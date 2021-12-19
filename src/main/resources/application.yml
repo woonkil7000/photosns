@@ -1,0 +1,52 @@
+server:
+  port: 80
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://192.168.0.100:3307/photogram?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
+
+  jpa:
+    open-in-view: true # LAZY의 늦은 세션이 가능하도록 함,View단까지 세션이 열려있음, EAGER 옵션
+    hibernate:
+      ddl-auto: update # update: DB Data Drop & Create New # 최초 Create 이후 update 또는 none으로 변경
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #카멜표기 컬럼명 사용가능 @JoinColumn(name = "fromUserId")
+      show-sql: true
+      format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug    # Logger
+    org.hibernate.type: trace   # Show Query Parameter
+
+  security:
+    user:
+      name: test
+      password: 1234
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 25MB
+
+file:
+  path: D:/src/springbootwork-sts/upload/
+
+  devtools:
+    livereload:
+      enabled: true
+    freemarker:
+      cache: false
