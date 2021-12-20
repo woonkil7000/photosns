@@ -23,6 +23,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data // toString 자동생성
 @Entity
+@Table(
+		name="image"
+)
 public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

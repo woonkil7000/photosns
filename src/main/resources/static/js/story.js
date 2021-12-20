@@ -64,8 +64,8 @@ function getStoryItem(image) {
 
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
-	<div>
-		<img  class="rounded mx-auto d-block" src="/upload/${image.postImageUrl}" alt="" />
+	<div class="sl__item__img">
+		<img src="/upload/${image.postImageUrl}" alt="" />
 	</div>
 
 	<!--게시물 내용 + 댓글 영역-->
