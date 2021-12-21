@@ -12,6 +12,7 @@
 	<groupId>com.cos</groupId>
 	<artifactId>photogram</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging> <!-- WAR 파일로 배포합니다 -->
 	<name>photogram</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
