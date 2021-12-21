@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /
     encoding:
@@ -54,8 +54,8 @@ logging:
       max-file-size: 25MB
 
 file:
-  path: /home/user/uploadImages/
-#  path: D:/src/springbootwork-sts/upload/
+#  path: /home/user/uploadImages/
+  path: D:/src/springbootwork-sts/upload/
 
   devtools:
     livereload:
