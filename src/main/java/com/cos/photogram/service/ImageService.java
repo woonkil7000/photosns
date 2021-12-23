@@ -50,6 +50,7 @@ public class ImageService {
 		}));
 
 		System.out.println("============= return images ===========");
+		log.info("imageRepository.mStory(principalId,pageable) => "+String.valueOf(images));
 		return images;
 	}
 
@@ -64,6 +65,10 @@ public class ImageService {
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid+"_"+imageReDto.getFile().getOriginalFilename(); // xxxxxx_1.jpg
 		System.out.println("이미지 파일명 : "+imageFileName);
+
+		// 이미지 파일명 문자열에서 공백제거!!
+		imageFileName = imageFileName.replaceAll(" ","");
+		System.out.println("이미지 파일명 공백제거 = "+imageFileName);
 
 		Path imageFilePath = Paths.get(uploadFolder+imageFileName);
 		System.out.println("이미지 파일 패스 : "+imageFilePath);

@@ -113,43 +113,38 @@ function toggleSubscribeModal(toUserId, obj) {
 }
 
 // (4) 유저 프로파일 사진 변경 (완)
-function profileImageUpload() {
-	let principalId = $("#principalId").val();
+function profileImageUpload(pageUserId,principalId) {
+	//let principalId = $("#principalId").val();
+	//console.log("pageUserId="+pageUserId);
+	//console.log("principalId="+principalId);
 
-	$("#userProfileImageInput").click();
+	// 로그인 사용자의  프로필 페이지 이외의 접근
+	if(pageUserId!=principalId) {
+		alert("현재 로그인한 유저는 프로필 사진을 수정할수 없습니다");
+		return;
+	}
 
-	$("#userProfileImageInput").on("change", (e) => {
+	$("#userProfileImageInput").click(); // 이미지 파일 선택 이벤트 실행.
+
+	//이미지 선택하지 않으면 에러 메세지
+	$("#userProfileImageInput").on("change",(e) => {
 		let f = e.target.files[0];
-
-		if (!f.type.match("image.*")) {
-			alert("이미지를 등록해야 합니다.");
+		if (!f.type.match("image.*")){
+			alert("이미지를 선택해야 합니다.");
 			return;
 		}
+		// --------------------------------------------------------------------------
 
-		// 통신 시작
+		// 서버에 이미지 전송
 		let profileImageForm = $("#userProfileImageForm")[0];
+		console.log("폼 전송: "+profileImageForm);
 
-		let formData = new FormData(profileImageForm); // Form태그 데이터 전송 타입을 multipart/form-data 로 만들어줌.
 
-		$.ajax({
-			type: "put",
-			url: "/user/" + principalId + "/profileImageUrl",
-			data: formData,
-			contentType: false, //필수  x-www-form-urlencoded로 파싱됨.
-			processData: false, //필수 : contentType을 false로 줬을 때 쿼리 스트링으로 자동 설정됨. 그거 해제 하는 법
-			enctype: "multipart/form-data", // 필수 아님
-			dataType: "json"
-		}).done(res => {
 
-			// 사진 전송 성공시 이미지 변경
-			let reader = new FileReader();
-			reader.onload = (e) => {
-				$("#userProfileImage").attr("src", e.target.result);
-			}
-			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
-		});
 
-	});
+		// --------------------------------------------------------------------------
+	})
+
 }
 
 

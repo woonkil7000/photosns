@@ -33,10 +33,17 @@ public class UserService {
 	@Value("${file.path}")
 	private String uploadFolder;
 
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true) // ex) /user/1, /user/2, /user/3
 	public UserProfileDto 회원프로필(int pageUserId,int principalId){
 		UserProfileDto dto = new UserProfileDto();
+		// UserProfileDto dto has
+		// : pageOwnerState,imageCount,subscribeState,subscribeCount,User user
+
 		// select * from Image where userId=:userId;
+		// image has id,createDate,imageId,userId
+
+		// UserRepository has User(id,bio,createDate,email,name,password,....)
+		// interface UserRepository extends JpaRepository<User, Integer>
 		User userEntity = userRepository.findById(pageUserId).orElseThrow(()->{
 			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다");
 		});
