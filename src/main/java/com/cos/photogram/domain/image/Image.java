@@ -47,10 +47,11 @@ public class Image {
 	@OneToMany(mappedBy = "image")
 	private List<Likes> likes; // A이미지에 홍길동, 장보고, 임꺽정 좋아요.   (고소영)
 
+	// 댓글. 코맨트.
 	@OrderBy("id DESC")  // 정렬
 	@JsonIgnoreProperties({"image"}) // Comment에서 image파싱금지.
 	@OneToMany(mappedBy = "image")
-	private List<Comment> comments;
+	private List<Comment> comments; // 양방향 맵핑.
 
 
 	@CreationTimestamp

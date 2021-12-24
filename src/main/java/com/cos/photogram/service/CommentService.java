@@ -1,5 +1,7 @@
 package com.cos.photogram.service;
 
+import com.cos.photogram.domain.user.UserRepository;
+import com.cos.photogram.handler.ex.CustomApiException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,22 +17,26 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final UserRepository userRepository;
 
-	
 	@Transactional
-	public Comment 댓글쓰기(User principal, String content, int imageId) {
-		
-		Image image = Image.builder()
-				.id(imageId)
-				.build();
-				
-		// Save할 때 연관관계가 있으면 오브젝트로 만들어서 id값만 넣어주면 된다.
-		Comment comment = Comment.builder()
-				.content(content)
-				.image(image)
-				.user(principal)
-				.build();
-		
+	public Comment 댓글쓰기(String content, int imageId,int userId) {
+
+
+		//Tip 객체를 만들때 id값만 담아서 insert 할 수있다.
+		// 대신에 return 시 image객체와 uesr객체의 id값만 가지고 있는 빈 객체를 리턴받는다.
+		Image image = new Image();
+		image.setId(imageId);
+
+		User userEntity = userRepository.findById(userId).orElseThrow(()->{
+			throw new CustomApiException("유저를 잦을 수 없습니다.");
+		});
+
+		Comment comment = new Comment();
+		comment.setContent(content);
+		comment.setImage(image);
+		comment.setUser(userEntity); // userEntity!! <- user.username등 포함.
+
 		return commentRepository.save(comment);
 	}
 	

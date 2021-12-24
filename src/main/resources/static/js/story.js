@@ -109,10 +109,13 @@ function getStoryItem(image) {
 			<p>${image.caption}</p>
 		</div>
 		<!--게시글내용end-->
-		
-		<!-- 댓글 들어오는 박스 -->
+
+
+		<!-- 댓글 박스 시작 -->
 		<div id="storyCommentList-${image.id}">
 		`;
+
+		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
 
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
@@ -134,14 +137,18 @@ function getStoryItem(image) {
 
   result += `
 		</div>
-		<!-- 댓글 들어오는 박스end -->
+		<!-- 댓글 박스 끝 -->
+		<!--  ########################  댓글 목록 반복문 끝   ################################# -->
+
 
 		<!--댓글입력박스-->
 		<div class="sl__item__input">
 			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}"/>
-			<button type="button" onClick="addComment(${image.id}, '${principalUsername}')">게시</button>
+			<button type="button" onClick="addComment(${image.id})">게시</button>
 		</div>
 		<!--댓글달기박스end-->
+		
+		
 	</div>
 </div>
 <!--전체 리스트 아이템end-->
@@ -188,46 +195,63 @@ function toggleLike(imageId) {
 	}
 }
 
+// 댓글쓰기
 
-function addComment(imageId, username) {
+function addComment(imageId) {
 
-	let commentInput = $("#storyCommentInput-" + imageId);
-	let commentList = $("#storyCommentList-" + imageId);
+	let commentInput = $(`#storyCommentInput-${imageId}`);
+	let commentList = $(`#storyCommentList-${imageId}`);
 	
 	let data = {
+		imageId: imageId,
 		content: commentInput.val()
 	}
-	
+	// 이미지번호와 코멘트 입력내용.
+
+	// alert(data.content);
+	// return;
 
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
 
+	// console.log(data);
+	// console.log(JSON.stringify(data));
+	// return;
+
 	// 통신 성공하면 아래 prepend 되야 되고 ID값 필요함
 	$.ajax({
 		type: "POST",
-		url: `/image/${imageId}/comment`,
-		data: data.content,
-		contentType: "plain/text; charset=utf-8",
-		dataType: "json"
+		//url: "/image/${imageId}/comment",
+		url: "/api/comment",
+		data: JSON.stringify(data),
+		//contentType: "plain/text; charset=utf-8",
+		contentType: "application/json;charset=utf-8",
+		dataType: "json" //응답 받을때
 	}).done(res => {
+		//console.log("성공",res);
+
 		let comment = res.data;
 		let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}""> 
+			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
 			    <p>
-			      <b>${username} :</b>
-			      ${comment.content}
+			      <b>${comment.user.username} :</b> ${comment.content}
 			    </p>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
 			  `;
-		commentList.prepend(content);
+		// 코멘트 삭제를 위해 ${comment.id} 삽입
+
+		commentList.prepend(content); // 앞에 붙이기
 		commentInput.val("");
+	}).fail(error=>{
+		console.log("오류",error);
 	});
 
 }
 
+// 댓글 삭제
 function deleteComment(commentId) {
 	$.ajax({
 		type: "delete",

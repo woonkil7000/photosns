@@ -98,13 +98,13 @@ public class ImageController {
 		return null;
 	}
 	
-	@PostMapping("/image/{imageId}/comment")
+	/*@PostMapping("/image/{imageId}/comment")
 	public @ResponseBody CMRespDto<?> save(@PathVariable int imageId, @RequestBody String content, @AuthenticationPrincipal PrincipalDetails principalDetails){   // content, imageId, userId(세션)
 		Comment commentEntity = commentService.댓글쓰기(principalDetails.getUser(), content, imageId);
 		
 		//return new CMRespDto<>(1, commentEntity);
 		return null;
-	}
+	}*/
 }
 
 

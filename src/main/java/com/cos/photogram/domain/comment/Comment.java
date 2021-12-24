@@ -1,6 +1,7 @@
 package com.cos.photogram.domain.comment;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -28,20 +29,27 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(length = 100, nullable = false)
+	@Column(length = 100, nullable = false) // 글자수 제약.
 	private String content;
 	
 	@JoinColumn(name = "imageId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER) // EAGER: 기본값
 	private Image image;
 	
-	@JsonIgnoreProperties({"images"})
+	@JsonIgnoreProperties({"images"}) // images 정보 가져오지않게
 	@JoinColumn(name = "userId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 	
-	@CreationTimestamp
-	private Timestamp createDate;
+//	@CreationTimestamp
+//	private Timestamp createDate;
+
+	private LocalDateTime createDate;
+
+	@PrePersist // DB에 insert될때 실행~~
+	public void createDate(){
+		this.createDate = LocalDateTime.now();
+	}
 }
 
 
