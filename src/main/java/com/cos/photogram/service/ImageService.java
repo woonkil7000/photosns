@@ -76,6 +76,7 @@ public class ImageService {
 		// 통신. IO -> 예외발생할수있다....
 		try {
 			Files.write(imageFilePath, imageReDto.getFile().getBytes()); // 파일 쓰기
+			System.out.println("------------------------  :: 파일쓰기 :: ------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -6,6 +6,9 @@ server:
     encoding:
       charset: utf-8
       enabled: true
+    multipart:
+      enabled: true
+      max-file-size: 25MB
 
 spring:
   mvc:
@@ -49,10 +52,6 @@ logging:
       name: test
       password: 1234
 
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 25MB
 
 file:
 #  path: /home/user/uploadImages/

@@ -120,7 +120,7 @@ function profileImageUpload(pageUserId,principalId) {
 
 	// 로그인 사용자의  프로필 페이지 이외의 접근
 	if(pageUserId!=principalId) {
-		alert("현재 로그인한 유저는 프로필 사진을 수정할수 없습니다");
+		alert("현재 로그인한 사용자는 이 프로필 사진을 수정할수 없습니다");
 		return;
 	}
 
@@ -137,10 +137,32 @@ function profileImageUpload(pageUserId,principalId) {
 
 		// 서버에 이미지 전송
 		let profileImageForm = $("#userProfileImageForm")[0];
-		console.log("폼 전송: "+profileImageForm);
+		//console.log("폼 전송: "+profileImageForm);
 
+		// form data객체를 이용하려면 폼케그의 필드와 그값을 나타내는 일련의 key/value쌍을 담을 수 있다.
+		let formData = new FormData(profileImageForm);
 
+		//$.ajax({}).done(res=>{}).fail(error=>{});
+		$.ajax({
+			type:"put",
+			url:`/api/user/${principalId}/profileImageUrl`,
+			data:formData,
+			contentType:false, // 필수: x-www-form-urlencode로 파싱되는것 방지
+			processData:false, // 필수: contentType을 false로 했을때 Query String으로 자동 생성되는것 방지. 해제!!
+			enctype:"multipart/form-data",
+			dataType:"json"
+		}).done(res=>{
 
+			//성공시 사진 전송시 이미지 변경됨.
+			let reader=new FileReader();
+			reader.onload=(e)=>{
+				$("#userProfileImage").attr("src",e.target.result);
+			}
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.conload 실행됨.
+
+		}).fail(error=>{
+			console.log("오류",error);
+		});
 
 		// --------------------------------------------------------------------------
 	})

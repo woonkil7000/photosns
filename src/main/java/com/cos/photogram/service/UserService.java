@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import com.cos.photogram.handler.ex.CustomApiException;
 import com.cos.photogram.handler.ex.CustomException;
 import com.cos.photogram.handler.ex.CustomValidationApiException;
 import com.cos.photogram.web.dto.user.UserProfileDto;
@@ -21,7 +22,13 @@ import com.cos.photogram.domain.user.UserRepository;
 import com.cos.photogram.web.dto.user.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
+import javax.servlet.annotation.MultipartConfig;
 
+@MultipartConfig(
+		fileSizeThreshold = 1024*1024,
+		maxFileSize = 1024*1024*50,
+		maxRequestSize = 1024*1024*50*5
+)
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -69,25 +76,31 @@ public class UserService {
 	}
 
 	@Transactional
-	public User 회원사진변경(MultipartFile profileImageFile, PrincipalDetails principalDetails) {
+	public User 회원프로필사진변경(int principalId,MultipartFile profileImageFile) {
 
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
-		// System.out.println("파일명 : "+imageFileName);
+			System.out.println("파일명 : "+imageFileName);
 
 		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-		// System.out.println("파일패스 : "+imageFilePath);
+			System.out.println("파일 path : "+imageFilePath);
+
 		try {
 			Files.write(imageFilePath, profileImageFile.getBytes());
+			System.out.println("---------------------- :: 파일쓰기 :: ------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		User userEntity = userRepository.findById(principalDetails.getUser().getId()).get();
+		//User userEntity = userRepository.findById(principalId).orElseThrow(()->{});
+		User userEntity = userRepository.findById(principalId).orElseThrow(()->{
+			throw new CustomApiException("유저를 찾을 수 없습니다.");
+		});
+
 		userEntity.setProfileImageUrl(imageFileName);
 
-		return userEntity;
-	} // 더티체킹
+		return userEntity; // 세션에 저장
+	} // 더티체킹으로 업데이트 됨.
 
 	@Transactional
 	public User 회원수정(int id, User user) {

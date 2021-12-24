@@ -78,7 +78,8 @@ public class UserController {
 	@PutMapping("/user/{id}/profileImageUrl")
 	public @ResponseBody CMRespDto<?> profileImageUrlUpdate(@PathVariable int id, MultipartFile profileImageFile,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
-		User userEntity = userService.회원사진변경(profileImageFile, principalDetails);
+		int principalId;
+		User userEntity = userService.회원프로필사진변경(id,profileImageFile);
 		principalDetails.setUser(userEntity);
 		//return new CMRespDto<>(1, null);
 		return null;

@@ -14,7 +14,8 @@
 		<div class="profile-left">
 			<div class="profile-img-wrap story-border"
 				onclick="popup('.modal-image')">
-				<form id="userProfileImageForm">
+				<form id="userProfileImageForm" enctype="multipart/form-data" method="POST">
+					<input type="hidden" name="_method" value="put"/>
 					<input type="file" name="profileImageFile" style="display: none;"
 						id="userProfileImageInput" />
 				</form>
