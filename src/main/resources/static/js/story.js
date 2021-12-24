@@ -230,7 +230,7 @@ function addComment(imageId) {
 		contentType: "application/json;charset=utf-8",
 		dataType: "json" //응답 받을때
 	}).done(res => {
-		//console.log("성공",res);
+		console.log("성공",res);
 
 		let comment = res.data;
 		let content = `

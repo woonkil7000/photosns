@@ -72,7 +72,7 @@
 			<version>2.6.1</version>
 		</dependency>
 
-		<!-- qlrm -->
+		<!-- qlrm : native query로 작성된 result된 값들을 DTO Mapping -->
 		<dependency>
 			<groupId>org.qlrm</groupId>
 			<artifactId>qlrm</artifactId>

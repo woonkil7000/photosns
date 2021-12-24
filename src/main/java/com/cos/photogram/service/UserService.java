@@ -24,11 +24,7 @@ import com.cos.photogram.web.dto.user.UserProfileRespDto;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.annotation.MultipartConfig;
 
-@MultipartConfig(
-		fileSizeThreshold = 1024*1024,
-		maxFileSize = 1024*1024*50,
-		maxRequestSize = 1024*1024*50*5
-)
+
 @RequiredArgsConstructor
 @Service
 public class UserService {

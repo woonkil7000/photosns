@@ -40,6 +40,8 @@ function toggleSubscribe(userId, obj) {
 
 // (2) 구독자 정보  모달 보기
 function subscribeInfoModalOpen(pageUserId) {
+	// alert(pageUserId);
+	// return;
 	$(".modal-subscribe").css("display", "flex");
 
 	//let userId = $("#userId").val(); // pageUserId 해당 페이지의 주인 id
@@ -47,17 +49,21 @@ function subscribeInfoModalOpen(pageUserId) {
 	$.ajax({
 		url: `/api/user/${pageUserId}/subscribe`,
 		dataType:"json"
-	})
-		.done((res) => {
-			$("#subscribeModalList").empty();
+	}).done((res) => {
 
-			res.data.forEach((u) => {
-				let item = getSubscribeModalItem(u);
-				$("#subscribeModalList").append(item);
-			});
-		})
-		.fail((error) => {
-			console.log("오류 : " + error.text);
+		console.log(res);
+		return;
+
+		$("#subscribeModalList").empty();
+
+		res.data.forEach((u) => {
+			let item = getSubscribeModalItem(u);
+			$("#subscribeModalList").append(item);
+		});
+	}).fail((error) => {
+
+		console.log("구독자 리스트 불러오기 오류 : ",error);
+		return;
 		});
 }
 
