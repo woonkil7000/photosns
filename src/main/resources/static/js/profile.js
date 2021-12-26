@@ -52,7 +52,7 @@ function subscribeInfoModalOpen(pageUserId) {
 	}).done((res) => {
 
 		console.log(res);
-		return;
+		//return;
 
 		$("#subscribeModalList").empty();
 
@@ -76,7 +76,7 @@ function getSubscribeModalItem(u) {
 	item += `<h2>${u.username}</h2>`;
 	item += `</div>`;
 	item += `<div class="subscribe__btn">`;
-	if (!u.equalState) { // 동일 유저가 아닐때 버튼이 만들어져야함.
+	if (!u.equalUserState) { // 동일 유저가 아닐때 버튼이 만들어져야함. 자기자신 제외.
 		if (u.subscribeState) { // 구독한 상태
 			item += `<button class="cta blue" onclick="toggleSubscribeModal(${u.userId}, this)">구독취소</button>`;
 		} else { // 구독안한 상태
