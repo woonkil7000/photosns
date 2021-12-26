@@ -56,6 +56,8 @@ public class UserApiController {
     @GetMapping("/api/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable int pageUserId){
 
+        System.out.println("########################### principalDetails.getUser().getId()  =>"+principalDetails.getUser().getId());
+        System.out.println("######################## pageUserId =>"+pageUserId);
         List<SubscribeDto> subscribeDto = subscribeService.구독리스트(principalDetails.getUser().getId(),pageUserId);
 
         System.out.println(" ######################## List<SubscribeDto> subscribeDto = subscribeService.구독리스트() ###########################");

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -11,8 +13,8 @@ public class SubscribeDto {
 	private int userId;
 	private String username;
 	private String profileImageUrl;
-	private Integer subscribeState; // mariadb에서는 Integer
-	private Integer equalUserState;
+	private BigInteger subscribeState; // mariadb에서는 Integer
+	private BigInteger equalUserState;
 //	private int subscribeState;
 //	private int equalUserState;
 

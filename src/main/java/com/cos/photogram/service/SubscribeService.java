@@ -34,7 +34,7 @@ public class SubscribeService {
 		StringBuffer sb = new StringBuffer();
 		sb.append("select u.id userId, u.username, u.profileImageUrl,  ");
 		sb.append("if( (select true from subscribe where fromUserId = ? and toUserId = u.id), true, false) subscribeState, ");  // ? = principalDetails.user.id
-		sb.append("if(u.id = ?, true, false) equalState "); // ? = principalDetails.user.id
+		sb.append("if(u.id = ?, true, false) equalUserState "); // ? = principalDetails.user.id
 		sb.append("from subscribe f inner join user u on u.id = f.toUserId ");
 		sb.append("where f.fromUserId = ? "); // ? = pageUserId 해당 페이지의 주인 id
 
@@ -51,12 +51,14 @@ public class SubscribeService {
 		// 쿼리 실행!! JpaResultMapper
 		JpaResultMapper result  = new JpaResultMapper(); // 결과값 매핑
 		System.out.println(" ######################## 결과값 맴핑 #########################");
-		System.out.println(" ########################  result = " +result.toString());
+		//System.out.println(" ########################  result = " +result.toString());
 
-		List<SubscribeDto> subscribeDtos = result.list(query, SubscribeDto.class);
+		//System.out.println(" ########################  result.list => " +result.list(query, SubscribeDto.class));
+		//List<SubscribeDto> subscribeDtos = result.list(query, SubscribeDto.class);
+		List<SubscribeDto> subscribeDtoList = result.list(query, SubscribeDto.class);
 		System.out.println(" ######################## 리스트 담기 #########################");
-		System.out.println(" ########################  subscribeDtos = " +subscribeDtos.toString());
-		return subscribeDtos;
+		System.out.println(" ########################  subscribeDtoList = " +subscribeDtoList.toString());
+		return subscribeDtoList;
 	}
 	
 	@Transactional
