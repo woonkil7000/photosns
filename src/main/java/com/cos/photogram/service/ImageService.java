@@ -33,7 +33,9 @@ public class ImageService {
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
 		Page<Image> images=imageRepository.mStory(principalId,pageable);
-		System.out.println("getting..... List[image] images from imageRepository....");
+		System.out.println("################## ImageService{} public Page<Image> 이미지스토리(int principalId, Pageable pageable) ##################");
+		System.out.println("##################  Page<Image> images=imageRepository.mStory(principalId,pageable) ##################");
+		System.out.println(images);
 
 		// ############ images에 좋아요 상태 likeState: true/false 담기 ######### //
 		// 2(cos) 로그인에서
@@ -49,8 +51,9 @@ public class ImageService {
 			});
 		}));
 
-		System.out.println("============= return images ===========");
-		log.info("imageRepository.mStory(principalId,pageable) => "+String.valueOf(images));
+		System.out.println("######################################## End of Page[Image] images ###################################################");
+		log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> "+String.valueOf(images));
+		log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
 		return images;
 	}
 
