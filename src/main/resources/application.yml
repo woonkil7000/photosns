@@ -1,20 +1,20 @@
 server:
   port: 8081
-
   servlet:
     context-path: /
     encoding:
       charset: utf-8
       enabled: true
-    multipart:
-      enabled: true
-      max-file-size: 25MB
 
 spring:
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 25MB
 
 # 마리아 DB 설정
 #  datasource:
@@ -30,8 +30,6 @@ spring:
     username: cos
     password: cos1234
 # MySQL8 설정
-
-
 
   jpa:
     open-in-view: true # LAZY의 늦은 세션이 가능하도록 함,View단까지 세션이 열려있음, EAGER 옵션
