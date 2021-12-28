@@ -25,6 +25,10 @@ import com.cos.photogram.web.dto.subscribe.SubscribeRespDto;
 import com.cos.photogram.web.dto.user.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.servlet.annotation.MultipartConfig;
+
+
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -79,7 +83,9 @@ public class UserController {
 	public @ResponseBody CMRespDto<?> profileImageUrlUpdate(@PathVariable int id, MultipartFile profileImageFile,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		int principalId;
+		System.out.println(" ################# PutMapping /user/id/profileImageUrl");
 		User userEntity = userService.회원프로필사진변경(id,profileImageFile);
+		System.out.println(" ################# userEntity =>"+userEntity.toString());
 		principalDetails.setUser(userEntity);
 		//return new CMRespDto<>(1, null);
 		return null;

@@ -13,8 +13,8 @@ spring:
       suffix: .jsp
   servlet:
     multipart:
-      enabled: true
-      max-file-size: 25MB
+        enabled: true
+        max-file-size: 25MB
 
 # 마리아 DB 설정
 #  datasource:
@@ -52,8 +52,9 @@ logging:
 
 
 file:
-#  path: /home/user/uploadImages/
   path: D:/src/springbootwork-sts/upload/
+#  path: /home/user/uploadImages/
+
 
   devtools:
     livereload:

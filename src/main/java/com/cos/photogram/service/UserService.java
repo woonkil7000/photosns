@@ -75,8 +75,8 @@ public class UserService {
 	public User 회원프로필사진변경(int principalId,MultipartFile profileImageFile) {
 
 		UUID uuid = UUID.randomUUID();
-		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
-			System.out.println("파일명 : "+imageFileName);
+		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename(); //1.jpg
+			System.out.println("이미지 파일이름 : "+imageFileName);
 
 		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
 			System.out.println("파일 path : "+imageFilePath);

@@ -13,16 +13,15 @@
 		<!--유저이미지-->
 		<div class="profile-left">
 			<div class="profile-img-wrap story-border"
-				onclick="popup('.modal-image')">
-				<form id="userProfileImageForm" enctype="multipart/form-data" method="POST">
-					<input type="hidden" name="_method" value="put"/>
+				 onclick="popup('.modal-image')">
+				<form id="userProfileImageForm">
 					<input type="file" name="profileImageFile" style="display: none;"
-						id="userProfileImageInput" />
+						   id="userProfileImageInput" />
 				</form>
 
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					alt="" onerror="this.src='/images/person.jpeg'"
-					id="userProfileImage" />
+					 alt="" onerror="this.src='/images/person.jpeg'"
+					 id="userProfileImage" />
 			</div>
 		</div>
 		<!--유저이미지end-->

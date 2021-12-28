@@ -121,58 +121,72 @@ function toggleSubscribeModal(toUserId, obj) {
 // (4) 유저 프로파일 사진 변경 (완)
 function profileImageUpload(pageUserId,principalId) {
 	//let principalId = $("#principalId").val();
-	//console.log("pageUserId="+pageUserId);
-	//console.log("principalId="+principalId);
+	// console.log("pageUserId",pageUserId);
+	// console.log("principalId",principalId);
 
-	// 로그인 사용자의  프로필 페이지 이외의 접근
-	if(pageUserId!=principalId) {
-		alert("현재 로그인한 사용자는 이 프로필 사진을 수정할수 없습니다");
+	if(pageUserId != principalId){
+		alert("수정할 수 없는 유저입니다");
 		return;
 	}
 
-	$("#userProfileImageInput").click(); // 이미지 파일 선택 이벤트 실행.
+	$("#userProfileImageInput").click();
 
-	//이미지 선택하지 않으면 에러 메세지
-	$("#userProfileImageInput").on("change",(e) => {
+	$("#userProfileImageInput").on("change", (e) => {
 		let f = e.target.files[0];
-		if (!f.type.match("image.*")){
-			alert("이미지를 선택해야 합니다.");
+
+		if (!f.type.match("image.*")) {
+			alert("이미지를 등록해야 합니다.");
 			return;
 		}
-		// --------------------------------------------------------------------------
 
-		// 서버에 이미지 전송
+		// 서버에 이미지 전송. 통신 시작
 		let profileImageForm = $("#userProfileImageForm")[0];
-		//console.log("폼 전송: "+profileImageForm);
+		console.log("userProfileImageForm[0] => ",profileImageForm);
 
-		// form data객체를 이용하려면 폼케그의 필드와 그값을 나타내는 일련의 key/value쌍을 담을 수 있다.
 		let formData = new FormData(profileImageForm);
+		console.log("formData = FormData(profileImageForm) => ",formData);
+		// FormData객체로 보내야함. key/value formData에 값들만 담김.
+		// Form태그 데이터 전송 타입을 multipart/form-data 로 만들어줌.
 
-		//$.ajax({}).done(res=>{}).fail(error=>{});
 		$.ajax({
-			type:"put",
-			url:`/api/user/${principalId}/profileImageUrl`,
-			data:formData,
-			contentType:false, // 필수: x-www-form-urlencode로 파싱되는것 방지
-			processData:false, // 필수: contentType을 false로 했을때 Query String으로 자동 생성되는것 방지. 해제!!
-			enctype:"multipart/form-data",
-			dataType:"json"
+			type: "put",
+			url: `/api/user/${principalId}/profileImageUrl`,
+			data: formData,
+			contentType: false, //필수  x-www-form-urlencoded로 파싱됨.
+			processData: false, //필수 : contentType을 false로 줬을 때 쿼리 스트링으로 자동 설정됨. 그거 해제 하는 법
+			enctype: "multipart/form-data", // 필수 아님 x-www-form-urlencoded로 파싱되는것 방지.
+			dataType: "json",
+			complete: function (data){
+				// 500 error 발생.
+				console.log("########## principalId => "+principalId);
+				console.log("########## 파일전송 ############ ");
+				// 사진 전송 성공시 화면에 프로필 이미지 변경
+				let reader = new FileReader();
+				reader.onload = (e) => {
+					$("#userProfileImage").attr("src", e.target.result);
+				}
+				reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+			}
+		});
+/*
 		}).done(res=>{
 
-			//성공시 사진 전송시 이미지 변경됨.
-			let reader=new FileReader();
-			reader.onload=(e)=>{
-				$("#userProfileImage").attr("src",e.target.result);
+			console.log("########## principalId => "+principalId);
+			console.log("########## 파일전송 ajax.done(res=>)");
+			// 사진 전송 성공시 이미지 변경
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#userProfileImage").attr("src", e.target.result);
 			}
-			reader.readAsDataURL(f); // 이 코드 실행시 reader.conload 실행됨.
-
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
 		}).fail(error=>{
-			console.log("오류",error);
+
+			console.log("########## principalId => "+principalId);
+			console.log("########## 파일전송 실퍠!",error.responseText);
 		});
 
-		// --------------------------------------------------------------------------
-	})
-
+*/
+	});
 }
 
 

@@ -10,6 +10,7 @@ import com.cos.photogram.web.dto.CMRespDto;
 import com.cos.photogram.web.dto.subscribe.SubscribeDto;
 import com.cos.photogram.web.dto.subscribe.SubscribeRespDto;
 import com.cos.photogram.web.dto.user.UserUpdateDto;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,10 @@ import java.util.List;
 import java.util.Map;
 
 @MultipartConfig(
-        fileSizeThreshold = 1024*1024,
-        maxFileSize = 1024*1024*50,
-        maxRequestSize = 1024*1024*50*5
+        fileSizeThreshold = 1024 * 1024 * 2, // 2mb
+        maxFileSize = 1024 * 1024 * 10, // 10mb
+        maxRequestSize = 1024 * 1024 * 50, //50mb
+        location = "c:/upload" //파일저장위치
 )
 @Slf4j
 @RequiredArgsConstructor
@@ -47,9 +49,13 @@ public class UserApiController {
     public ResponseEntity<?>profileImageUrlUpdate(@PathVariable int principalId, MultipartFile profileImageFile,
                                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        // MultipartFile profileImageFile 변수 <== <input> tag의 name과 동일해야함.
+        // MultipartFile profileImageFile 변수 <== <input> tag의 name=과 동일해야함.
+        System.out.println("############### public ResponseEntity<?>profileImageUrlUpdate() #####################");
+        System.out.println("############### principalID =>"+principalId+" #####################");
+        System.out.println("############### profileImageFile => "+profileImageFile+" #####################");
+        System.out.println("############### principalDetails =>"+principalDetails+" #####################");
         User userEntity = userService.회원프로필사진변경(principalId,profileImageFile);
-        principalDetails.setUser(userEntity);
+        principalDetails.setUser(userEntity); //세션 변경 반영
         return new ResponseEntity<>(new CMRespDto<>(1,"프로필사진변경 성공",null),HttpStatus.OK);
     }
 
