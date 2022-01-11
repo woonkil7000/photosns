@@ -6,6 +6,7 @@ import com.cos.photogram.web.dto.auth.SignupDto;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,17 +37,17 @@ public class AuthController {
 
 	private SignupDto signupDto;
 
-	@GetMapping("/auth/signin")
+	@GetMapping("/auth/signin") // to auth/signin.jsp :login Form 으로
 	public String loginForm() {
 		return "auth/signin";
 	}
 
-	@GetMapping("/auth/signup") // joinForm: auth/signup 회원가입폼으로.
+	@GetMapping("/auth/signup") // to auth/signup.jsp joinForm: auth/signup 회원가입폼으로.
 	public String joinForm() {
 		return "auth/signup";
 	}
 
-	@PostMapping("/auth/signup")
+	@PostMapping("/auth/signup") // /auth/signup.jsp <form action=post
 	public String join(@Valid SignupDto signupDto, BindingResult bindingResult) {
 
 		if(bindingResult.hasFieldErrors()){
@@ -79,5 +80,9 @@ public class AuthController {
 		log.info(signupDto.toString());
 		return "auth/signin";
 	}*/
+
+
+
+
 
 }

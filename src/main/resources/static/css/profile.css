@@ -12,7 +12,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /*
   width: 935px;
+  */
+  width: 320px;
   margin: 0 auto;
   height: 100%;
 }
@@ -404,21 +407,21 @@
   align-items: center;
   justify-content: center;
 }
-.modal-info .modal {
+.modal-info .modal1 {
   width: 400px;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
 }
-.modal-info .modal button {
+.modal-info .modal1 button {
   border: 0;
   background-color: transparent;
   height: 48px;
   cursor: pointer;
 }
 
-.modal-info .modal button:not(:last-child) {
+.modal-info .modal1 button:not(:last-child) {
   border-bottom: 1px solid #dbdbdb;
 }
 

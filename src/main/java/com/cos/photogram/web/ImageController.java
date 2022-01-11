@@ -1,5 +1,6 @@
 package com.cos.photogram.web;
 
+import com.cos.photogram.domain.user.User;
 import com.cos.photogram.handler.ex.CustomValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -105,6 +106,7 @@ public class ImageController {
 		//return new CMRespDto<>(1, commentEntity);
 		return null;
 	}*/
+
 }
 
 

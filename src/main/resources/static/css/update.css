@@ -9,7 +9,10 @@
 
 /*프로필셋팅 섹션*/
 .setting-container {
+  /*
   width: 935px;
+  */
+  width: 320px;
   margin: 0 auto;
   border: 1px solid gainsboro;
   margin-top: 30px;

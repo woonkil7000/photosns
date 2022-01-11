@@ -2,7 +2,10 @@
 @import "footer.css";
 
 .exploreContainer {
+  /*
   width: 935px;
+  */
+  width: 320px;
   margin: 0 auto;
   height: 100%;
 }

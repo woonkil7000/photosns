@@ -39,13 +39,14 @@ storyLoad();
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
 
-    //console.log("윈도우 스크롤 탑",$(window).scrollTop());
     //console.log("문서의 높이",$(document).height());
+    //console.log("윈도우 스크롤 탑",$(window).scrollTop());
     //console.log("윈도우 높이",$(window).height());
-  let checkNum = $(window).scrollTop() - ($(document).height() - $(window).height());
-    //console.log("checkNum="+checkNum);
+
+    let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
+    console.log("checkNum="+checkNum);
   // 근사치 계산
-  if (checkNum < 1 && checkNum > -1) {
+  if (checkNum < 200 && checkNum > -1) {
     page++;
     storyLoad();
   }
@@ -64,8 +65,10 @@ function getStoryItem(image) {
 
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
+	<!-- <div class="col-md-5 px-0"> -->
 	<div class="sl__item__img">
-		<img src="/upload/${image.postImageUrl}" alt="" />
+		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
+          <img src="/upload/${image.postImageUrl}" alt="" />
 	</div>
 
 	<!--게시물 내용 + 댓글 영역-->
