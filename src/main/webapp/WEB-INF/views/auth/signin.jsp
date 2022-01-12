@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photogram</title>
     <link rel="stylesheet" href="/css/style.css">
+    <!--
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+        -->
 </head>
 
 <body>
@@ -27,6 +29,7 @@
                         <form class="login__input" action="/login" method="post">
                             <input type="text" name="username" placeholder="유저네임">
                             <input type="password" name="password" placeholder="비밀번호">
+                            <div>test id= cos, pw= 111</div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->

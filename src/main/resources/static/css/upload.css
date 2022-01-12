@@ -15,7 +15,7 @@
   /*
   width: 600px;
   */
-  width: 320px;
+  width: 380px;
   display: flex;
   flex-direction: column;
   padding: 10px 40px;
@@ -98,7 +98,8 @@
 /*이미지에 대한 설명인풋 + 버튼*/
 .upload .upload-form .upload-form-detail input,
 .upload .upload-form .upload-form-detail button {
-  width: 340px;
+  <!-- width: 340px; -->
+  width: 380px;
 }
 .upload .upload-form .upload-form-detail input {
   text-indent: 10px;

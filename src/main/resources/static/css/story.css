@@ -9,7 +9,7 @@
 .main .container {
   padding-top: 30px;
   /*width: 935px;*/
-  width: 320px;
+  width: 380px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -71,8 +71,10 @@
 
 /* 게시물 이미지 박스*/
 .main .container .story-list .story-list__item .sl__item__img {
-  /*height: 600px;
-  min-height: 300px;*/
+  /*
+  height: 600px;
+  min-height: 300px;
+  */
   /*
   height: 600px;
   min-height: 300px;
@@ -166,7 +168,7 @@
   .sl__item__contents
   .sl__item__contents__comment
   {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
   background-color: transparent;
@@ -186,21 +188,25 @@
 
 /* 댓글 입력창*/
 .main .container .story-list .story-list__item .sl__item__input {
+  /* display: flex; */
   display: flex;
   border-top: 1px solid #dbdbdb;
 }
 
 /*입력 인풋*/
 .main .container .story-list .story-list__item .sl__item__input input {
-  flex: 9;
-  height: 56px;
+  /* flex: 9; */
+  flex: 7;
+  /*height: 56px;*/
+  height: 28px;
   border: 0;
   padding-left: 15px;
 }
 /* 입력하기 버튼 */
 .main .container .story-list .story-list__item .sl__item__input button {
-  flex: 1;
-  height: 56px;
+  flex: 3;
+  /*height: 56px;*/
+  height: 28px;
   border: 0;
   background-color: transparent;
   font-weight: 500;

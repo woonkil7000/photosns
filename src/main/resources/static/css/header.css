@@ -24,7 +24,7 @@
   /*
   width: 935px;
   */
-  width: 320px;
+  width: 380px;
   margin: 0 auto;
   height: 100%;
 }
@@ -52,7 +52,8 @@
   margin-top: 4px;
 }
 
-@media screen and (max-width: 935px) {
+/* @media screen and (max-width: 935px) { */
+@media screen and (max-width: 380px) {
   .header .container {
     width: 100%;
   }

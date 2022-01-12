@@ -79,7 +79,7 @@ public class UserApiController {
             BindingResult bindingResult, // 꼭 Valid 다음 파라미터에 있어야함.
             @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        if(bindingResult.hasFieldErrors()){
+ /*       if(bindingResult.hasFieldErrors()){
             Map<String, String> errorMap = new HashMap<>();
 
             for(FieldError error:bindingResult.getFieldErrors()){
@@ -90,7 +90,7 @@ public class UserApiController {
             }
             throw new CustomValidationApiException("유효성 검사 실패함.",errorMap);
 
-        }else {
+        }*/
 
             User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
             log.info("============= UserApiController : userUpdateDto.toEntity() =============");
@@ -100,6 +100,6 @@ public class UserApiController {
             return new CMRespDto<>(1, "회원수정완료", userEntity);
             // 응답시에 userEntity의 모든 getter함수가 호출되고 JSON으로 파싱하여 응답
         }
-    }
+
 
 }

@@ -50,7 +50,7 @@ public class AuthController {
 	@PostMapping("/auth/signup") // /auth/signup.jsp <form action=post
 	public String join(@Valid SignupDto signupDto, BindingResult bindingResult) {
 
-		if(bindingResult.hasFieldErrors()){
+		/*if(bindingResult.hasFieldErrors()){
 			Map<String, String> errorMap = new HashMap<>();
 
 			for(FieldError error:bindingResult.getFieldErrors()){
@@ -60,7 +60,7 @@ public class AuthController {
 				System.out.println("=====================================");
 			}
 			throw new CustomValidationException("유효성 검사 실패함.",errorMap);
-		} else {
+		} */
 
 			log.info(signupDto.toString());
 
@@ -72,7 +72,7 @@ public class AuthController {
 			System.out.println(userEntity);
 			return "auth/signin";
 			//return Script.href("회원가입에 성공하셨습니다.", "/auth/signin"
-		}
+
 
 	}
 	/*@PostMapping("/auth/signup") // signup form action method:post

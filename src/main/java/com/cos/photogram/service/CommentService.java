@@ -42,14 +42,15 @@ public class CommentService {
 	
 	@Transactional
 	public void 댓글삭제(int id, int principalId) {
-		
-		Comment commentEntity = commentRepository.findById(id).get();
-		if(commentEntity.getUser().getId() == principalId) {
-			commentRepository.deleteById(id);
-		}else {
-			// 스로우 익센션 날려서 ControllAdvice 처리
+
+			try {
+				// id = 댓글 id
+				commentRepository.deleteById(id);
+			} catch (Exception e) {
+				// 스로우 익센션 날려서 ControllAdvice 처리
+				throw new CustomApiException(e.getMessage());
+			}
 		}
-	}
 }
 
 

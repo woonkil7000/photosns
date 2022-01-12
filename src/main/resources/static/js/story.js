@@ -44,9 +44,10 @@ $(window).scroll(() => {
     //console.log("윈도우 높이",$(window).height());
 
     let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
-    console.log("checkNum="+checkNum);
+    //console.log("checkNum="+checkNum);
+
   // 근사치 계산
-  if (checkNum < 200 && checkNum > -1) {
+  if (checkNum < 100 && checkNum > -1) {
     page++;
     storyLoad();
   }
@@ -68,8 +69,8 @@ function getStoryItem(image) {
 	<!-- <div class="col-md-5 px-0"> -->
 	<div class="sl__item__img">
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
-          <img src="/upload/${image.postImageUrl}" alt="" />
-	</div>
+		          <img src="/upload/${image.postImageUrl}" alt="" />
+    </div>
 
 	<!--게시물 내용 + 댓글 영역-->
 	<div class="sl__item__contents">
@@ -91,7 +92,7 @@ function getStoryItem(image) {
 		<!-- 하트모양 버튼 박스 end -->
 
 		<!--좋아요-->
-		<span class="like"><b id="storyLikeCount-${image.id}">${image.likeCount}</b>likes</span>
+		<span class="like">좋아요 <b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
 		<!--좋아요end-->
 
 		<!--태그박스-->
@@ -145,9 +146,10 @@ function getStoryItem(image) {
 
 
 		<!--댓글입력박스-->
+		<!-- <div class="sl__item__input"> -->
 		<div class="sl__item__input">
-			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}"/>
-			<button type="button" onClick="addComment(${image.id})">게시</button>
+			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
+			<button type="button" onClick="addComment(${image.id})">쓰기</button>
 		</div>
 		<!--댓글달기박스end-->
 		
@@ -214,6 +216,7 @@ function addComment(imageId) {
 	// alert(data.content);
 	// return;
 
+
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
@@ -233,7 +236,7 @@ function addComment(imageId) {
 		contentType: "application/json;charset=utf-8",
 		dataType: "json" //응답 받을때
 	}).done(res => {
-		console.log("성공",res);
+		console.log("댓글 쓰기 성공: ",res);
 
 		let comment = res.data;
 		let content = `
@@ -249,7 +252,9 @@ function addComment(imageId) {
 		commentList.prepend(content); // 앞에 붙이기
 		commentInput.val("");
 	}).fail(error=>{
-		console.log("오류",error);
+	    console.log("댓글 쓰기 오류:",error);
+		console.log("오류 내용: ",error.responseJSON.data.content);
+	    alert(error.responseJSON.message+" : "+error.responseJSON.data.content);
 	});
 
 }
@@ -257,11 +262,15 @@ function addComment(imageId) {
 // 댓글 삭제
 function deleteComment(commentId) {
 	$.ajax({
-		type: "delete",
-		url: "/comment/" + commentId,
+		type: "DELETE",
+		url: "/api/comment/" + commentId,
 		dataType: "json"
 	}).done(res => {
-		$("#storyCommentItem-" + commentId).remove();
+	    console.log("댓글 삭제: delete commentId => ",commentId);
+	    console.log("#storyCommentItem-${commentId}.remove() : #storyCommentItem-? => ",$(`#storyCommentItem-${commentId}`));
+		$(`#storyCommentItem-${commentId}`).remove();
+	}).fail(error=>{
+	    console.log("댓글 삭제 오류",error);
 	});
 }
 

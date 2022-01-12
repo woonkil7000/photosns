@@ -66,4 +66,24 @@ public class User {
 
 	//@CreationTimestamp
 	//private Timestamp createDate;
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", website='" + website + '\'' +
+				", name='" + name + '\'' +
+				", bio='" + bio + '\'' +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", gender='" + gender + '\'' +
+				", profileImageUrl='" + profileImageUrl + '\'' +
+				", provider='" + provider + '\'' +
+				", role='" + role + '\'' +
+				", images= <생략:무한참조 방지>" +
+				", createDate=" + createDate +
+				'}';
+	}
 }

@@ -9,7 +9,8 @@
 		<div class="popular-gallery">
 			<c:forEach var="image" items="${images}">
 				<div class="p-img-box">
-					<a href="/user/${image.user.id}">
+					<!-- <a href="/user/${image.user.id}"> -->
+					<a href="">
 						<img src="/upload/${image.postImageUrl}" alt="">
 					</a>
 				</div>
