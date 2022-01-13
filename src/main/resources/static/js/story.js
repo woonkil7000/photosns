@@ -122,7 +122,7 @@ function getStoryItem(image) {
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
 
   image.comments.forEach((comment) => {
-    result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
+    result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 			    <p>
 			      <b>${comment.user.name} :</b>
 			      ${comment.content}
@@ -242,7 +242,7 @@ function addComment(imageId) {
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
 			    <p>
-			      <b>${comment.user.username} :</b> ${comment.content}
+			      <b>${comment.user.name} :</b> ${comment.content}
 			    </p>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>

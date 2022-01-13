@@ -61,6 +61,21 @@
                                <span>Google 로그인(pc only)</span>
                            </button>
                        </div>
+                       <div class="login__facebook">
+                           <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
+                           <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
+                               <!-- <i class="fab fa-google-plus-square"></i> -->
+                               <span><image height="28px" width="60" src="/images/kakao_login.png"/>(pc only)</span>
+                           </button>
+                       </div>
+                       <div class="login__facebook">
+                           <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
+                           <button onclick="javascript:location.href='/oauth2/authorization/naver'">
+                               <!-- <i class="fab fa-google-plus-square"></i> -->
+                               <i class="fas fa-sticky-note"></i>
+                               <span>Naver 로그인(pc only)</span>
+                           </button>
+                       </div>
                         <!-- Oauth 소셜로그인end -->
                     </div>
                     

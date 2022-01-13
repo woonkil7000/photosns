@@ -121,11 +121,11 @@ function toggleSubscribeModal(toUserId, obj) {
 // (4) 유저 프로파일 사진 변경 (완)
 function profileImageUpload(pageUserId,principalId) {
 	//let principalId = $("#principalId").val();
-	// console.log("pageUserId",pageUserId);
-	// console.log("principalId",principalId);
+	 console.log("pageUserId => ",pageUserId);
+	 console.log("principalId => ",principalId);
 
 	if(pageUserId != principalId){
-		alert("수정할 수 없는 유저입니다");
+		alert("현재 사용자의 프로필이 아닙니다");
 		return;
 	}
 
