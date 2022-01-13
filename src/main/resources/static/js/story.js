@@ -124,7 +124,7 @@ function getStoryItem(image) {
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
 			    <p>
-			      <b>${comment.user.username} :</b>
+			      <b>${comment.user.name} :</b>
 			      ${comment.content}
 			    </p>
   				`;

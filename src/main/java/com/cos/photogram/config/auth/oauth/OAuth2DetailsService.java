@@ -21,6 +21,7 @@ import java.util.UUID;
 public class OAuth2DetailsService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -31,7 +32,16 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         log.info("======================== OAuth2User oAuth2User.getAttributes() => {}",oAuth2User.getAttributes());
         // username,password,email required
         Map<String,Object> userInfo = oAuth2User.getAttributes();
-        String username = "facebook_"+(String) userInfo.get("id"); // id = facebook id number
+        //String username = "facebook_"+(String) userInfo.get("id"); // id = facebook id number
+        String username;
+        if(userInfo.get("id") != null){
+            username = "facebook_"+(String) userInfo.get("id"); // id = facebook id number
+        }else if(userInfo.get("sub") != null){
+            username = "google_"+(String) userInfo.get("sub"); // id = facebook id number
+        }else{
+            username=null; // make error
+        }
+
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
         String email = (String) userInfo.get("email");
         String name = (String) userInfo.get("name");

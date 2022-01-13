@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photogram</title>
     <link rel="stylesheet" href="/css/style.css">
+    <!-- Fontawesome -->
+    <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
     <!--
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -44,17 +46,19 @@
                         
                         <!-- Oauth 소셜로그인 -->
                         <div class="login__facebook">
-                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
+                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/facebook'"> -->
                             <button onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                            <!-- <i class="fab fa-facebook-square"></i> -->
                                 <i class="fab fa-facebook-square"></i>
-                                <span>Facebook으로 로그인</span>
+                                <span>Facebook 로그인(pc only)</span>
                             </button>
                         </div>
-                       <div class="login__google">
+                       <div class="login__facebook">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
-                               <i class="fab -google-plus-official"></i>
-                               <span>Google으로 로그인</span>
+                               <!-- <i class="fab fa-google-plus-square"></i> -->
+                               <i class="fab fa-google-plus-square"></i>
+                               <span>Google 로그인(pc only)</span>
                            </button>
                        </div>
                         <!-- Oauth 소셜로그인end -->
