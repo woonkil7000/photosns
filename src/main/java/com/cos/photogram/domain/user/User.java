@@ -1,21 +1,15 @@
 package com.cos.photogram.domain.user;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.CreationTimestamp;
-
 import com.cos.photogram.domain.image.Image;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -30,7 +24,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id; 
 	
-	@Column(length = 30, unique = true)
+	@Column(length = 100, unique = true) // OAuth2 로그인위해 컬럼 늘리기.
 	private String username;
 	@Column(nullable = false)
 	private String password;

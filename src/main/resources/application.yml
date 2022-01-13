@@ -7,6 +7,23 @@ server:
       enabled: true
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 2704971909812622
+            client-secret: 8fc011e1d045d44a932f9b4ea3e56799
+            scope:
+              - public_profile
+              - email
+          google:
+            client-id: 975792662557-jmsj7oatn25sj6k9o21eqdk9dl64e16s.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -42,6 +59,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #카멜표기 컬럼명 사용가능 @JoinColumn(name = "fromUserId")
       show-sql: true
       format_sql: true
+
 
 logging:
   level:
