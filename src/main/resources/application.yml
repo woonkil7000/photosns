@@ -26,13 +26,13 @@ spring:
           naver:
             client-id: ssHJWrtmTcfIixvcqcNH
             client-secret: J6iuz7ho6L
-            redirect-uri: "http://localhost:8081/login/oauth2/code/naver" # (== http://localhost:8080/login/oauth2/code/naver)
+            redirect-uri: "http://wooongil.iptime.org:8081/login/oauth2/code/naver" # (== http://localhost:8080/login/oauth2/code/naver)
             authorization-grant-type: authorization_code
             scope: name, email, profile_image
             client-name: Naver
           kakao:
             client-id: 9a9c2e13d349f8f0e08ac9d88e0fb39a
-            redirect-uri: "http://localhost:8081/login/oauth2/code/kakao" # http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: "http://woongil.iptime.org:8081/login/oauth2/code/kakao" # http://localhost:8080/login/oauth2/code/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope: profile_nickname, profile_image, account_email
@@ -73,7 +73,7 @@ spring:
 # MySQL8 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.0.100:3306/photogram?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://192.168.0.115:3306/photogram?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
 # MySQL8 설정
@@ -100,8 +100,8 @@ logging:
 
 
 file:
-  path: D:/src/springbootwork-sts/upload/
-#  path: /home/user/uploadImages/
+#  path: D:/src/springbootwork-sts/upload/
+  path: /home/user/uploadImages/
 
 
   devtools:

@@ -45,12 +45,19 @@
                         <!-- 또는end -->
                         
                         <!-- Oauth 소셜로그인 -->
+                       <div class="login__facebook">
+                           <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
+                           <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
+                               <!-- <i class="fab fa-google-plus-square"></i> -->
+                               <span>kakao<image height="28px" width="60" src="/images/kakao_login.png"/></span>
+                           </button>
+                       </div>
                         <div class="login__facebook">
                             <!-- <button onclick="javascript:location.href='/oauth2/authorization/facebook'"> -->
                             <button onclick="javascript:location.href='/oauth2/authorization/facebook'">
                             <!-- <i class="fab fa-facebook-square"></i> -->
                                 <i class="fab fa-facebook-square"></i>
-                                <span>Facebook 로그인(pc only)</span>
+                                <span>Facebook(local only)</span>
                             </button>
                         </div>
                        <div class="login__facebook">
@@ -58,22 +65,14 @@
                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
                                <i class="fab fa-google-plus-square"></i>
-                               <span>Google 로그인(pc only)</span>
-                           </button>
-                       </div>
-                       <div class="login__facebook">
-                           <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
-                           <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
-                               <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span><image height="28px" width="60" src="/images/kakao_login.png"/>(pc only)</span>
+                               <span>Google(local only)</span>
                            </button>
                        </div>
                        <div class="login__facebook">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/naver'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <i class="fas fa-sticky-note"></i>
-                               <span>Naver 로그인(pc only)</span>
+                               <span><image height="28px" width="30" src="/images/naver.png"/>(local only)</span>
                            </button>
                        </div>
                         <!-- Oauth 소셜로그인end -->

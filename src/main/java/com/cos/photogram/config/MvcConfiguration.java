@@ -13,7 +13,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("UTF-8"); // 파일 인코딩 설정
-        multipartResolver.setMaxUploadSizePerFile(30 * 1024 * 1024); // 파일당 업로드 크기 제한 (30MB)
+        multipartResolver.setMaxUploadSizePerFile(50 * 1024 * 1024); // 파일당 업로드 크기 제한 (30MB)
         return multipartResolver;
     }
 
