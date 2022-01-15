@@ -33,9 +33,10 @@
 
 				<c:choose>
 					<c:when test="${dto.pageOwnerState}">
-						<button class="cta" onclick="location.href='/image/upload'">포토앨범 사진올리기</button>
+						<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
+						<button class="modi" onclick="location.href='/image/upload'"><i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i>앨범올리기</button>
 						<button class="modi" onclick="popup('.modal-info')">
-							<i class="fas fa-cog"></i>
+							<i class="fas fa-user-cog"></i><i class="fas fa-sign-out-alt"></i><i class="fas fa-power-off"></i>
 						</button>
 					</c:when>
 					<c:otherwise>
@@ -55,15 +56,17 @@
 			</div>
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>${dto.imageCount}</span>
+					<li><a href=""><i class="far fa-images"></i><span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});" > 구독정보<span>${dto.subscribeCount}</span>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i><span>${dto.subscribeCount}</span>
 					</a></li>
 				</ul>
 			</div>
 			<div class="state">
-				<h4>소개:${dto.user.bio}</h4>
-				<h4>홈페이지:${dto.user.website}</h4>
+				<ul>
+					<li><i class="fas fa-info-circle"></i>${dto.user.bio}</li>
+					<li><i class="fas fa-home"></i>${dto.user.website}</li>
+				</ul>
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->

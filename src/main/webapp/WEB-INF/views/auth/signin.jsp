@@ -25,13 +25,12 @@
                 <article class="login__form__container">
                    <!--로그인 폼-->
                    <div class="login__form">
-                        <h1><img src="/images/logo.jpg" alt=""></h1>
-                        
+                       <div  class="login__facebook"><img src="/images/logo2.jpg" width="100" height="20" alt=""></div>
                         <!--로그인 인풋-->
                         <form class="login__input" action="/login" method="post">
                             <input type="text" name="username" placeholder="유저네임">
                             <input type="password" name="password" placeholder="비밀번호">
-                            <div>test id= cos, pw= 111</div>
+                            <div class="login__facebook">test id= cos, pw= 111</div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->

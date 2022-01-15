@@ -61,7 +61,7 @@ function getStoryItem(image) {
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
 		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/></div>
-		<div><a href="/user/${image.user.id}">${image.user.name}</a></div>
+		<div>${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-eye"></i></a></div>
 	</div>
 	<!--헤더영역 end-->
 
