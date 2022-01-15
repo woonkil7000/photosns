@@ -33,7 +33,7 @@
 
 				<c:choose>
 					<c:when test="${dto.pageOwnerState}">
-						<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
+						<button class="cta" onclick="location.href='/image/upload'">포토앨범 사진올리기</button>
 						<button class="modi" onclick="popup('.modal-info')">
 							<i class="fas fa-cog"></i>
 						</button>

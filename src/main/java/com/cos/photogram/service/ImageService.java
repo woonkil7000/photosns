@@ -58,6 +58,33 @@ public class ImageService {
 		return images;
 	}
 
+	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
+	public Page<Image> 이미지스토리올(int principalId,Pageable pageable){
+		Page<Image> images=imageRepository.mStory(pageable);
+		System.out.println("################## ImageService{} public Page<Image> 이미지스토리(Pageable pageable) ##################");
+		System.out.println("##################  Page<Image> images=imageRepository.mStory(pageable) ##################");
+		System.out.println(images);
+
+		// ############ images에 좋아요 상태 likeState: true/false 담기 ######### //
+		// 2(cos) 로그인에서
+		images.forEach((image -> {
+
+			// 좋아요 카운트 추가하기
+			image.setLikeCount(image.getLikes().size());
+
+			image.getLikes().forEach(likes -> {
+				if(likes.getUser().getId() == principalId){ //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
+					image.setLikeState(true);
+				}
+			});
+		}));
+
+		System.out.println("######################################## End of Page[Image] images ###################################################");
+		log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> "+String.valueOf(images));
+		log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
+		return images;
+	}
+
 	@Value("${file.path}")
 	private String uploadFolder;
 

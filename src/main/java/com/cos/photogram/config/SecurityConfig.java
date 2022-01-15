@@ -41,9 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.permitAll()
 			.and()
 			.formLogin()
-			.loginPage("/auth/signin")
-			.loginProcessingUrl("/login") // Post => PrincipalDetailsService로 로그인 진행.
-			.defaultSuccessUrl("/") //.usernameParameter() // username 변수를 다르게 사용할때
+				.loginPage("/auth/signin")
+				.loginProcessingUrl("/login") // Post => PrincipalDetailsService로 로그인 진행.
+				.defaultSuccessUrl("/") //.usernameParameter() // username 변수를 다르게 사용할때
+				.and()
+			.logout()
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/")
 			.and()
 			.oauth2Login()// form login과 더불어 oauth2로그인도 상용
 			.loginPage("/loginForm")

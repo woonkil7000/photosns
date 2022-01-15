@@ -15,6 +15,9 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 	@Query(value = "select * from image where userId in (select toUserId from subscribe where fromUserId = :principalId) order by id desc", nativeQuery = true)
 	Page<Image> mStory(int principalId, Pageable pageable);
 
+	@Query(value = "select * from image  order by createDate desc", nativeQuery = true)
+	Page<Image> mStory(Pageable pageable);
+
 	@Query(value = "SELECT i.* FROM image i INNER JOIN (SELECT imageId, COUNT(imageId) likeCount FROM likes GROUP BY imageId " +
 			" ORDER BY likeCount DESC) c ON i.id=c.imageId ORDER BY likeCount desc", nativeQuery = true)
 	List<Image> mExplore(int principalId);

@@ -15,11 +15,10 @@ function storyLoad() {
   // ajax로 Page<Image> 가져올 예정 (3개)
   $.ajax({
     type: "get",
-    url: `/api/image?page=${page}`,
+    url: `/api/image2?page=${page}`,
     dataType: "json",
   }).done((res) => {
-    //console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
-	//return;
+    console.log(res);
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);

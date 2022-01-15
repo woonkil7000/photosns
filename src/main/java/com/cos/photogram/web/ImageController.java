@@ -1,6 +1,5 @@
 package com.cos.photogram.web;
 
-import com.cos.photogram.domain.user.User;
 import com.cos.photogram.handler.ex.CustomValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.photogram.config.auth.PrincipalDetails;
-import com.cos.photogram.domain.comment.Comment;
 import com.cos.photogram.domain.image.Image;
 import com.cos.photogram.service.CommentService;
 import com.cos.photogram.service.ImageService;
@@ -55,11 +52,16 @@ public class ImageController {
 		return "redirect:/user/"+principalDetails.getUser().getId();
 	}
 
-	@GetMapping({"/", "/image/story"})
+	@GetMapping({"/image/story"})
 	public String feed() {
 		return "image/story";
 	}
-	
+
+	@GetMapping({"/","/image/storyall"})
+	public String feed2() {
+		return "/image/storyall";
+	}
+
 	//  주소 : /image?page=0
 	@GetMapping("/image")
 	public @ResponseBody CMRespDto<?> image(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, 

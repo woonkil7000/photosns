@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photogram</title>
+<title>Photo Story</title>
 
 	<!-- 제이쿼리 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,14 +45,20 @@
 
 	<header class="header">
 		<div class="container">
-			<a href="/image/story" class="logo">
+			<a href="/image/storyall" class="logo">
 				<img src="/images/logo.jpg" alt="">
 			</a>
 			<nav class="navi">
 				<ul class="navi-list">
-					<li class="navi-item"><a href="/image/story" alt="home">
-							<i class="fas fa-home"></i>
+					<li class="navi-item"><a href="/image/storyall" alt="storyall">
+							<!-- <i class="fas fa-home"></i> -->
+						<!-- <i class="fas fa-newspaper"></i> -->
+						<i class="fas fa-images"></i>
 						</a></li>
+					<li class="navi-item"><a href="/image/story" alt="subscribe">
+						<!-- <i class="fas fa-home"></i> -->
+						<i class="fas fa-newspaper"></i>
+					</a></li>
 					<li class="navi-item"><a href="/image/popular" alt="popular">
 							<!-- <i class="fas fa-compass"></i>-->
 							<i class="fas fa-heart"></i>
