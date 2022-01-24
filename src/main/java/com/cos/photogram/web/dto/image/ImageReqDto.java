@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class ImageReqDto {
 
+	// 이미지 업로드 폼에서 입력한 값들
 	private MultipartFile file;
 	private String caption;
 	private String tags;

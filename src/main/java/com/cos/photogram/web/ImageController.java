@@ -39,6 +39,7 @@ public class ImageController {
 		return "image/upload";
 	}
 
+	// 이미지 업로딩
 	@PostMapping("/image")
 	public String image(ImageReqDto imageReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
@@ -54,6 +55,7 @@ public class ImageController {
 
 	@GetMapping({"/image/story"})
 	public String feed() {
+
 		return "image/story";
 	}
 
@@ -80,9 +82,12 @@ public class ImageController {
 		// API는 데이터를 리턴하는 서버!!
 		List<Image> images = imageService.인기사진(principalDetails.getUser().getId());
 
-		model.addAttribute("images", images);
-		
-		return "image/popular"; // /image/popular.jsp로 model data를 전달
+		if (images.isEmpty()) { // 좋아요한 사진이 아직 없는 경우
+			return "image/nolike";
+		}else {
+			model.addAttribute("images", images);
+			return "image/popular"; // /image/popular.jsp로 model data를 전달
+		}
 	}
 	
 

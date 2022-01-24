@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import com.cos.photogram.utils.Script;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -34,28 +35,35 @@ public class ImageService {
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
 		Page<Image> images=imageRepository.mStory(principalId,pageable);
-		System.out.println("################## ImageService{} public Page<Image> 이미지스토리(int principalId, Pageable pageable) ##################");
-		System.out.println("##################  Page<Image> images=imageRepository.mStory(principalId,pageable) ##################");
-		System.out.println(images);
 
-		// ############ images에 좋아요 상태 likeState: true/false 담기 ######### //
-		// 2(cos) 로그인에서
-		images.forEach((image -> {
+		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
 
-			// 좋아요 카운트 추가하기
-			image.setLikeCount(image.getLikes().size());
+			log.info("#################### 구독자 없는 경우");
+			return images;
+		} else {
+			System.out.println("################## ImageService{} public Page<Image> 이미지스토리(int principalId, Pageable pageable) ##################");
+			System.out.println("##################  Page<Image> images=imageRepository.mStory(principalId,pageable) ##################");
+			System.out.println(images);
 
-			image.getLikes().forEach(likes -> {
-				if(likes.getUser().getId() == principalId){ //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
-					image.setLikeState(true);
-				}
-			});
-		}));
+			// ############ images에 좋아요 상태 likeState: true/false 담기 ######### //
+			// 2(cos) 로그인에서
+			images.forEach((image -> {
 
-		System.out.println("######################################## End of Page[Image] images ###################################################");
-		log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> "+String.valueOf(images));
-		log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
-		return images;
+				// 좋아요 카운트 추가하기
+				image.setLikeCount(image.getLikes().size());
+
+				image.getLikes().forEach(likes -> {
+					if (likes.getUser().getId() == principalId) { //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
+						image.setLikeState(true);
+					}
+				});
+			}));
+
+			System.out.println("######################################## End of Page[Image] images ###################################################");
+			log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> " + String.valueOf(images));
+			log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
+			return images;
+		}
 	}
 
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
@@ -85,13 +93,14 @@ public class ImageService {
 		return images;
 	}
 
-	@Value("${file.path}")
-	private String uploadFolder;
+	@Value("${file.path}") // application.yml file: path:
+	private String uploadFolder; // <== @Value("$file.path") ex)c:/spring/upload
 
 	private final TagRepository tagRepository;
 
 	@Transactional
 	public void 사진업로드(ImageReqDto imageReDto, PrincipalDetails principalDetails) {
+		// filename = imageRedDto.getFile().getOriginalFilename(); //ex) 1.jpg
 
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid+"_"+imageReDto.getFile().getOriginalFilename(); // xxxxxx_1.jpg
@@ -104,12 +113,12 @@ public class ImageService {
 		Path imageFilePath = Paths.get(uploadFolder+imageFileName);
 		System.out.println("이미지 파일 패스 : "+imageFilePath);
 
-		// 통신. IO -> 예외발생할수있다....
+		// 통신. IO -> 항상 예외가 발생할 수 있다.... 꼭 예외 처리할 것.
 		try {
-			Files.write(imageFilePath, imageReDto.getFile().getBytes()); // 파일 쓰기
+			Files.write(imageFilePath, imageReDto.getFile().getBytes()); // 파일 쓰기(경로포함 파일이름, 파일크기 정보)
 			System.out.println("------------------------  :: 파일쓰기 :: ------------------------");
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); // 예외상황 기록하기.
 		}
 
 		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.

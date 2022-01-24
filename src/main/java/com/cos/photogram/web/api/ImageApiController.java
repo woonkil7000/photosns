@@ -29,7 +29,11 @@ public class ImageApiController {
                                         @PageableDefault(size=3) Pageable pageable){
         Page<Image> images = imageService.이미지스토리(principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
-        return  new ResponseEntity<>(new CMRespDto<>(1,"List images 담기 성공",images), HttpStatus.OK);
+        if (images.isEmpty()) { // ############### 구독자가 없는 경우 에러
+            return  new ResponseEntity<>(new CMRespDto<>(-1,"List images 없음",null), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(new CMRespDto<>(1, "List images 담기 성공", images), HttpStatus.OK);
+        }
     }
     @GetMapping("/api/image2")
     public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=3) Pageable pageable){

@@ -50,10 +50,11 @@
 			</a>
 			<nav class="navi">
 				<ul class="navi-list">
-					<li class="navi-item"><a href="/image/storyall" alt="storyall">
+					<li class="navi-item"><a href="/image/storyall" >
+							<i class="fas fa-images"></i>
 							<!-- <i class="fas fa-home"></i> -->
 						<!-- <i class="fas fa-newspaper"></i> -->
-						<i class="fas fa-images"></i>
+						<!-- <i class="fas fa-images"></i> -->
 						</a></li>
 					<li class="navi-item"><a href="/image/story" alt="subscribe">
 						<!-- <i class="fas fa-home"></i> -->

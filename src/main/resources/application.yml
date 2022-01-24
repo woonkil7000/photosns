@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /
     encoding:
@@ -49,13 +49,11 @@ spring:
             token_uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user_name_attribute: id
-
-
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
-  servlet:
+  servlet: # this servlet must be at spring zone, no server zone
     multipart:
         enabled: true
         max-file-size: 50MB
@@ -73,7 +71,7 @@ spring:
 # MySQL8 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.0.100:3306/photogram?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/photogram?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
 # MySQL8 설정
@@ -102,6 +100,7 @@ logging:
 file:
   path: D:/src/springbootwork-sts/upload/
 #  path: /home/user/uploadImages/
+# 항상 "/"로 끝나도록 설정할 것
 
 
   devtools:
