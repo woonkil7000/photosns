@@ -35,6 +35,7 @@ function storyLoad() {
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
     alert("구독을 신청한 게시자가 없습니다\n사진 게시자의 프로필에서 '구독하기'를 신청하세요");
+    history.back();
   });
 }
 
