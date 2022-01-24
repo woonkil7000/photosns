@@ -30,7 +30,7 @@ public class ImageApiController {
         Page<Image> images = imageService.이미지스토리(principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
         if (images.isEmpty()) { // ############### 구독자가 없는 경우 에러
-            return  new ResponseEntity<>(new CMRespDto<>(-1,"List images 없음",null), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CMRespDto<>(-1,"List images 없음",null), HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(new CMRespDto<>(1, "List images 담기 성공", images), HttpStatus.OK);
         }

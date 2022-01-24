@@ -55,7 +55,6 @@ public class ImageController {
 
 	@GetMapping({"/image/story"})
 	public String feed() {
-
 		return "image/story";
 	}
 
