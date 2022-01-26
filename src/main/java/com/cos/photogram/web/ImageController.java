@@ -77,14 +77,14 @@ public class ImageController {
 	
 	
 	// API로 구현을 한다면 -이유- 브라우저요청이 아니라 안드로이드나 iOS에서 요청시.
-	// 현재 유저가 좋아요 표시한 인기사진 리스트 페이지로 리턴 됨.
+	// 좋아요 랭킹!!  인기많은 사진순으로  리턴 됨.
 	@GetMapping("/image/popular")
 	public String explore(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		// API는 데이터를 리턴하는 서버!!
 		List<Image> images = imageService.인기사진(principalDetails.getUser().getId());
 
-		if (images.isEmpty()) { // 좋아요한 사진이 아직 없는 경우
+		if (images.isEmpty()) { // likes table 에 좋아요가 아직 없는 경우
 			return "image/nolike";
 		}else {
 			model.addAttribute("images", images);

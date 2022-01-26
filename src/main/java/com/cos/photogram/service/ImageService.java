@@ -113,7 +113,8 @@ public class ImageService {
 
 		// 통신. IO -> 항상 예외가 발생할 수 있다.... 꼭 예외 처리할 것.
 		try {
-			Files.write(imageFilePath, imageReDto.getFile().getBytes()); // 파일 쓰기(경로포함 파일이름, 파일크기 정보)
+			Files.write(imageFilePath, imageReDto.getFile().getBytes());
+			// 파일 쓰기(경로포함 파일이름, 파일크기 정보)
 			System.out.println("------------------------  :: 파일쓰기 :: ------------------------");
 		} catch (Exception e) {
 			e.printStackTrace(); // 예외상황 기록하기.
@@ -121,7 +122,7 @@ public class ImageService {
 
 		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.
 
-		// 1. Image 저장
+		// 1. Image table 저장
 		Image image = imageReDto.toEntity(imageFileName, principalDetails.getUser());
 		Image imageEntity = imageRepository.save(image);
 		//imageRepository.save(image);

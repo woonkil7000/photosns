@@ -51,20 +51,18 @@
                         
                         <!-- Oauth 소셜로그인 -->
                        <div class="login__facebook">
-                           <a class="sc-bqyKva hjAlSd">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span class="sc-kstrdz kBjdk"><image  height="40px" width="40" src="/images/kakao.png"/></span>
+                               <span class="sc-kstrdz kBjdk"><image  height="30px" width="30" src="/images/kakao.png"/></span>
                                <span class="sc-hBEYos hXuLSV">LOG IN WITH KAKAO</span>
                            </button>
-                           </a>
                        </div>
                        <div class="login__facebook">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/naver'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span class="sc-kstrdz kBjdk"><image  height="35px" width="35" src="/images/naver.png"/></span>
+                               <span class="sc-kstrdz kBjdk"><image  height="30px" width="30" src="/images/naver.png"/></span>
                                <span>LOGIN WITH NAVER</span>
                            </button>
                        </div>
@@ -72,7 +70,7 @@
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span class="sc-kstrdz kBjdk"><image height="35px" width="35" src="/images/google.png"/>
+                               <span class="sc-kstrdz kBjdk"><image height="30px" width="30" src="/images/google.png"/>
                                <span>LOGIN WITH GOOGLE</span>
                            </button>
                        </div>
@@ -80,7 +78,7 @@
                             <!-- <button onclick="javascript:location.href='/oauth2/authorization/facebook'"> -->
                             <button onclick="javascript:location.href='/oauth2/authorization/facebook'">
                             <!-- <i class="fab fa-facebook-square"></i> -->
-                                <image height="35px" width="35" src="/images/facebook.png"/>
+                                <image height="30px" width="30" src="/images/facebook.png"/>
                                 <span>LOGIN WITH FACEBOOK</span>
                             </button>
                         </div>

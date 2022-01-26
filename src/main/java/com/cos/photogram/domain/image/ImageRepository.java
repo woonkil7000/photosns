@@ -23,7 +23,7 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 
 	// 좋아요 랭킹. order by likeCount desc //좋아요 가 많은 순서대로 정렬.
 	@Query(value = "SELECT i.* FROM image i INNER JOIN (SELECT imageId, COUNT(imageId) likeCount FROM likes GROUP BY imageId " +
-			" ORDER BY likeCount DESC) c ON i.id=c.imageId ORDER BY likeCount desc", nativeQuery = true)
+			" ORDER BY likeCount DESC) c ON i.id=c.imageId ORDER BY likeCount desc limit 10", nativeQuery = true)
 	List<Image> mExplore(int principalId);
 
 	//@Query(value = "select * from image where id in (select imageId from (select imageId, count(imageId) likeCount from likes group by imageId order by 2 desc) t) and userId != :principalId  ", nativeQuery = true)

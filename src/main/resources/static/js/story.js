@@ -34,7 +34,7 @@ function storyLoad() {
     console.log("오류",error);
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
-    alert("구독을 신청한 게시자가 없습니다\n\n사진 게시자의 프로필에서 \"구독하기\"를 신청하세요");
+    alert("\n\n아직 \"구독하기\" 중인 게시자가 없습니다\n\n사진을 올린 게시자의 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 게시자의 사진들을 여기에서 모두 보실 수 있습니다");
     history.back();
   });
 }
