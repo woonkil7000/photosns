@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: /
     encoding:
@@ -98,8 +98,8 @@ logging:
 
 
 file:
-  path: D:/src/springbootwork-sts/upload/
-#  path: /home/user/uploadImages/
+#  path: D:/src/springbootwork-sts/upload/
+  path: /home/user/uploadImages/
 # 항상 "/"로 끝나도록 설정할 것
 
 

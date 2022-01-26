@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- Fontawesome -->
     <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="canonical" href="https://linkda.io">
     <!--
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -30,7 +36,7 @@
                         <form class="login__input" action="/login" method="post">
                             <input type="text" name="username" placeholder="유저네임">
                             <input type="password" name="password" placeholder="비밀번호">
-                            <div class="login__facebook">test id= cos, pw= 111</div>
+                            <div class="login__facebook"><b>TEST ID = cos , PW = 111</b></div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->
@@ -38,40 +44,44 @@
                         <!-- 또는 -->
                         <div class="login__horizon">
                             <div class="br"></div>
-                            <div class="or">또는</div>
+                            <div class="or">LOGIN WITH SNS</div>
                             <div class="br"></div>
                         </div>
                         <!-- 또는end -->
                         
                         <!-- Oauth 소셜로그인 -->
                        <div class="login__facebook">
+                           <a class="sc-bqyKva hjAlSd">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span>kakao <image height="28px" width="60" src="/images/kakao_login.png"/></span>
+                               <span class="sc-kstrdz kBjdk"><image  height="40px" width="40" src="/images/kakao.png"/></span>
+                               <span class="sc-hBEYos hXuLSV">LOG IN WITH KAKAO</span>
                            </button>
+                           </a>
                        </div>
                        <div class="login__facebook">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/naver'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <span>naver <image height="28px" width="30" src="/images/naver.png"/></span>
+                               <span class="sc-kstrdz kBjdk"><image  height="35px" width="35" src="/images/naver.png"/></span>
+                               <span>LOGIN WITH NAVER</span>
                            </button>
                        </div>
                        <div class="login__facebook">
                            <!-- <button onclick="javascript:location.href='/oauth2/authorization/google'"> -->
                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
-                               <i class="fab fa-google-plus-square"></i>
-                               <span>Google</span>
+                               <span class="sc-kstrdz kBjdk"><image height="35px" width="35" src="/images/google.png"/>
+                               <span>LOGIN WITH GOOGLE</span>
                            </button>
                        </div>
                        <div class="login__facebook">
                             <!-- <button onclick="javascript:location.href='/oauth2/authorization/facebook'"> -->
                             <button onclick="javascript:location.href='/oauth2/authorization/facebook'">
                             <!-- <i class="fab fa-facebook-square"></i> -->
-                                <i class="fab fa-facebook-square"></i>
-                                <span>Facebook</span>
+                                <image height="35px" width="35" src="/images/facebook.png"/>
+                                <span>LOGIN WITH FACEBOOK</span>
                             </button>
                         </div>
                         <!-- Oauth 소셜로그인end -->

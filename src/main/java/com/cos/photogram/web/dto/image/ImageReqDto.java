@@ -11,9 +11,9 @@ import lombok.Data;
 public class ImageReqDto {
 
 	// 이미지 업로드 폼에서 입력한 값들
-	private MultipartFile file;
-	private String caption;
-	private String tags;
+	private MultipartFile file; // 첨부 파일을 여기로 받는다.
+	private String caption; // 해당 사진의 부가 정보1
+	private String tags; // 해당 사진의 부가 정보2
 	
 	public Image toEntity(String postImageUrl, User userEntity) {
 		return Image.builder()

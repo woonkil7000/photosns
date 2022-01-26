@@ -107,7 +107,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
                     .email(email)
                     .role("USER")
                     .build();
-            log.info("================= User user = User.builder() => {}",user.toString());
+            //log.info("================= User user = User.builder() => {}",user.toString());
             return new PrincipalDetails(userRepository.save(user),oAuth2User.getAttributes());
 
         }else{ // 기존 가입회원 로그인 처리

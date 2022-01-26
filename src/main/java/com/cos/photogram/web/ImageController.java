@@ -40,7 +40,7 @@ public class ImageController {
 	}
 
 	// 이미지 업로딩
-	@PostMapping("/image")
+	@PostMapping("/image") // upload.js 에서 post 로 받음.
 	public String image(ImageReqDto imageReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		if(imageReqDto.getFile().isEmpty()) {
@@ -53,18 +53,20 @@ public class ImageController {
 		return "redirect:/user/"+principalDetails.getUser().getId();
 	}
 
+	// /image/story.jsp 구독중인 사진 리스트 페이지로 리텀됨
 	@GetMapping({"/image/story"})
 	public String feed() {
 		return "image/story";
 	}
 
+	// /image/storyall.jsp // 모든 사진 불러오는 페이지로 리턴됨
 	@GetMapping({"/","/image/storyall"})
 	public String feed2() {
 		return "/image/storyall";
 	}
 
 	//  주소 : /image?page=0
-	@GetMapping("/image")
+	@GetMapping("/image") // imageApi json data
 	public @ResponseBody CMRespDto<?> image(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, 
 			@PageableDefault(size=3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 		
@@ -75,6 +77,7 @@ public class ImageController {
 	
 	
 	// API로 구현을 한다면 -이유- 브라우저요청이 아니라 안드로이드나 iOS에서 요청시.
+	// 현재 유저가 좋아요 표시한 인기사진 리스트 페이지로 리턴 됨.
 	@GetMapping("/image/popular")
 	public String explore(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 

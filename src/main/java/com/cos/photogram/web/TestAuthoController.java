@@ -34,7 +34,7 @@ public class TestAuthoController {
         log.info("signupDto.toString() => {}",signupDto.toString());
 
         User user = signupDto.toEntity();
-        log.info("user = user.toString()=> {}",user);
+        //log.info("user = user.toString()=> {}",user);
         return null;
     }
 

@@ -66,7 +66,7 @@ public class AuthController {
 
 			//User <- SignupDto
 			User user = signupDto.toEntity();
-			log.info(user.toString());
+			//log.info(user.toString());
 
 			User userEntity = authService.joinMember(signupDto.toEntity());
 			System.out.println(userEntity);

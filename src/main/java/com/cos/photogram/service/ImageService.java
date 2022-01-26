@@ -37,9 +37,7 @@ public class ImageService {
 		Page<Image> images=imageRepository.mStory(principalId,pageable);
 
 		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
-
 			log.info("#################### 구독자 없는 경우");
-			return images;
 		} else {
 			System.out.println("################## ImageService{} public Page<Image> 이미지스토리(int principalId, Pageable pageable) ##################");
 			System.out.println("##################  Page<Image> images=imageRepository.mStory(principalId,pageable) ##################");
@@ -62,8 +60,8 @@ public class ImageService {
 			System.out.println("######################################## End of Page[Image] images ###################################################");
 			log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> " + String.valueOf(images));
 			log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
-			return images;
 		}
+		return images;
 	}
 
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
@@ -140,7 +138,16 @@ public class ImageService {
 
 	@Transactional(readOnly = true)
 	public List<Image> 인기사진(int principalId){
-		return imageRepository.mExplore(principalId);
+		//return imageRepository.mExplore(principalId);
+		List<Image> images = imageRepository.mExplore(principalId);
+
+		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
+			log.info("#################### 좋아요를 표시한 사진이 없는 경우에 해당 imageRepository.mExplore(principalId)");
+		} else {
+			System.out.println("################## 좋아요 표시한 사진만. Page<Image> images = imageRepository.mExplore(principalId) ##################");
+		}
+		System.out.println("#################  인기사진 List<Image> images = imageRepository.mExplore(principalId)  #####################");
+		return images;
 	}
 	
 	
