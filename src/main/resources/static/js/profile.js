@@ -168,6 +168,7 @@ function profileImageUpload(pageUserId,principalId) {
 			//async: true
 		}).done(res=>{
 			console.log("#### .done res=> 진행 ####");
+			console.log("res =>",res);
 			//let f = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
 			reader.onload=(e)=>{

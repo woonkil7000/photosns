@@ -81,6 +81,10 @@ public class UserService {
 		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename(); //1.jpg
 			//System.out.println("이미지 파일이름 : "+imageFileName);
 
+		// 이미지 파일명 문자열에서 공백제거!!
+		imageFileName = imageFileName.replaceAll(" ","");
+		System.out.println("이미지 파일명 공백제거 = "+imageFileName);
+
 		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
 			//System.out.println("파일 path : "+imageFilePath);
 
