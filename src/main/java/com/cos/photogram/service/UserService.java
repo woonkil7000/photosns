@@ -10,6 +10,7 @@ import com.cos.photogram.handler.ex.CustomException;
 import com.cos.photogram.handler.ex.CustomValidationApiException;
 import com.cos.photogram.web.dto.user.UserProfileDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ import com.cos.photogram.domain.user.UserRepository;
 import com.cos.photogram.web.dto.user.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import javax.servlet.annotation.MultipartConfig;
 
 
@@ -76,14 +79,15 @@ public class UserService {
 
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename(); //1.jpg
-			System.out.println("이미지 파일이름 : "+imageFileName);
+			//System.out.println("이미지 파일이름 : "+imageFileName);
 
 		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-			System.out.println("파일 path : "+imageFilePath);
+			//System.out.println("파일 path : "+imageFilePath);
 
+		System.out.println(" ###############   회원프로파일사진변경  just before Files.write() ################ ");
 		try {
 			Files.write(imageFilePath, profileImageFile.getBytes());
-			System.out.println("---------------------- :: 파일쓰기 :: ------------------------");
+			System.out.println("---------------------- :: 파일쓰기 완료 :: ------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +97,7 @@ public class UserService {
 			throw new CustomApiException("유저를 찾을 수 없습니다.");
 		});
 
-		userEntity.setProfileImageUrl(imageFileName);
+		userEntity.setProfileImageUrl(imageFileName); // 이미지 경로 DB 저장.
 
 		return userEntity; // 세션에 저장
 	} // 더티체킹으로 업데이트 됨.

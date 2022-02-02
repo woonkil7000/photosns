@@ -15,7 +15,9 @@
 <title>Photo Story</title>
 
 	<!-- 제이쿼리 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 	<!-- Style -->
 	<!-- bootstrap -->
@@ -32,9 +34,9 @@
 	<!-- Fontawesome -->
     <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> -->
-	<!-- <link rel="stylesheet" href="/fontawesome/css/all.min.css"> -->
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/fontawesome/css/all.min.css">
 </head>
 
 <body>

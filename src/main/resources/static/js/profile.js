@@ -141,51 +141,82 @@ function profileImageUpload(pageUserId,principalId) {
 
 		// 서버에 이미지 전송. 통신 시작
 		let profileImageForm = $("#userProfileImageForm")[0];
-		console.log("userProfileImageForm[0] => ",profileImageForm);
+		//let profileImageForm = $('form')[0];
+		console.log("profileImageForm => ",profileImageForm);
+		//return;
 
+		//let formData = new FormData(profileImageForm); // form data 전송시 FormData(): key:value 쌍으로 formData 에 담을 수 있다.
+		//let formData = new FormData(profileImageForm);
 		let formData = new FormData(profileImageForm);
-		console.log("formData = FormData(profileImageForm) => ",formData);
+		//formData.append('tax_file', $('input[type=file]')[0].files[0]);
+		console.log("formData => ",formData);
+		//return;
 		// FormData객체로 보내야함. key/value formData에 값들만 담김.
 		// Form태그 데이터 전송 타입을 multipart/form-data 로 만들어줌.
 
 		$.ajax({
-			type: "put",
+			type: "POST", // ######################## PUT 안됨 ################################
 			url: `/api/user/${principalId}/profileImageUrl`,
 			data: formData,
-			contentType: false, //필수  x-www-form-urlencoded로 파싱됨.
+			//data: JSON.stringify(formData),
+			//contentType: false, //필수  x-www-form-urlencoded로 파싱됨.
+			//contentType: 'application/json; charset=utf-8',
+			contentType: false,
 			processData: false, //필수 : contentType을 false로 줬을 때 쿼리 스트링으로 자동 설정됨. 그거 해제 하는 법
 			enctype: "multipart/form-data", // 필수 아님 x-www-form-urlencoded로 파싱되는것 방지.
-			dataType: "json",
-			complete: function (data){
-				// 500 error 발생.
-				console.log("########## principalId => "+principalId);
-				console.log("########## 파일전송 ############ ");
-				// 사진 전송 성공시 화면에 프로필 이미지 변경
-				let reader = new FileReader();
-				reader.onload = (e) => {
-					$("#userProfileImage").attr("src", e.target.result);
-				}
-				reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
-			}
-		});
-/*
+			dataType: 'json'
+			//async: true
 		}).done(res=>{
-
-			console.log("########## principalId => "+principalId);
-			console.log("########## 파일전송 ajax.done(res=>)");
-			// 사진 전송 성공시 이미지 변경
+			console.log("#### .done res=> 진행 ####");
+			//let f = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
-			reader.onload = (e) => {
-				$("#userProfileImage").attr("src", e.target.result);
+			reader.onload=(e)=>{
+				$("#userProfileImage").attr("scr",e.target.result);
 			}
-			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+			reader.readAsDataURL(f); // 이코드 실행시 reader.onload 실행됨.
+			location.href = `/user/${principalId}`;
 		}).fail(error=>{
-
-			console.log("########## principalId => "+principalId);
-			console.log("########## 파일전송 실퍠!",error.responseText);
+			console.log("폼 ajax 전송 오류",error);
 		});
 
+
+		/*
+		$.ajax({
+			type: 'PUT',
+			url:  prefix + '/MyData',
+			contentType: 'application/json; charset=utf-8',
+			data: JSON.stringify(JSONObject),
+			dataType: 'json',
+			async: true,
+			success: function(result) {
+				alert('At ' + result.time
+					+ ': ' + result.message);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(jqXHR.status + ' ' + jqXHR.responseText);
+			}
+		});
 */
+
+
+		/*
+                }).done(res=>{
+
+                    console.log("########## principalId => "+principalId);
+                    console.log("########## 파일전송 ajax.done(res=>)");
+                    // 사진 전송 성공시 이미지 변경
+                    let reader = new FileReader();
+                    reader.onload = (e) => {
+                        $("#userProfileImage").attr("src", e.target.result);
+                    }
+                    reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+                }).fail(error=>{
+
+                    console.log("########## principalId => "+principalId);
+                    console.log("########## 파일전송 실퍠!",error.responseText);
+                });
+
+        */
 	});
 }
 

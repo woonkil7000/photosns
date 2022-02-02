@@ -55,7 +55,7 @@
                            <button onclick="javascript:location.href='/oauth2/authorization/kakao'">
                                <!-- <i class="fab fa-google-plus-square"></i> -->
                                <span class="sc-kstrdz kBjdk"><image  height="30px" width="30" src="/images/kakao.png"/></span>
-                               <span class="sc-hBEYos hXuLSV">LOG IN WITH KAKAO</span>
+                               <span class="sc-hBEYos hXuLSV">LOGIN WITH KAKAO</span>
                            </button>
                        </div>
                        <div class="login__facebook">

@@ -19,10 +19,7 @@ import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -31,12 +28,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 2, // 2mb
-        maxFileSize = 1024 * 1024 * 10, // 10mb
-        maxRequestSize = 1024 * 1024 * 50, //50mb
-        location = "c:/upload" //파일저장위치
-)
+//@MultipartConfig(
+//        fileSizeThreshold = 1024 * 1024 * 2, // 2mb
+//        maxFileSize = 1024 * 1024 * 10, // 10mb
+//        maxRequestSize = 1024 * 1024 * 50, //50mb
+//        location = "c:/upload" //파일저장위치
+//)
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -45,7 +42,7 @@ public class UserApiController {
     private final UserService userService;
     private final SubscribeService subscribeService;
 
-    @PutMapping("/api/user/{principalId}/profileImageUrl")
+    @PostMapping("/api/user/{principalId}/profileImageUrl")
     public ResponseEntity<?>profileImageUrlUpdate(@PathVariable int principalId, MultipartFile profileImageFile,
                                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
 
@@ -54,8 +51,8 @@ public class UserApiController {
         System.out.println("############### principalID =>"+principalId+" #####################");
         System.out.println("############### profileImageFile => "+profileImageFile+" #####################");
         System.out.println("############### principalDetails =>"+principalDetails+" #####################");
-        User userEntity = userService.회원프로필사진변경(principalId,profileImageFile);
-        principalDetails.setUser(userEntity); //세션 변경 반영
+        User userEntity = userService.회원프로필사진변경(principalId,profileImageFile); // 세션 변경을 위해 userEntity 로 받음.
+        principalDetails.setUser(userEntity); //변경된 세션 값에도 변경내용 반영
         return new ResponseEntity<>(new CMRespDto<>(1,"프로필사진변경 성공",null),HttpStatus.OK);
     }
 
