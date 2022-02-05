@@ -98,8 +98,8 @@ logging:
 
 
 file:
-  path: D:/src/springbootwork-sts/upload/
-#  path: /home/user/uploadImages/
+#  path: D:/src/springbootwork-sts/upload/
+  path: /home/user/uploadImages/
 
 # 프로필 이미지도 여기에 저장됨을 참고.
 # 항상 "/"로 끝나도록 설정할 것
