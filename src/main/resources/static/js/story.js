@@ -8,7 +8,7 @@
 
 let page = 0;
 
-let principalId = $("#principalId").val(); // input hidden value
+let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
 
 function storyLoad() {
@@ -23,7 +23,7 @@ function storyLoad() {
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
-        $("#storyList").append(storyItem);
+        $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
 //    let images = res.data.content;
 //    images.forEach((image) => {
@@ -34,9 +34,10 @@ function storyLoad() {
     console.log("오류",error);
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
-    alert("\n\n구독중인 게시물의 끝이거나 아직 \"구독하기\" 중인 게시자가 없습니다.\n\n사진을 올린 게시자의 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 게시자의 사진들을 여기에서 모두 보실 수 있습니다");
+    alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n사진 게시자의 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 게시자의 사진을 여기에서 보실 수 있습니다");
     //history.back();
-	  return;
+	  //window.location.replace("/");
+	  //return;
   });
 }
 

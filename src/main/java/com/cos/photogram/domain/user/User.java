@@ -21,7 +21,7 @@ import java.util.List;
 )
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 번호 증가 전략을 DB에서 자동증가 사용.
 	private int id; 
 	
 	@Column(length = 100, unique = true) // OAuth2 로그인위해 컬럼 늘리기.

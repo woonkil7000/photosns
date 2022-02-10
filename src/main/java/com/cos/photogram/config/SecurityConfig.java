@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/")
 			.and()
-			.oauth2Login()// form login과 더불어 oauth2로그인도 상용
+			.oauth2Login()// form login과 더불어 oauth2로그인도 사용
 			.loginPage("/loginForm")
 			.userInfoEndpoint()//oauth2로 로그인. 회원정보 바로받음.
 			.userService(oAuth2DetailsService);

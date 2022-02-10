@@ -30,8 +30,8 @@ import java.util.logging.Logger;
 @Controller
 public class AuthController {
 
-	private final AuthService authService;
-/*	public AuthController(AuthService authService){
+	private final AuthService authService; // final 정의시 생성자 호출됨.
+/*	public AuthController(AuthService authService){ //AuthController 생성자
 		this.authService = authService; // 의존성 주입
 	}*/
 

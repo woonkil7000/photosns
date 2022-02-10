@@ -42,8 +42,12 @@
   flex-basis: 60%;
 }
 .profile .profile-left .profile-img-wrap {
+  /*
   width: 162px;
   height: 162px;
+   */
+  width: 81px;
+  height: 81px;
   padding: 6px;
   border-radius: 50%;
   position: relative;
