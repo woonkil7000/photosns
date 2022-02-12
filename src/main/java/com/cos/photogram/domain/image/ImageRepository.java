@@ -13,7 +13,7 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 	@Query(value = "select * from image where userId in (select toUserId from subscribe where fromUserId = :principalId) order by id desc", nativeQuery = true)
 	Page<Image> mFeed(int principalId, Pageable pageable);
 
-	// 구독중인 게시자 userid 의 사진들 목록 보기 // 위와 쿼리 동일함
+	// 구독중인 게시자 userid 의 사진들 목록 보기 // 위와 쿼리 동일함. subscribe 에서 내가 구독중인 게시자의 ToUerId
 	@Query(value = "select * from image where userId in (select toUserId from subscribe where fromUserId = :principalId) order by id desc", nativeQuery = true)
 	Page<Image> mStory(int principalId, Pageable pageable);
 
@@ -23,7 +23,7 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 
 	// 좋아요 랭킹. order by likeCount desc //좋아요 가 많은 순서대로 정렬.
 	@Query(value = "SELECT i.* FROM image i INNER JOIN (SELECT imageId, COUNT(imageId) likeCount FROM likes GROUP BY imageId " +
-			" ORDER BY likeCount DESC) c ON i.id=c.imageId ORDER BY likeCount desc limit 10", nativeQuery = true)
+			" ORDER BY likeCount DESC) c ON i.id=c.imageId ORDER BY likeCount desc,i.id desc limit 10", nativeQuery = true)
 	List<Image> mExplore(int principalId);
 
 	//@Query(value = "select * from image where id in (select imageId from (select imageId, count(imageId) likeCount from likes group by imageId order by 2 desc) t) and userId != :principalId  ", nativeQuery = true)

@@ -73,7 +73,7 @@ function getSubscribeModalItem(u) {
 	item += `<img src="/upload/${u.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/>`;
 	item += `</div>`;
 	item += `<div class="subscribe__text">`;
-	item += `<h2>${u.username}</h2>`;
+	item += `<h2>${u.name.substring(0,10)}(${u.username.substring(0,10)}...)</h2>`;
 	item += `</div>`;
 	item += `<div class="subscribe__btn">`;
 	if (!u.equalUserState) { // 동일 유저가 아닐때 버튼이 만들어져야함. 자기자신 제외.
@@ -220,7 +220,27 @@ function profileImageUpload(pageUserId,principalId) {
         */
 	});
 }
+// 이미지 삭제
 
+function deleteImage(imageId,principalId) {
+
+		//let pid = ${u.userId}
+		$.ajax({
+			type: "DELETE",
+			url: `/api/image/${imageId}/delete`,
+			dataType: "json"
+		}).done(res => {
+			console.log("delete imageId=", imageId);
+			console.log("principalId=",principalId);
+			alert(" 선택한 이미지가 삭제되었습니다. \n\n deleted imageId= "+imageId+", principalId="+principalId);
+			location.href = `/user/${principalId}`;
+		}).fail(error=>{
+			console.log("오류",error);
+			//console.log("오류 내용: ",error.responseJSON.data.content);
+			console.log("오류 내용: ",error.responseJSON.message);
+			alert("오류 발생"+error);
+		});
+}
 
 // (5) 사용자 정보 메뉴 열기 닫기
 function popup(obj) {
@@ -246,4 +266,9 @@ function modalImage() {
 function modalClose() {
 	$(".modal-subscribe").css("display", "none");
 	location.reload();
+}
+
+// 본인의 이미지 삭제(사진 삭제, 취소) 모달
+function modalDelete() {
+	$(".modal-imgdelete").css("display", "none");
 }

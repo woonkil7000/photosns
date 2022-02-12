@@ -54,4 +54,11 @@ public class ImageApiController {
         likesService.좋아요취소(imageId,principalDetails.getUser().getId());
         return  new ResponseEntity<>(new CMRespDto<>(1,"좋아요취소성공",null),HttpStatus.OK);
     }
+
+    @DeleteMapping("/api/image/{imageId}/delete")
+    public ResponseEntity<?> delete(@PathVariable int imageId,@AuthenticationPrincipal PrincipalDetails principalDetails){
+        imageService.이미지삭제(imageId,principalDetails.getUser().getId());
+        return  new ResponseEntity<>(new CMRespDto<>(1,"이미지 삭제 성공",null),HttpStatus.OK);
+    }
+
 }

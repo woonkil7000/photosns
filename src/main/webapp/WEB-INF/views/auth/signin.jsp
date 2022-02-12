@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photogram</title>
+    <title>Photo SNS</title>
     <link rel="stylesheet" href="/css/style.css">
     <!-- Fontawesome -->
     <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
@@ -38,9 +38,9 @@
                             <input type="text" name="username" placeholder="유저네임">
                             <input type="password" name="password" placeholder="비밀번호">
                             -->
-                            <input type="text"  name="username" placeholder="유저네임" autocomplete="username">
-                            <input type="password"  name="password" placeholder="비밀번호" autocomplete="current-password">
-                            <div class="login__facebook"><b>테스트 유저네임 = "cos" , 비밀번호 = "111"</b></div>
+                            <input type="text"  name="username" autocomplete="username">
+                            <input type="password"  name="password" autocomplete="current-password">
+                            <div class="login__facebook"><span>test user = "cos" , pw = "111"</span></div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->

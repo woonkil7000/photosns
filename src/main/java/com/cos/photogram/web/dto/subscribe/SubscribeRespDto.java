@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class SubscribeRespDto {
 	private int userId;
 	private String username;
+	private String name;
 	private String profileImageUrl;
 	private Integer subscribeState; // mariadb에서는 Integer
 	private Integer equalState;

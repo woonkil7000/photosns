@@ -1,9 +1,7 @@
 package com.cos.photogram.service;
 
-import com.cos.photogram.handler.ex.CustomApiException;
-import com.cos.photogram.handler.ex.CustomException;
-import com.cos.photogram.handler.ex.ErrorCode;
-import com.cos.photogram.handler.ex.UsernameDuplicateException;
+import com.cos.photogram.domain.comment.handler.ex.ErrorCode;
+import com.cos.photogram.domain.comment.handler.ex.UsernameDuplicateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,9 +10,6 @@ import com.cos.photogram.domain.user.User;
 import com.cos.photogram.domain.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-
-import java.sql.SQLException;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor // final 선언된 객체의 생성자 자동실행

@@ -1,4 +1,4 @@
-package com.cos.photogram.handler.ex;
+package com.cos.photogram.domain.comment.handler.ex;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

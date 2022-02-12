@@ -18,11 +18,12 @@ function storyLoad() {
     url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
-    //console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+    console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
 	//return;
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
+		console.log("#### res.data.content.forEach((image) storyItem = getStoryItem(image) storyItem => "+JSON.stringify(storyItem));
         $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
 //    let images = res.data.content;
@@ -54,7 +55,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산
-  if (checkNum < 100 && checkNum > -1) {
+  if (checkNum < 10 && checkNum > -1) {
     page++;
     storyLoad();
   }

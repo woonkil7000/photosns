@@ -37,20 +37,22 @@ public class Image {
 	@ManyToOne(fetch = FetchType.EAGER) // 이미지를 select하면 조인해서 User정보를 같이 들고옴.
 	@JoinColumn(name = "userId")
 	private User user;
-	
+
+	//@OneToMany(mappedBy = "image", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+	// fetch = FetchType.EAGER 포함시 에러 발생됨. 추후 검토.
 	@JsonIgnoreProperties({"image"})
-	@OneToMany(mappedBy = "image")
+	@OneToMany(mappedBy = "image", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Tag> tags;
 
 	// 이미지 좋아요~~
 	@JsonIgnoreProperties({"image"}) // 무한참조 방지. Likes 안에서 image 파싱 금지시킴.
-	@OneToMany(mappedBy = "image")
+	@OneToMany(mappedBy = "image", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Likes> likes; // A이미지에 홍길동, 장보고, 임꺽정 좋아요.   (고소영)
 
 	// 댓글. 코맨트.
 	@OrderBy("id DESC")  // 정렬
 	@JsonIgnoreProperties({"image"}) // Comment에서 image파싱금지.
-	@OneToMany(mappedBy = "image")
+	@OneToMany(mappedBy = "image", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Comment> comments; // 양방향 맵핑.
 
 

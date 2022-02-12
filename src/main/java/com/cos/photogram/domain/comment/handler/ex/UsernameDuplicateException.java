@@ -1,7 +1,6 @@
-package com.cos.photogram.handler.ex;
+package com.cos.photogram.domain.comment.handler.ex;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 public class UsernameDuplicateException extends RuntimeException{

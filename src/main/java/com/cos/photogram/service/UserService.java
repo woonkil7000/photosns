@@ -5,27 +5,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import com.cos.photogram.handler.ex.CustomApiException;
-import com.cos.photogram.handler.ex.CustomException;
-import com.cos.photogram.handler.ex.CustomValidationApiException;
+import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
+import com.cos.photogram.domain.comment.handler.ex.CustomException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationApiException;
 import com.cos.photogram.web.dto.user.UserProfileDto;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cos.photogram.config.auth.PrincipalDetails;
 import com.cos.photogram.domain.subscribe.SubscribeRepository;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.domain.user.UserRepository;
-import com.cos.photogram.web.dto.user.UserProfileRespDto;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import javax.servlet.annotation.MultipartConfig;
 
 
 @RequiredArgsConstructor

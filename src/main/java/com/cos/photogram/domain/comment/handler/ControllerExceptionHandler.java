@@ -1,9 +1,9 @@
-package com.cos.photogram.handler;
+package com.cos.photogram.domain.comment.handler;
 
-import com.cos.photogram.handler.ex.CustomApiException;
-import com.cos.photogram.handler.ex.CustomException;
-import com.cos.photogram.handler.ex.CustomValidationApiException;
-import com.cos.photogram.handler.ex.CustomValidationException;
+import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
+import com.cos.photogram.domain.comment.handler.ex.CustomException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationApiException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationException;
 import com.cos.photogram.utils.Script;
 import com.cos.photogram.web.dto.CMRespDto;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 @Slf4j
 @RestController
 @ControllerAdvice

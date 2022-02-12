@@ -18,10 +18,11 @@ function storyLoad() {
     url: `/api/image2?page=${page}`,
     dataType: "json",
   }).done((res) => {
-    console.log(res);
+    console.log("######## res ######## => ",res);
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
+		console.log("#### storyItem ####  = getStoryItem(image) => ",storyItem);
         $("#storyList").append(storyItem);
     });
 //    let images = res.data.content;
@@ -47,7 +48,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산
-  if (checkNum < 100 && checkNum > -1) {
+  if (checkNum < 10 && checkNum > -1) {
     page++;
     storyLoad();
   }

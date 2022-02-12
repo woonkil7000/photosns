@@ -5,16 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query; // 반드시 persistence 인지 확인!!
 
-import com.cos.photogram.handler.ex.CustomApiException;
-import com.cos.photogram.handler.ex.CustomValidationException;
+import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
 import com.cos.photogram.web.dto.subscribe.SubscribeDto;
-import lombok.NoArgsConstructor;
 import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogram.domain.subscribe.SubscribeRepository;
-import com.cos.photogram.web.dto.subscribe.SubscribeRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +29,7 @@ public class SubscribeService {
 
 		// 쿼리 준비
 		StringBuffer sb = new StringBuffer();
-		sb.append("select u.id userId, u.username, u.profileImageUrl,  ");
+		sb.append("select u.id userId, u.username, u.name, u.profileImageUrl,  ");
 		sb.append("if( (select true from subscribe where fromUserId = ? and toUserId = u.id), true, false) subscribeState, ");  // ? = principalDetails.user.id
 		sb.append("if(u.id = ?, true, false) equalUserState "); // ? = principalDetails.user.id
 		sb.append("from subscribe f inner join user u on u.id = f.toUserId ");

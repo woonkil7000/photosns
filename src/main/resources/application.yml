@@ -49,6 +49,14 @@ spring:
             token_uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user_name_attribute: id
+    user:
+      name: test
+      password: 1234
+#  security:
+#    user:
+#      name: test
+#      password: 1234
+
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -82,19 +90,30 @@ spring:
       ddl-auto: update # update: DB Data Drop & Create New # 최초 Create 이후 update 또는 none으로 변경
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #카멜표기 컬럼명 사용가능 @JoinColumn(name = "fromUserId")
-      show-sql: true
-      format_sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    show-sql: true
+  devtools:
+    livereload:
+      enabled: true
+      freemarker:
+        cache: false
+
+#devtools:
+#    livereload:
+#      enabled: true
+#    freemarker:
+#      cache: false
 
 
 logging:
   level:
     org.hibernate.SQL: debug    # Logger
     org.hibernate.type: trace   # Show Query Parameter
-
-  security:
-    user:
-      name: test
-      password: 1234
+    org.hibernate.type.descriptor.sql: trace
 
 
 file:
@@ -105,8 +124,3 @@ file:
 # 항상 "/"로 끝나도록 설정할 것
 
 
-  devtools:
-    livereload:
-      enabled: true
-    freemarker:
-      cache: false

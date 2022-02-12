@@ -47,6 +47,7 @@ public class User {
 	// User를 select 할때 해당 User id로 등록된 image들을 다 가져와~~
 	// LAZY = User를 select할때 User id로 등록된 image들을 가져오지마~~ 대신 getImages()함수의 image들이 호출될때 가져와~~
 	// EAGER = User를 select할때 User id로 등록된 image들을 전부 Join해서 가져와~~
+	@OrderBy("id desc") // 최근 이미지 순
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("user") // Jpa 무한 순환참조 해결. images에서 user는 더깊이 Json으로 파싱하지마라.
 	private List<Image> images; // 양방향 매핑.

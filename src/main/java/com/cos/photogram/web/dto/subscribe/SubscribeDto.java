@@ -12,6 +12,7 @@ import java.math.BigInteger;
 public class SubscribeDto {
 	private int userId;
 	private String username;
+	private String name;
 	private String profileImageUrl;
 	private BigInteger subscribeState; // mariadb에서는 Integer
 	private BigInteger equalUserState;

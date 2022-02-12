@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import com.cos.photogram.domain.comment.CommentRepository;
+import com.cos.photogram.domain.likes.LikesRepository;
+import com.cos.photogram.domain.user.User;
 import com.cos.photogram.utils.Script;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +34,9 @@ import lombok.RequiredArgsConstructor;
 public class ImageService {
 
 	private final ImageRepository imageRepository;
+	private final CommentRepository commentRepository;
+	private final LikesRepository likesRepository;
+	private final TagRepository tagRepository;
 
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
@@ -94,7 +100,7 @@ public class ImageService {
 	@Value("${file.path}") // application.yml file: path:
 	private String uploadFolder; // <== @Value("$file.path") ex)c:/spring/upload
 
-	private final TagRepository tagRepository;
+	//private final TagRepository tagRepository;
 
 	@Transactional
 	public void 사진업로드(ImageReqDto imageReDto, PrincipalDetails principalDetails) {
@@ -177,8 +183,68 @@ public class ImageService {
 		
 		return images;
 	}
-	
 
+
+	@Transactional
+	public void 이미지삭제(int imageId, int princialId) {
+
+		// id: 이미지 주인 id, imageId 이미지번호
+		// 파일 삭제, DB 삭제(image,comment,likes,.....)
+		// transaction 처리.
+		Image image = imageRepository.findById(imageId).orElseThrow();
+		User user = image.getUser();
+		log.info("#### #### principalId ={}",princialId);
+		log.info("#### #### to delete image's user ={}",user);
+		log.info("#### #### imageId ={}",imageId);
+
+		// user.id == principalId // image.user.getId 과 principalId 가 같을 때
+		if(princialId==user.getId()) {
+
+			// 파일 경로 지정 String path = ServletContext.getRealPath("저장된 파일 경로");
+			// 현재 게시판에 존재하는 파일객체를 만듬 File file = new File(path + "\\" + "저장된 파일 이름");
+			// if(file.exists()) {
+			// 	파일이 존재하면 file.delete(); // 파일 삭제
+			// }
+			Path imageFilePath = Path.of(uploadFolder + image.getPostImageUrl());
+			log.info("#### #### To delete imageFilePath={}", imageFilePath);
+
+			if(Files.exists(imageFilePath)) {
+
+				try {
+					System.out.println("--------  :: 파일삭제 시도 :: --------");
+
+					Files.delete(imageFilePath);
+					System.out.println(" ==== Files.delete(imageFilePath) : 파일삭제 ==== ");
+					// 파일 삭제(경로포함 파일경로)
+					// Files.delete(imageFilePath);
+					// imageFilePath.toFile().delete() // ????
+					// 삭제후 삭제 파일 exists 로 체크.
+					if(Files.exists(imageFilePath)) {
+						System.out.println("Files.exists 체크: 파일이 삭제되지 않았습니다.");
+					}else{
+						System.out.println("Files.exists 체크: 파일이 삭제된 것을 학인합니다.");
+						System.out.println("관련 DB data 도 삭제해 주세요.");
+						// 파일 삭제시 DB 에서 파일 경로 정보를 참조하므로 파일 삭제 후 디비 삭제하는 로직으로
+						// comment, likes, tag, image  delete by imageId
+						// tagRepository.deleteById(imageId);
+						// likesRepository.deleteById(imageId);
+						// commentRepository.deleteById(imageId);
+						imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace(); // 예외상황 기록하기.
+				}
+
+			} else { // Files.exists
+				System.out.println(" ==== Files.exists() :: 삭제할 파일이 존재하지 않습니다. ==== ");
+			}
+
+
+		} else {
+			log.info("삭제할 이미지의 주인이 아닙니다.");
+		}
+	}
 }
 
 

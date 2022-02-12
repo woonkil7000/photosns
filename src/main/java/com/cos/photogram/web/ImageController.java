@@ -1,6 +1,6 @@
 package com.cos.photogram.web;
 
-import com.cos.photogram.handler.ex.CustomValidationException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -104,6 +104,13 @@ public class ImageController {
 	@DeleteMapping("/image/{imageId}/likes")
 	public @ResponseBody CMRespDto<?> unLike(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){
 		likesService.좋아요취소(imageId, principalDetails.getUser().getId());
+		//return new CMRespDto<>(1, null);
+		return null;
+	}
+
+	@DeleteMapping("/image/{imageId}/delete")
+	public @ResponseBody CMRespDto<?> delete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){
+		imageService.이미지삭제(imageId, principalDetails.getUser().getId());
 		//return new CMRespDto<>(1, null);
 		return null;
 	}

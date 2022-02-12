@@ -1,28 +1,18 @@
 package com.cos.photogram.web;
 
 import com.cos.photogram.domain.user.User;
-import com.cos.photogram.handler.ex.CustomValidationException;
 import com.cos.photogram.web.dto.auth.SignupDto;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.photogram.service.AuthService;
-import com.cos.photogram.utils.Script;
-import com.cos.photogram.web.dto.auth.UserJoinReqDto;
 
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
 
 // 시작주소 : /auth
 @Slf4j

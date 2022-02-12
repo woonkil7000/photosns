@@ -1,7 +1,7 @@
-package com.cos.photogram.handler.aop;
+package com.cos.photogram.domain.comment.handler.aop;
 
-import com.cos.photogram.handler.ex.CustomValidationApiException;
-import com.cos.photogram.handler.ex.CustomValidationException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationException;
+import com.cos.photogram.domain.comment.handler.ex.CustomValidationApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

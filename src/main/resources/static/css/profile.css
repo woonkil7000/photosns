@@ -34,7 +34,7 @@
   height: 100%;
 }
 .profile .profile-left {
-  flex-basis: 40%;
+  flex-basis: 60%;
   display: flex;
   justify-content: center;
 }
@@ -46,8 +46,8 @@
   width: 162px;
   height: 162px;
    */
-  width: 81px;
-  height: 81px;
+  width: 162px;
+  height: 162px;
   padding: 6px;
   border-radius: 50%;
   position: relative;

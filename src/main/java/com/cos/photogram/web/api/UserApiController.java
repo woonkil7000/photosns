@@ -2,31 +2,22 @@ package com.cos.photogram.web.api;
 
 import com.cos.photogram.config.auth.PrincipalDetails;
 import com.cos.photogram.domain.user.User;
-import com.cos.photogram.handler.ex.CustomValidationApiException;
-import com.cos.photogram.handler.ex.CustomValidationException;
 import com.cos.photogram.service.SubscribeService;
 import com.cos.photogram.service.UserService;
 import com.cos.photogram.web.dto.CMRespDto;
 import com.cos.photogram.web.dto.subscribe.SubscribeDto;
-import com.cos.photogram.web.dto.subscribe.SubscribeRespDto;
 import com.cos.photogram.web.dto.user.UserUpdateDto;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 //@MultipartConfig(
 //        fileSizeThreshold = 1024 * 1024 * 2, // 2mb
