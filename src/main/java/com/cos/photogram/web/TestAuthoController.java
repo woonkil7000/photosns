@@ -38,5 +38,8 @@ public class TestAuthoController {
         return null;
     }
 
-
+    @GetMapping("/testmodal")
+    public String test2() {
+        return "/test";
+    }
 }

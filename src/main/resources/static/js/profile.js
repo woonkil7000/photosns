@@ -57,7 +57,7 @@ function subscribeInfoModalOpen(pageUserId) {
 		$("#subscribeModalList").empty();
 
 		res.data.forEach((u) => {
-			let item = getSubscribeModalItem(u);
+			let item = getSubscribeModalItem(u); // return html tag applied subscriber list and toggle button
 			$("#subscribeModalList").append(item);
 		});
 	}).fail((error) => {

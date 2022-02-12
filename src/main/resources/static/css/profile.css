@@ -186,7 +186,8 @@
 }
 #tab-content #tab-1-content .tab-1-content-inner .img-box {
   position: relative;
-  height: 293px;
+  <!-- height: 293px; -->
+  height: 100px;
 }
 #tab-content #tab-1-content .tab-1-content-inner .img-box img {
   width: 100%;
@@ -197,8 +198,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;

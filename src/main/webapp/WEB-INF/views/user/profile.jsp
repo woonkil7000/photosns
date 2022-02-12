@@ -77,11 +77,19 @@
 	<div class="profileContainer">
 		<!--그냥 감싸는 div (지우면이미지커짐)-->
 		<div id="tab-1-content" class="tab-content-item show">
-			<div class="alert alert-danger d-flex align-items-center" role="alert">
-				<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-				<div>이미지를  선택하면  삭제할 수 있습니다
-				</div>
-			</div>
+
+<!-- 프로필 페이지 주인에게만 이미지 삭제 가능 알림 -->
+			<c:choose>
+				<c:when test="${dto.pageOwnerState}">
+					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
+					<div class="alert alert-danger d-flex align-items-center" role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+						<div>프로필 페이지에서 이미지를  수정 / 삭제할 수 있습니다
+						</div>
+					</div>
+				</c:when>
+			</c:choose>
+<!-- 이미지 삭제 가능 알림 end -->
 
 			<!--게시물컨 그리드배열-->
 			<div class="tab-1-content-inner">
@@ -91,9 +99,37 @@
 				<c:forEach var="image" items="${dto.user.images}"><!-- EL 표현식에서 변수명을 적으면 get함수가 자동으로 호출됨. -->
 					<!-- profileImageUpload(${dto.user.id},${principal.user.id}) -->
 					<!-- <div class="img-box" onclick="deleteImage(${image.id},${principal.user.id})"> -->
-					<div class="img-box" id="${image.id}" onclick="popup('modal-imgdelete')">
-						<a href=""> <img src="/upload/${image.postImageUrl}" alt="" >
-						</a>
+					<div class="img-box" id="${image.id}">
+						<div  class="col">
+							<a href=""><img src="/upload/${image.postImageUrl}" alt="" ></a>
+						</div>
+
+						<!-- 프로필 페이지 주인에게만 이미지 삭제 버튼 보임 -->
+						<c:choose>
+							<c:when test="${dto.pageOwnerState}">
+
+						<!-- 이미지 삭제 모달 트리거 버튼 -->
+						<div  class="col-sm-10"">
+						<a  class="btn btn-outline-primary btn-sm"
+							data-bs-toggle="modal"
+							data-bs-target="#delete-modal"
+							data-bs-imageid="${image.id}"
+							data-bs-imageurl="${image.postImageUrl}"
+							data-bs-userid="${principal.user.id}"
+							data-bs-caption="${image.caption}"
+							href="#"
+							role="button">수정|삭제</a>
+						</div>
+						<!-- 이미지 삭제 모달 크리거 버튼 end -->
+
+						</c:when>
+					</c:choose>
+						<!-- 이미지 삭제 버튼 보임 end -->
+
+
+
+
+
 						<div class="comment">
 							<a href="#a"><i class="fas fa-heart"></i><span>${image.likeCount}</span>
 							</a>
@@ -149,6 +185,166 @@
 	</div>
 </div>
 
-<script src="/js/profile.js"></script>
 
+<!-- Button trigger modal -->
+<!--
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	Launch demo modal
+</button>
+<a  class="btn btn-outline-primary btn-sm" data-bs-toggle="delete-modal" data-bs-target="delete-modal" href="#" role="button">삭제</a>
+-->
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">이미지 설명 수정 / 삭제</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+
+
+			<div class="modal-body">
+				이미지 설명을 수정 또는 이미지를 삭제하시겠습니까?
+					<img  class="img-box" src=""
+						  alt="" onerror="this.src='/images/person.jpeg'"
+						  id="delimage" style="width:300px;height:300px;" />
+				<form>
+					<input type="hidden" id="image_id">
+					<input type="hidden" id="image_url">
+					<input type="hidden" id="user_id">
+					<hr>
+					<label>사진 설명 </label> <input type="text" id="caption" size="45">
+				</form>
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary" id="update-btn">수정</button>
+				<button type="button" class="btn btn-primary" id="delete-btn">삭제</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 이미지 삭제 모달 이벤트 처리 -->
+<script>
+	{	// 모달 요소 선택
+	//const delete_modal = document.getElementById('#delete-modal'); // 모달 id
+	const delete_modal = document.querySelector('#delete-modal'); // 모달 id
+	// 모달 이벤트 감지
+	delete_modal.addEventListener('show.bs.modal', function (event) {
+		// 트리거 버트 선택
+		const button = event.relatedTarget;
+		// 전달할 데이타 가져오기
+		const imageid = button.getAttribute("data-bs-imageid");
+		const imageurl = button.getAttribute("data-bs-imageurl");
+		const userid = button.getAttribute("data-bs-userid");
+		const caption = button.getAttribute("data-bs-caption");
+		console.log("imageid=",imageid);
+		console.log("imageurl=",imageurl);
+		console.log("userid=",userid);
+		console.log("caption=",caption);
+
+		// 모달창에 데이타 반영
+		document.querySelector("#image_id").value=imageid;
+		document.querySelector("#caption").value=caption;
+		document.querySelector("#user_id").value=userid;
+		document.querySelector("#image_url").value="/upload/"+imageurl;
+		document.querySelector("#delimage").src="/upload/"+imageurl;
+		// If necessary, you could initiate an AJAX request here
+		// and then do the updating in a callback.
+		// Update the modal's content.
+		//const modalTitle = delete_modal.querySelector('.modal-title')
+		//const modalBodyInput = delete_modal.querySelector('.modal-body input')
+		//modalTitle.textContent = 'New message to ' + recipient
+		//modalBodyInput.value = recipient
+	})
+	}
+
+
+	{
+	// 삭제 완료 버튼
+		const delete_button=document.querySelector("#delete-btn");
+	// 클릭 이벤트 감지
+		delete_button.addEventListener('click',function (event) {
+
+			// 삭제 이미지 객채 생성
+			const image = {
+				id: document.querySelector("#image_id").value,
+				caption: document.querySelector("#caption").value,
+				userid: document.querySelector("#user_id").value,
+				url: document.querySelector("#image_url").value
+			};
+			console.log("image object =", image);
+
+			// 삭제 REST API 호출 - fetch()
+			const url="/api/image/"+image.id+"/delete";
+			console.log("fetch url=",url);
+
+			// fetch(url,{})
+			fetch(url,{
+				method: "DELETE", // method = 삭제요청
+				body: JSON.stringify(image), // 객체를 JSON 으로 전달
+				headers: {
+					"Content-Type": "application/json"
+				}
+
+			// }).then(function (response) {}) -->> response => {}
+			}).then(response => {
+				// http 응답 코드에 따른 메시지 출력
+				const msg = (response.ok) ? "이미지 삭제 완료~" : "이미지 삭제 실패!!";
+				console.log(msg);
+				alert(msg);
+				// 현재 페이지를 새로 고침
+				window.location.reload();
+			})
+
+		});
+
+	}
+
+	{
+		// Caption 수정 완료 버튼
+		const update_button=document.querySelector("#update-btn");
+		// 클릭 이벤트 감지
+		update_button.addEventListener('click',function (event) {
+
+			// 삭제 이미지 객채 생성
+			const image = {
+				id: document.querySelector("#image_id").value,
+				caption: document.querySelector("#caption").value,
+				userid: document.querySelector("#user_id").value,
+				url: document.querySelector("#image_url").value
+			};
+			console.log("image object =", image);
+
+			// 삭제 REST API 호출 - fetch()
+			const url="/api/image/"+image.id+"/update";
+			console.log("fetch url=",url);
+
+			// fetch(url,{})
+			fetch(url,{
+				method: "PATCH", // method = 수정 요청
+				body: JSON.stringify(image), // 객체를 JSON 으로 전달
+				headers: {
+					"Content-Type": "application/json"
+				}
+
+				// }).then(function (response) {}) -->> response => {}
+			}).then(response => {
+				// http 응답 코드에 따른 메시지 출력
+				const msg = (response.ok) ? "이미지 update 완료~" : "이미지 update 실패!!";
+				console.log(msg);
+				//alert(msg);
+				// 현재 페이지를 새로 고침
+				window.location.reload();
+			})
+
+		});
+
+	}
+</script>
+<!-- -->
+<script src="/js/profile.js"></script>
 <%@ include file="../layout/footer.jsp"%>

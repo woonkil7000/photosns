@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.cos.photogram.domain.comment.CommentRepository;
+import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
 import com.cos.photogram.domain.likes.LikesRepository;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.utils.Script;
@@ -245,7 +246,72 @@ public class ImageService {
 			log.info("삭제할 이미지의 주인이 아닙니다.");
 		}
 	}
-}
+
+	@Transactional
+	public Image 이미지수정(int imageId, ImageReqDto imageReDto, int principalId) {
+
+		// caption 수정
+		// id: 이미지 주인 id, imageId 이미지번호
+		// 파일 삭제, DB 삭제(image,comment,likes,.....)
+		// transaction 처리.
+
+		//Image imageEntity = imageRepository.findById(imageId).orElseThrow();
+		Image imageEntity = imageRepository.findById(imageId).orElseThrow(()->{
+			throw new CustomApiException("이미지를 찾을 수 없습니다.");
+		});
+
+		//User user = imageEntity.getUser();
+		User user = imageEntity.getUser();
+		//int principalId = principalDetails.getUser().getId();
+
+		log.info("#### #### principalId ={}",principalId);
+		log.info("#### #### to delete image's user ={}",user);
+		log.info("#### #### imageId ={}",imageId);
+
+		// user.id == principalId // image.user.getId 과 principalId 가 같을 때
+		if(principalId==user.getId()) {
+			System.out.println(" #### 로그인한 아이디와 이미지 userId가 같습니다");
+		}else{
+			System.out.println(" #### 로그인한 아이디와 이미지 userId가 다릅니다");
+		}
+
+		imageEntity.setCaption(imageReDto.getCaption()); // 이미지 경로 DB 저장.
+
+		return imageEntity; // 세션에 저장 // 더티 체킹?
+
+
+		// 영속화된 오브젝트 수정. 더티체킹.수정완료.
+		/*
+		userEntity.setName(user.getName());
+		userEntity.setBio(user.getBio());
+		userEntity.setWebsite(user.getWebsite());
+		userEntity.setPhone(user.getPhone());
+		userEntity.setGender(user.getGender());
+		String rawPassword = user.getPassword();
+		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+
+		// 비밀번호입력란이 공백이 아니면 새로 비번 저장(입력란이 공백이면 그대로 유지)
+		if(!user.getPassword().equals("")) {
+			userEntity.setPassword(encPassword);
+		}
+		return userEntity;
+		*/
+
+
+		/*
+		//User userEntity = userRepository.findById(principalId).orElseThrow(()->{});
+		User userEntity = userRepository.findById(principalId).orElseThrow(()->{
+			throw new CustomApiException("유저를 찾을 수 없습니다.");
+		});
+
+		userEntity.setProfileImageUrl(imageFileName); // 이미지 경로 DB 저장.
+
+		return userEntity; // 세션에 저장
+		 */
+
+	}
+
+	}
 
 
 

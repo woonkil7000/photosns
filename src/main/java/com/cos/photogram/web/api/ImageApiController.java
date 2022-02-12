@@ -5,6 +5,7 @@ import com.cos.photogram.domain.image.Image;
 import com.cos.photogram.service.ImageService;
 import com.cos.photogram.service.LikesService;
 import com.cos.photogram.web.dto.CMRespDto;
+import com.cos.photogram.web.dto.image.ImageReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,6 +60,12 @@ public class ImageApiController {
     public ResponseEntity<?> delete(@PathVariable int imageId,@AuthenticationPrincipal PrincipalDetails principalDetails){
         imageService.이미지삭제(imageId,principalDetails.getUser().getId());
         return  new ResponseEntity<>(new CMRespDto<>(1,"이미지 삭제 성공",null),HttpStatus.OK);
+    }
+
+    @PatchMapping("/api/image/{imageId}/update")
+    public ResponseEntity<?> update(@PathVariable int imageId, @RequestBody ImageReqDto imageReDto, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        imageService.이미지수정(imageId,imageReDto,principalDetails.getUser().getId());
+        return  new ResponseEntity<>(new CMRespDto<>(1,"이미지 수정 성공",null),HttpStatus.OK);
     }
 
 }
