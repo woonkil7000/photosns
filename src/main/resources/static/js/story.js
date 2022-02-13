@@ -19,11 +19,13 @@ function storyLoad() {
     dataType: "json",
   }).done((res) => {
     console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+	console.log("-----------------------  res -end- ----------------------------------");
 	//return;
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
 		console.log("#### res.data.content.forEach((image) storyItem = getStoryItem(image) storyItem => "+JSON.stringify(storyItem));
+		console.log("----------------------- forEach -end- ----------------------------------");
         $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
 //    let images = res.data.content;
@@ -68,7 +70,7 @@ function getStoryItem(image) {
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
 		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/></div>
-		<div>${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></div>
+		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->
 

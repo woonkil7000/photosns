@@ -57,7 +57,7 @@ function subscribeInfoModalOpen(pageUserId) {
 		$("#subscribeModalList").empty();
 
 		res.data.forEach((u) => {
-			let item = getSubscribeModalItem(u); // return html tag applied subscriber list and toggle button
+			let item = getSubscribeModalItem(u); // return html tag applied subscriber list and 구독하기 / 구독취소 버튼 표시 toggle button
 			$("#subscribeModalList").append(item);
 		});
 	}).fail((error) => {

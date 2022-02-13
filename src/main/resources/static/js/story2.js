@@ -18,11 +18,13 @@ function storyLoad() {
     url: `/api/image2?page=${page}`,
     dataType: "json",
   }).done((res) => {
-    console.log("######## res ######## => ",res);
+	console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+	console.log("-------------------------- res -end- -------------------------------");
     //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
 		console.log("#### storyItem ####  = getStoryItem(image) => ",storyItem);
+		console.log("------------------------- forEach -end- --------------------------------");
         $("#storyList").append(storyItem);
     });
 //    let images = res.data.content;
@@ -54,6 +56,13 @@ $(window).scroll(() => {
   }
 });
 
+function isFileImage(file) {
+	const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png','image/jpg','image/JPG'];
+
+	return file && acceptedImageTypes.includes(file['type'])
+};
+
+
 function getStoryItem(image) {
   let result = `
 <!--전체 리스트 아이템-->
@@ -61,7 +70,7 @@ function getStoryItem(image) {
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
 		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/></div>
-		<div>${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></div>
+		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->
 
@@ -70,7 +79,12 @@ function getStoryItem(image) {
 	<!-- <div class="col-md-5 px-0"> -->
 	<div class="sl__item__img">
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
-		          <img src="/upload/${image.postImageUrl}" alt="" />
+		`;
+
+
+  result +=`<img src="/upload/${image.postImageUrl}" alt=""/>`;
+
+  result +=`
     </div>
 
 	<!--게시물 내용 + 댓글 영역-->

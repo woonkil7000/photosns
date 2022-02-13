@@ -145,7 +145,7 @@ public class ImageService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Image> 인기사진(int principalId){
+	public List<Image> 인기사진(int principalId){ // mExplore:
 		//return imageRepository.mExplore(principalId);
 		List<Image> images = imageRepository.mExplore(principalId);
 
@@ -214,7 +214,8 @@ public class ImageService {
 				try {
 					System.out.println("--------  :: 파일삭제 시도 :: --------");
 
-					Files.delete(imageFilePath);
+					Files.delete(imageFilePath); // #### 파일 삭제 ####
+
 					System.out.println(" ==== Files.delete(imageFilePath) : 파일삭제 ==== ");
 					// 파일 삭제(경로포함 파일경로)
 					// Files.delete(imageFilePath);
@@ -238,7 +239,11 @@ public class ImageService {
 				}
 
 			} else { // Files.exists
+
 				System.out.println(" ==== Files.exists() :: 삭제할 파일이 존재하지 않습니다. ==== ");
+
+				// #### 삭제할 파일이 없으면 DB 가 잘못된 파일 경로 데이터를 가지고 있으므로  DB 에서 삭제하자 ####
+				imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
 			}
 
 
@@ -250,7 +255,7 @@ public class ImageService {
 	@Transactional
 	public Image 이미지수정(int imageId, ImageReqDto imageReDto, int principalId) {
 
-		// caption 수정
+		// 이미지 설명 caption 만  수정
 		// id: 이미지 주인 id, imageId 이미지번호
 		// 파일 삭제, DB 삭제(image,comment,likes,.....)
 		// transaction 처리.

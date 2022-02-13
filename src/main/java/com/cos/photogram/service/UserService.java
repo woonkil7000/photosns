@@ -54,8 +54,11 @@ public class UserService {
 		dto.setPageOwnerState(pageUserId == principalId); // 1은 페이지 주인/ -1은 주인아님
 		dto.setImageCount(userEntity.getImages().size());
 
+		// 구독 여부
 		int subscribeState = subscribeRepository.mSubscribeState(principalId,pageUserId);
 		dto.setSubscribeState(subscribeState == 1); // 1 == true
+
+		// 구독자 수
 		int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
 		dto.setSubscribeCount(subscribeCount);
 

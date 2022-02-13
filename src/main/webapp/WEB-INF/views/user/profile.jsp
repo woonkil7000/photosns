@@ -20,7 +20,7 @@
 					 alt="" onerror="this.src='/images/person.jpeg'"
 					 id="userProfileImage" />
 			</div>
-			<div class="profileContainer"><h2>${dto.user.name}</h2></div>
+			<div class="profileContainer"><span style="font-size: 18px; color: Dodgerblue;"><h2>${dto.user.name}</h2></span></div>
 		</div>
 		<!--유저이미지end-->
 	</div>
@@ -36,8 +36,12 @@
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
 					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
-					<button class="modi" onclick="location.href='/image/upload'"><i class="fas fa-cloud-upload-alt"></i>사진/게시 등록</button>
-					<button class="modi" onclick="popup('.modal-info')"><i class="fas fa-user-cog"></i><i class="fas fa-power-off"></i>정보수정/로그아웃</button>
+					<div>
+					<div><button class="modi" onclick="location.href='/image/upload'"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-cloud-upload-alt"></i>새로운 사진 등록</span></button>
+					</div>
+					<div><button class="modi" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i><i class="fas fa-power-off"></i>정보수정/로그아웃</span></button>
+					</div>
+					</div>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
@@ -82,9 +86,8 @@
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
 					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
-					<div class="alert alert-danger d-flex align-items-center" role="alert">
-						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-						<div>프로필 페이지에서 이미지를  수정 / 삭제할 수 있습니다
+					<div class="alert btn-primary d-flex align-items-center" role="alert">
+						<div>이미지를 선택하면 설명(caption)을 수정하거나 사진을 삭제할 수 있습니다
 						</div>
 					</div>
 				</c:when>
@@ -101,15 +104,30 @@
 					<!-- <div class="img-box" onclick="deleteImage(${image.id},${principal.user.id})"> -->
 					<div class="img-box" id="${image.id}">
 						<div  class="col">
-							<a href=""><img src="/upload/${image.postImageUrl}" alt="" ></a>
+							<!-- ####################### 이미지 링크 ###################### -->
+							<a   class="btn btn-outline-primary btn-sm"
+								 data-bs-toggle="modal"
+								 data-bs-target="#delete-modal"
+								 data-bs-imageid="${image.id}"
+								 data-bs-imageurl="${image.postImageUrl}"
+								 data-bs-userid="${principal.user.id}"
+								 data-bs-caption="${image.caption}"
+								 href="#"
+								 role="button" style="outline: none;border: 0;"><img src="/upload/${image.postImageUrl}"></a>
 						</div>
+						<!--
+						fn:substring(string객체, 시작index, 종료index)
+						-->
+						<div><span style="font-size: 16px; color: Dodgerblue;">${fn:substring(image.caption,0,7)}</span></div>
 
 						<!-- 프로필 페이지 주인에게만 이미지 삭제 버튼 보임 -->
 						<c:choose>
 							<c:when test="${dto.pageOwnerState}">
 
 						<!-- 이미지 삭제 모달 트리거 버튼 -->
-						<div  class="col-sm-10"">
+
+						<!--
+						<div  class="col-sm-10">
 						<a  class="btn btn-outline-primary btn-sm"
 							data-bs-toggle="modal"
 							data-bs-target="#delete-modal"
@@ -120,6 +138,8 @@
 							href="#"
 							role="button">수정|삭제</a>
 						</div>
+						-->
+
 						<!-- 이미지 삭제 모달 크리거 버튼 end -->
 
 						</c:when>
@@ -127,12 +147,8 @@
 						<!-- 이미지 삭제 버튼 보임 end -->
 
 
-
-
-
-						<div class="comment">
-							<a href="#a"><i class="fas fa-heart"></i><span>${image.likeCount}</span>
-							</a>
+						<div>
+							<span style="font-size: 16px; color: Dodgerblue; padding-right: 16px;"><i class="fas fa-heart"></i> ${image.likeCount}</span>
 						</div>
 					</div>
 				</c:forEach>
@@ -206,7 +222,6 @@
 
 
 			<div class="modal-body">
-				이미지 설명을 수정 또는 이미지를 삭제하시겠습니까?
 					<img  class="img-box" src=""
 						  alt="" onerror="this.src='/images/person.jpeg'"
 						  id="delimage" style="width:300px;height:300px;" />
@@ -220,8 +235,8 @@
 			</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="update-btn">수정</button>
-				<button type="button" class="btn btn-primary" id="delete-btn">삭제</button>
+					<button type="button" class="btn btn-primary" id="update-btn">설명 수정</button>
+				<button type="button" class="btn btn-primary" id="delete-btn">이미지 삭제</button>
 			</div>
 		</div>
 	</div>

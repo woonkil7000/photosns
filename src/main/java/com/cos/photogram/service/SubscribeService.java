@@ -35,7 +35,7 @@ public class SubscribeService {
 		sb.append("from subscribe f inner join user u on u.id = f.toUserId ");
 		sb.append("where f.fromUserId = ? "); // ? = pageUserId 해당 페이지의 주인 id
 
-		System.out.println(" ######################## 해당 페이지 주인의 구독자 구하는 쿼리 ###########################");
+		System.out.println(" ################### 해당 페이지 주인의 구독자 구하는 쿼리 ###################");
 		System.out.println(sb.toString());
 		// 쿼리 완성
 		Query query = em.createNativeQuery(sb.toString())

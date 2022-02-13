@@ -4,17 +4,18 @@
 <!--인기 게시글-->
 <main class="popular">
 	<div class="exploreContainer">
-
+		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;">좋아요 이미지 랭킹 10</span></div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
 			<c:forEach var="image" items="${images}">
-				<div class="p-img-box">
+				<div class="p-img-box" style="padding-top: 20px;">
 					<!-- <a href="/user/${image.user.id}"> -->
 					<a href="">
 						<img src="/upload/${image.postImageUrl}" alt="">
 					</a>
+					<span style="font-size: 16px; color: Dodgerblue; padding-right: 16px;"><i class="fas fa-heart"></i> ${image.likeCount}</span>
 				</div>
-			</c:forEach> 
+			</c:forEach>
 		</div>
 		
 	</div>
