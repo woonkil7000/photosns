@@ -35,7 +35,10 @@ public class UserService {
 
 	@Transactional(readOnly = true) // ex) /user/1, /user/2, /user/3
 	public UserProfileDto 회원프로필(int pageUserId,int principalId){
+
+		// UserprofileDto
 		UserProfileDto dto = new UserProfileDto();
+
 		// UserProfileDto dto has
 		// : pageOwnerState,imageCount,subscribeState,subscribeCount,User user
 
@@ -54,11 +57,11 @@ public class UserService {
 		dto.setPageOwnerState(pageUserId == principalId); // 1은 페이지 주인/ -1은 주인아님
 		dto.setImageCount(userEntity.getImages().size());
 
-		// 구독 여부
+		// 구독 여부: 프로필페이지 주인 = principaId가 subscribe 에서 구독중인가 아닌가?
 		int subscribeState = subscribeRepository.mSubscribeState(principalId,pageUserId);
 		dto.setSubscribeState(subscribeState == 1); // 1 == true
 
-		// 구독자 수
+		// 내가 구독중인 게시자 count 수: select count(*) from subscribe where fromUserId = pageUserId;
 		int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
 		dto.setSubscribeCount(subscribeCount);
 

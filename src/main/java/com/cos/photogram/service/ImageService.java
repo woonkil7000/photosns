@@ -11,6 +11,7 @@ import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
 import com.cos.photogram.domain.likes.LikesRepository;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.utils.Script;
+import com.cos.photogram.web.dto.imagerank.ImageRankDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -146,8 +147,11 @@ public class ImageService {
 
 	@Transactional(readOnly = true)
 	public List<Image> 인기사진(int principalId){ // mExplore:
+
 		//return imageRepository.mExplore(principalId);
+		//List<Image> images = imageRepository.mExplore(principalId);
 		List<Image> images = imageRepository.mExplore(principalId);
+		//ImageRankDto imageRankDto = new ImageRankDto();
 
 		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
 			log.info("#################### 좋아요를 표시한 사진이 없는 경우에 해당 imageRepository.mExplore(principalId)");
@@ -155,7 +159,33 @@ public class ImageService {
 			System.out.println("################## 좋아요 표시한 사진만. Page<Image> images = imageRepository.mExplore(principalId) ##################");
 		}
 		System.out.println("#################  인기사진 List<Image> images = imageRepository.mExplore(principalId)  #####################");
+
+
+
+
+
+		// 좋아요 하트 색깔 로직 + 좋아요 카운트 로직
+		images.forEach((image)-> {
+
+			int likeCount = image.getLikes().size();
+			image.setLikeCount(likeCount);
+
+			/*image.getLikes().forEach((like)->{
+				if(like.getUser().getId() == principalId) {
+					image.setLikeState(true);
+				}
+			});
+			 */
+		});
+
+
+		// StackOverflow 발생시킴. 에러방지를 위해 toString 처리에서 userEntity제외함.
+		//log.info("##### imageService: 인기사진: 인기사진 리스트 받음:{}",images);
 		return images;
+
+		// 콘트롤러에서 아래와 같이 수행함.
+		// model.addAttribute("images", images);
+		// return "image/popular"; // /image/popular.jsp 에서  model data 사용
 	}
 	
 	

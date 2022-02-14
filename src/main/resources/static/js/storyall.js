@@ -50,7 +50,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산
-  if (checkNum < 10 && checkNum > -1) {
+  if (checkNum < 50 && checkNum > -1) {
     page++;
     storyLoad();
   }
@@ -103,12 +103,11 @@ function getStoryItem(image) {
   }
 
   result += `	
-		</div>
-		<!-- 하트모양 버튼 박스 end -->
-
 		<!--좋아요-->
 		<span class="like">좋아요 <b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
 		<!--좋아요end-->
+		</div>
+		<!-- 하트모양 버튼 박스 end -->
 
 		<!--태그박스-->
 		<div class="sl__item__contents__tags">
@@ -125,7 +124,7 @@ function getStoryItem(image) {
 
 		<!--게시글내용-->
 		<div class="sl__item__contents__content">
-			<p>${image.caption}</p>
+			<span style="font-size: 18px; color: Dodgerblue;">${image.caption}</span>
 		</div>
 		<!--게시글내용end-->
 
@@ -138,10 +137,7 @@ function getStoryItem(image) {
 
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-			    <p>
-			      <b>${comment.user.name} :</b>
-			      ${comment.content}
-			    </p>
+			     ${comment.user.name}: ${comment.content}
   				`;
 
     if (principalId == comment.user.id) {

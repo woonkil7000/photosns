@@ -10,8 +10,7 @@
 	<div class="profileContainer">
 		<!--유저이미지-->
 		<div class="profile-left">
-			<div class="profile-img-wrap story-border"
-				 onclick="popup('.modal-image')">
+			<div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
 				<form id="userProfileImageForm">
 					<input type="file" name="profileImageFile" style="display: none;"
 						   id="userProfileImageInput" />
@@ -19,11 +18,15 @@
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
 					 alt="" onerror="this.src='/images/person.jpeg'"
 					 id="userProfileImage" />
-			</div>
-			<div class="profileContainer"><span style="font-size: 18px; color: Dodgerblue;"><h2>${dto.user.name}</h2></span></div>
 		</div>
-		<!--유저이미지end-->
 	</div>
+		<!--유저이미지end-->
+	<!-- user name -->
+	<div   class="text-nowrap bd-highlight" style="width: 6rem;">
+		<span style="color: Dodgerblue;"><h2>${dto.user.name}</h2></span>
+	</div>
+	</div>
+
 </section>
 <!--프로필 섹션 end-->
 
@@ -60,7 +63,7 @@
 		<!-- <div class="profileContainer"> -->
 		<div class="profileContainer">
 			<a href=""><i class="far fa-images"></i><span>등록사진:${dto.imageCount}</span></a>
-			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i><span>구독자:${dto.subscribeCount}</span></a>
+			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><span><i class="fas fa-users"></i>구독자:${dto.subscribeCount}</span></a>
 		</div>
 		<!--
 		<div class="state">

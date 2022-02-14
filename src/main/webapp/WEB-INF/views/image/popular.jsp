@@ -8,13 +8,18 @@
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
 			<c:forEach var="image" items="${images}">
-				<div class="p-img-box" style="padding-top: 20px;">
+				<div class="p-img-box" style="padding-top: 30px;">
 					<!-- <a href="/user/${image.user.id}"> -->
-					<a href="">
+					<div><a href="">
 						<img src="/upload/${image.postImageUrl}" alt="">
 					</a>
-					<span style="font-size: 16px; color: Dodgerblue; padding-right: 16px;"><i class="fas fa-heart"></i> ${image.likeCount}</span>
+					</div>
+					<div><p style="font-size: 16px; color: Dodgerblue; padding-right: 16px;">${image.id}:${fn:substring(image.user.name,0,3)} <i class="fas fa-heart"></i> ${image.likeCount}</p>
+					</div>
+					<div><p style="font-size: 16px; color: Dodgerblue; padding-right: 16px;">${fn:substring(image.caption,0,7)}</p>
+					</div>
 				</div>
+
 			</c:forEach>
 		</div>
 		

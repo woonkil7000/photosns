@@ -49,6 +49,7 @@ public class UserController {
 
 		//User userEntity = userService.회원프로필(pageUserId,principalDetails.getUser().getId());
 		UserProfileDto dto = userService.회원프로필(pageUserId,principalDetails.getUser().getId());
+		// dto 로 data:User, PageOwnerState,ImageCount,subscribeState,subScribeCount 를 받는다
 		model.addAttribute("dto",dto);
 		return "user/profile"; // userEntity를 user속성으로 전달한다.
 	}

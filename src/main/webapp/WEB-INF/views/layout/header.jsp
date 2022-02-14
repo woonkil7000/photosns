@@ -63,7 +63,7 @@
 	<header class="header">
 		<div class="container">
 			<a href="/image/storyall" class="logo">
-				<img src="/images/logo2.jpg" alt="">
+				<img src="/images/logo2.png" alt="">
 			</a>
 			<nav class="navi">
 				<ul class="navi-list">

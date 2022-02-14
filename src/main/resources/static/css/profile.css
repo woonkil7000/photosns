@@ -15,7 +15,7 @@
   /*
   width: 935px;
   */
-  width: 380px;
+  width: 350px;
   margin: 0 auto;
   height: 100%;
 }
@@ -274,7 +274,8 @@
 
 
 .profile-image {
-  border: 2px solid #8a3ab8;
+  <!--border: 2px solid #8a3ab8;-->
+  border: 2px solid Dodgerblue;
 }
 
 .modal-image {

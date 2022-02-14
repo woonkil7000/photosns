@@ -17,7 +17,7 @@
   /*
   width: 935px;
   */
-  width: 380px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -89,8 +89,7 @@
   height: 600px;
   min-height: 300px;
   */
-
-  height: 500px;
+  height: 350px;
   min-height: 200px;
 
 
@@ -115,8 +114,8 @@
   .story-list__item
   .sl__item__contents
   .sl__item__contents__icon {
-  height: 40px;
-  padding: 5px 0;
+  height: 15px;
+  padding: 10px 0;
 }
 
 /*좋아요 실제 버튼*/
@@ -128,8 +127,8 @@
   .sl__item__contents__icon
   button {
   background-color: transparent;
-  width: 40px;
-  font-size: 14px;
+  width: 50px;
+  font-size: 16px;
   
   border: 0;
   cursor: pointer;
@@ -169,8 +168,8 @@
 
 /*태그영역*/
 .sl__item__contents__tags{
-  height: 20px;
-  padding: 5px 15px;
+  height: 15px;
+  padding: 5px 10px;
   color: #0080ff;
 }
 
@@ -188,8 +187,8 @@
   background-color: transparent;
   color: #000;
   font-size: 14px;
-  padding: 0 10px;
-  margin-bottom: 10px;
+  padding: 0 5px;
+  margin-bottom: 5px;
 }
 
 /*댓글 삭제버튼*/
@@ -212,7 +211,7 @@
   /* flex: 9; */
   flex: 7;
   /*height: 56px;*/
-  height: 20px;
+  height: 24px;
   border: 0;
   padding-left: 15px;
 }
@@ -226,9 +225,9 @@
   /*
   font-weight: 500;
    */
-  font-weight: 20;
+  font-weight: 500;
   color: #0095f6;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Event */
@@ -244,6 +243,7 @@
 }
 
 .profile-image {
-  border: 2px solid #8a3ab8;
+  <!--border: 2px solid #8a3ab8;-->
+  border: 2px solid Dodgerblue;
 }
 

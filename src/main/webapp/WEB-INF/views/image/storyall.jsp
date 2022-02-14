@@ -66,6 +66,6 @@
 		</article>
 	</section>
 </main>
-<script src="/js/story2.js"></script>
+<script src="/js/storyall.js"></script>
 </body>
 </html>

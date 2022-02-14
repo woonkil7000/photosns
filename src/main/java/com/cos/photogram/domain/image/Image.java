@@ -66,7 +66,7 @@ public class Image {
 	private boolean likeState;
 
 	// object를 콘솔에 출력할때 문제가 될수있어서 User부분을 출력되지않게 함.
-	/*@Override
+	@Override
 	public String toString() {
 		return "Image{" +
 				"id=" + id +
@@ -81,7 +81,7 @@ public class Image {
 				", likeCount=" + likeCount +
 				", likeState=" + likeState +
 				'}';
-	}*/
+	}
 }
 
 

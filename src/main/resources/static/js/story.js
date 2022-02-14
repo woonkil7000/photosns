@@ -37,7 +37,7 @@ function storyLoad() {
     console.log("오류",error);
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
-    alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n사진 게시자의 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 게시자의 사진을 여기에서 보실 수 있습니다");
+    alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
     //history.back();
 	  //window.location.replace("/");
 	  //return;
@@ -57,7 +57,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산
-  if (checkNum < 10 && checkNum > -1) {
+  if (checkNum < 50 && checkNum > -1) {
     page++;
     storyLoad();
   }
@@ -98,12 +98,11 @@ function getStoryItem(image) {
   }
 
   result += `	
-		</div>
-		<!-- 하트모양 버튼 박스 end -->
-
 		<!--좋아요-->
 		<span class="like">좋아요 <b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
 		<!--좋아요end-->
+		</div>
+		<!-- 하트모양 버튼 박스 end -->
 
 		<!--태그박스-->
 		<div class="sl__item__contents__tags">
@@ -120,7 +119,7 @@ function getStoryItem(image) {
 
 		<!--게시글내용-->
 		<div class="sl__item__contents__content">
-			<p>${image.caption}</p>
+			<span style="font-size: 18px; color: Dodgerblue;">${image.caption}</span>
 		</div>
 		<!--게시글내용end-->
 
@@ -133,10 +132,7 @@ function getStoryItem(image) {
 
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-			    <p>
-			      <b>${comment.user.name} :</b>
-			      ${comment.content}
-			    </p>
+				 ${comment.user.name}: ${comment.content}
   				`;
 
     if (principalId == comment.user.id) {

@@ -31,7 +31,7 @@
                 <article class="login__form__container">
                    <!--로그인 폼-->
                    <div class="login__form">
-                       <div  class="login__facebook"><img src="/images/logo2.jpg" width="100" height="20" alt=""></div>
+                       <div  class="login__facebook"><img src="/images/logo2.png" width="100" height="20" alt=""></div>
                         <!--로그인 인풋-->
                         <form class="login__input" action="/login" method="post"><!-- security config login processing -->
                             <!--
