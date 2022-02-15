@@ -69,22 +69,22 @@
 				<ul class="navi-list">
 					<!--<li class="navi-item">-->
 					<li><a href="/image/storyall" >
-						<span style="font-size: 24px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-images"></i></span>
+						<span style="font-size: 30px; color: Dodgerblue; padding-right: 15px;"><i class="fas fa-images"></i></span>
 							<!-- <i class="fas fa-home"></i> -->
 						<!-- <i class="fas fa-newspaper"></i> -->
 						<!-- <i class="fas fa-images"></i> -->
 						</a></li>
 					<li><a href="/image/story" alt="subscribe">
 						<!-- <i class="fas fa-home"></i> -->
-						<span style="font-size: 24px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-newspaper"></i></span>
+						<span style="font-size: 30px; color: Dodgerblue; padding-right: 15px;"><i class="fas fa-newspaper"></i></span>
 					</a></li>
 					<li><a href="/image/popular" alt="popular">
 							<!-- <i class="fas fa-compass"></i>-->
-						<span style="font-size: 24px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i></span>
+						<span style="font-size: 30px; color: Dodgerblue; padding-right: 15px;"><i class="fas fa-heart"></i></span>
 							<!--<i class="fas fa-thumbs-up"></i>-->
 						</a></li>
 					<li><a href="/user/${principal.user.id}" alt="profile">
-						<span style="font-size: 24px; color: Dodgerblue; padding-right: 20px;"><i class="fa fa-user"></i></span>
+						<span style="font-size: 30px; color: Dodgerblue; padding-right: 15px;"><i class="fa fa-user"></i></span>
 						</a></li>
                       <!-- <li class="navi-item"><i class="fas fa-user"></i></li> --> <!-- uses solid style -->
                       <!-- <li class="navi-item"><i class="far fa-user"></i></li> --> <!-- uses regular style -->

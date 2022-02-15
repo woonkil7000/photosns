@@ -18,13 +18,15 @@
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
 					 alt="" onerror="this.src='/images/person.jpeg'"
 					 id="userProfileImage" />
+			</div>
 		</div>
-	</div>
+		<!-- user name -->
+		<div   class="profile-right text-nowrap bd-highlight">
+			<p> </p><p> </p><p> </p>
+			<span  class="align-middle" style="color: Dodgerblue;"><h2>${dto.user.name}</h2>${fn:substring(dto.user.username,0,15)}</span>
+		</div>
 		<!--유저이미지end-->
-	<!-- user name -->
-	<div   class="text-nowrap bd-highlight" style="width: 6rem;">
-		<span style="color: Dodgerblue;"><h2>${dto.user.name}</h2></span>
-	</div>
+
 	</div>
 
 </section>
@@ -90,7 +92,7 @@
 				<c:when test="${dto.pageOwnerState}">
 					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
 					<div class="alert btn-primary d-flex align-items-center" role="alert">
-						<div>이미지를 선택하면 설명(caption)을 수정하거나 사진을 삭제할 수 있습니다
+						<div>아래에서 이미지를 선택하면 설명(caption)을 수정하거나 사진을 삭제할 수 있습니다
 						</div>
 					</div>
 				</c:when>
@@ -107,16 +109,26 @@
 					<!-- <div class="img-box" onclick="deleteImage(${image.id},${principal.user.id})"> -->
 					<div class="img-box" id="${image.id}">
 						<div  class="col">
-							<!-- ####################### 이미지 링크 ###################### -->
-							<a   class="btn btn-outline-primary btn-sm"
-								 data-bs-toggle="modal"
-								 data-bs-target="#delete-modal"
-								 data-bs-imageid="${image.id}"
-								 data-bs-imageurl="${image.postImageUrl}"
-								 data-bs-userid="${principal.user.id}"
-								 data-bs-caption="${image.caption}"
-								 href="#"
-								 role="button" style="outline: none;border: 0;"><img src="/upload/${image.postImageUrl}"></a>
+							<c:choose>
+								<c:when test="${dto.pageOwnerState}"> <!-- 페이지 주인일때  -->
+									<!-- ####################### 이미지 링크 ###################### -->
+									<a   class="btn btn-outline-primary btn-sm"
+										 data-bs-toggle="modal"
+										 data-bs-target="#delete-modal"
+										 data-bs-imageid="${image.id}"
+										 data-bs-imageurl="${image.postImageUrl}"
+										 data-bs-userid="${principal.user.id}"
+										 data-bs-caption="${image.caption}"
+										 href="#"
+										 role="button" style="outline: none;border: 0;"><img src="/upload/${image.postImageUrl}"></a>
+									<!-- ####################### 이미지 링크 ###################### -->
+								</c:when>
+								<c:otherwise> <!-- 페이지 주인 아닐때 -->
+									<!-- ####################### 이미지 링크 ###################### -->
+									<img src="/upload/${image.postImageUrl}">
+									<!-- ####################### 이미지 링크 ###################### -->
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<!--
 						fn:substring(string객체, 시작index, 종료index)
@@ -227,7 +239,7 @@
 			<div class="modal-body">
 					<img  class="img-box" src=""
 						  alt="" onerror="this.src='/images/person.jpeg'"
-						  id="delimage" style="width:300px;height:300px;" />
+						  id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"  />
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">

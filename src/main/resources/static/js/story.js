@@ -77,9 +77,9 @@ function getStoryItem(image) {
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
-	<div class="sl__item__img">
+	<div >
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
-		          <img src="/upload/${image.postImageUrl}" alt="" />
+		          <img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="" />
     </div>
 
 	<!--게시물 내용 + 댓글 영역-->
@@ -106,14 +106,13 @@ function getStoryItem(image) {
 
 		<!--태그박스-->
 		<div class="sl__item__contents__tags">
-			<p> `;
+			`;
 
   image.tags.forEach((tag) => {
     result += `#${tag.name} `;
   });
 
   result += `			
-			</p>
 		</div>
 		<!--태그박스end-->
 

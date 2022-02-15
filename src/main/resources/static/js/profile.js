@@ -125,7 +125,7 @@ function profileImageUpload(pageUserId,principalId) {
 	 console.log("principalId => ",principalId);
 
 	if(pageUserId != principalId){
-		alert("현재 사용자의 프로필이 아닙니다");
+		alert("현재 유저의 프로필이 아닙니다");
 		return;
 	}
 
@@ -232,7 +232,7 @@ function deleteImage(imageId,principalId) {
 		}).done(res => {
 			console.log("delete imageId=", imageId);
 			console.log("principalId=",principalId);
-			alert(" 선택한 이미지가 삭제되었습니다. \n\n deleted imageId= "+imageId+", principalId="+principalId);
+			//alert(" 선택한 이미지가 삭제되었습니다. \n\n deleted imageId= "+imageId+", principalId="+principalId);
 			location.href = `/user/${principalId}`;
 		}).fail(error=>{
 			console.log("오류",error);

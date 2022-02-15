@@ -62,6 +62,23 @@ function isFileImage(file) {
 	return file && acceptedImageTypes.includes(file['type'])
 };
 
+/** 이미지 비율 유지하면 크기 정하기
+ * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
+ * images to fit into a certain area.
+ *
+ * @param {Number} srcWidth width of source image
+ * @param {Number} srcHeight height of source image
+ * @param {Number} maxWidth maximum available width
+ * @param {Number} maxHeight maximum available height
+ * @return {Object} { width, height }
+ */
+function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+
+	let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+	return { width: srcWidth*ratio, height: srcHeight*ratio };
+}
+
 
 function getStoryItem(image) {
   let result = `
@@ -77,15 +94,15 @@ function getStoryItem(image) {
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
-	<div class="sl__item__img">
+	<div >
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
 		`;
 
-
-  result +=`<img src="/upload/${image.postImageUrl}" alt=""/>`;
+  result +=`<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt=""/>`;
 
   result +=`
     </div>
+	<!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
 	<div class="sl__item__contents">
@@ -111,14 +128,13 @@ function getStoryItem(image) {
 
 		<!--태그박스-->
 		<div class="sl__item__contents__tags">
-			<p> `;
+			`;
 
   image.tags.forEach((tag) => {
     result += `#${tag.name} `;
   });
 
   result += `			
-			</p>
 		</div>
 		<!--태그박스end-->
 
@@ -128,13 +144,10 @@ function getStoryItem(image) {
 		</div>
 		<!--게시글내용end-->
 
-
 		<!-- 댓글 박스 시작 -->
 		<div id="storyCommentList-${image.id}">
 		`;
-
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
-
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 			     ${comment.user.name}: ${comment.content}
@@ -154,17 +167,13 @@ function getStoryItem(image) {
 		</div>
 		<!-- 댓글 박스 끝 -->
 		<!--  ########################  댓글 목록 반복문 끝   ################################# -->
-
-
 		<!--댓글입력박스-->
 		<!-- <div class="sl__item__input"> -->
 		<div class="sl__item__input">
 			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
 			<button type="button" onClick="addComment(${image.id})">쓰기</button>
 		</div>
-		<!--댓글달기박스end-->
-		
-		
+		<!--댓글달기박스end-->		
 	</div>
 </div>
 <!--전체 리스트 아이템end-->

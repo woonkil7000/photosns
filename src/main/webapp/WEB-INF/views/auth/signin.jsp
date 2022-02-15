@@ -40,7 +40,7 @@
                             -->
                             <input type="text"  name="username" autocomplete="username">
                             <input type="password"  name="password" autocomplete="current-password">
-                            <div class="login__facebook"><span>test user = "cos" , pw = "111"</span></div>
+                            <div class="login__facebook"><span>test user = "test" , pw = "111"</span></div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->

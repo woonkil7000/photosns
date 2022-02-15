@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Component // Restcontoller, Service 가  Component 의 구현체다.
+@Component("photogram.ValidationAdvice") // Restcontoller, Service 가  Component 의 구현체다.
 @Aspect
 public class ValidationAdvice {
 

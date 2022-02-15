@@ -10,8 +10,6 @@ import com.cos.photogram.domain.comment.CommentRepository;
 import com.cos.photogram.domain.comment.handler.ex.CustomApiException;
 import com.cos.photogram.domain.likes.LikesRepository;
 import com.cos.photogram.domain.user.User;
-import com.cos.photogram.utils.Script;
-import com.cos.photogram.web.dto.imagerank.ImageRankDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
