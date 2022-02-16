@@ -6,7 +6,7 @@
 	<section class="container">
 		<!--전체 리스트 시작-->
 		<article class="story-list" id="storyList">
-			<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;">구독중 이미지</span></div>
+			<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;">구독중인 이미지</span></div>
 
 			<!--전체 리스트 아이템-->
 
@@ -15,7 +15,7 @@
 				<div class="sl__item__header">
 					<div>
 						<img class="profile-image" src="#"
-							onerror="this.src='/images/person.jpeg'" />
+							onerror="this.src='/images/noimage.jpg'" />
 					</div>
 					<div>TherePrograming</div>
 				</div>
@@ -63,9 +63,75 @@
 			-->
 
 
+			<!-- 이미지 Modal -->
+			<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+
+						<div class="modal-body">
+							<img  data-bs-dismiss="modal" class="img-box" src=""
+								  alt="" onerror="this.src='/images/noimage.jpg'"
+								  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />
+							<form>
+								<input type="hidden" id="image_id">
+								<input type="hidden" id="image_url">
+								<input type="hidden" id="user_id">
+								<hr>
+								<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 이미지 모달 end -->
+
+
 		</article>
 	</section>
 </main>
+<!-- 이미지 삭제 모달 이벤트 처리 -->
+<script>
+	{	// 모달 요소 선택
+		//const delete_modal = document.getElementById('#delete-modal'); // 모달 id
+		const delete_modal = document.querySelector('#image-modal'); // 모달 id
+		// 모달 이벤트 감지
+		delete_modal.addEventListener('show.bs.modal', function (event) {
+			// 트리거 버트 선택
+			const button = event.relatedTarget;
+			// 전달할 데이타 가져오기
+			const imageid = button.getAttribute("data-bs-imageid");
+			const imageurl = button.getAttribute("data-bs-imageurl");
+			const userid = button.getAttribute("data-bs-userid");
+			const caption = button.getAttribute("data-bs-caption");
+			console.log("imageid=",imageid);
+			console.log("imageurl=",imageurl);
+			console.log("userid=",userid);
+			console.log("caption=",caption);
+
+			// 모달창에 데이타 반영
+			document.querySelector("#image_id").value=imageid;
+			document.querySelector("#caption").innerHTML=caption;
+			document.querySelector("#user_id").value=userid;
+			document.querySelector("#image_url").value="/upload/"+imageurl;
+			document.querySelector("#lgimage").src="/upload/"+imageurl;
+			// If necessary, you could initiate an AJAX request here
+			// and then do the updating in a callback.
+			// Update the modal's content.
+			//const modalTitle = delete_modal.querySelector('.modal-title')
+			//const modalBodyInput = delete_modal.querySelector('.modal-body input')
+			//modalTitle.textContent = 'New message to ' + recipient
+			//modalBodyInput.value = recipient
+		})
+	}
+</script>
 <script src="/js/story.js"></script>
 </body>
 </html>

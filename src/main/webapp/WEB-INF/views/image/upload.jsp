@@ -22,7 +22,7 @@
                     <input type="file" name="file"  onchange="imageChoose(this)"/>
                     
                     <div class="upload-img">
-                        <img src="/images/person.jpeg" alt="" id="imageUploadPreview" />
+                        <img src="/images/noimage.jpg" alt="" id="imageUploadPreview" />
                     </div>
                     
                     <!--사진설명 + 업로드버튼-->

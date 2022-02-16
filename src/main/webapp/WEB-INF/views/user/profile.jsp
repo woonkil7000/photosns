@@ -16,7 +16,7 @@
 						   id="userProfileImageInput" />
 				</form>
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					 alt="" onerror="this.src='/images/person.jpeg'"
+					 alt="" onerror="this.src='/images/noimage.jpg'"
 					 id="userProfileImage" />
 			</div>
 		</div>
@@ -64,8 +64,8 @@
 		</div>
 		<!-- <div class="profileContainer"> -->
 		<div class="profileContainer">
-			<a href=""><i class="far fa-images"></i><span>등록사진:${dto.imageCount}</span></a>
-			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><span><i class="fas fa-users"></i>구독자:${dto.subscribeCount}</span></a>
+			<span><i class="far fa-images"></i> 등록 사진수: ${dto.imageCount}
+			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i> 구독 정보: ${dto.subscribeCount}</span></a>
 		</div>
 		<!--
 		<div class="state">
@@ -185,7 +185,7 @@
 <!--로그아웃, 회원정보변경 모달 end-->
 
 <!--프로필사진 바꾸기 모달-->
-<div class="modal-image" onclick="modalImage()">
+<div  class="modal-image" onclick="modalImage()">
 	<div class="modal">
 		<p>프로필 사진 바꾸기</p>
 		<button onclick="profileImageUpload(${dto.user.id},${principal.user.id})">프로필 사진 등록/수정 업로드</button>
@@ -238,7 +238,7 @@
 
 			<div class="modal-body">
 					<img  class="img-box" src=""
-						  alt="" onerror="this.src='/images/person.jpeg'"
+						  alt="" onerror="this.src='/images/noimage.jpg'"
 						  id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"  />
 				<form>
 					<input type="hidden" id="image_id">
@@ -325,7 +325,7 @@
 				// http 응답 코드에 따른 메시지 출력
 				const msg = (response.ok) ? "이미지 삭제 완료~" : "이미지 삭제 실패!!";
 				console.log(msg);
-				alert(msg);
+				//alert(msg);
 				// 현재 페이지를 새로 고침
 				window.location.reload();
 			})

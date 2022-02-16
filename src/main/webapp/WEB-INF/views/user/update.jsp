@@ -12,7 +12,7 @@
                     <!--프로필셋팅 아이디영역-->
                     <div class="content-item__01">
                         <div class="item__img"><img src="/upload/${principal.user.profileImageUrl}" alt=""
-                                onerror="this.src='/images/person.jpeg'" /></div>
+                                onerror="this.src='/images/noimage.jpg'" /></div>
                         <div class="item__username">
                             <h2>${principal.user.username}</h2>
                         </div>

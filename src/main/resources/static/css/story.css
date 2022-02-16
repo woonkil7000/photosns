@@ -142,6 +142,7 @@
   .sl__item__contents
   .sl__item__contents__content {
   padding: 5px 10px;
+  border-radius: 10px;
 }
 
 /*게시물 like 갯수스타일*/
@@ -189,6 +190,7 @@
   font-size: 18px;
   padding: 0 5px;
   margin-bottom: 1px;
+  border-radius: 10px;
 }
 
 /*댓글 삭제버튼*/
@@ -239,7 +241,7 @@
   .sl__item__contents__icon
   button:first-child
   .active {
-  color: red;
+  color: Dodgerblue;
 }
 
 .profile-image {

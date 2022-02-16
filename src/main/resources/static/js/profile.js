@@ -70,7 +70,7 @@ function subscribeInfoModalOpen(pageUserId) {
 function getSubscribeModalItem(u) {
 	let item = `<div class="subscribe__item" id="subscribeModalItem-${u.userId}">`;
 	item += `<div class="subscribe__img">`;
-	item += `<img src="/upload/${u.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/>`;
+	item += `<img src="/upload/${u.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
 	item += `</div>`;
 	item += `<div class="subscribe__text">`;
 	item += `<h2>${u.name.substring(0,10)}(${u.username.substring(0,10)}...)</h2>`;
@@ -238,7 +238,7 @@ function deleteImage(imageId,principalId) {
 			console.log("오류",error);
 			//console.log("오류 내용: ",error.responseJSON.data.content);
 			console.log("오류 내용: ",error.responseJSON.message);
-			alert("오류 발생"+error);
+			//alert("오류 발생"+error);
 		});
 }
 

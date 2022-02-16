@@ -7,6 +7,10 @@
  */
 
 let page = 0;
+let storyLoadFailCount=0;
+let totalPage=0;
+let currentPage=0;
+
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
@@ -18,10 +22,15 @@ function storyLoad() {
     url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
-    console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+	console.log("## res=",res);
+	console.log("#### res.data.totalPages =",res.data.totalPages);
+	  console.log("#### currentpage : res.data.pageable.pageNumber =",res.data.pageable.pageNumber);
+    console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
 	console.log("-----------------------  res -end- ----------------------------------");
 	//return;
     //res.data.forEach((image)=>{ // List로 받을때
+	  totalPage = res.data.totalPages; // 전체 페이지
+	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
 		console.log("#### res.data.content.forEach((image) storyItem = getStoryItem(image) storyItem => "+JSON.stringify(storyItem));
@@ -37,10 +46,20 @@ function storyLoad() {
     console.log("오류",error);
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
-    alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
+    //alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
     //history.back();
 	  //window.location.replace("/");
 	  //return;
+	  if(storyLoadFailCount==0){
+		console.log("storyLoadFailCount = "+storyLoadFailCount);
+	  	let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\"><p></p><p>: : : : : 구독중인 이미지가 더이상 없습니다 : : : : :</p>" +
+		"<p>전체 이미지 목록에서 </p>" +
+			"<p>좀더 흥미로은/관심있는 사진이 있으시다면</p>" +
+		  "<p>해당 이미지 게시자의 프로필을 선택하신 후 </p>" +
+			"<p>\"구독하기\"를 신청하시면 더 많은 이미지를 보실 수 있습니다.</p></span></div>";
+	  	$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		storyLoadFailCount++;
+	  }
   });
 }
 
@@ -56,10 +75,13 @@ $(window).scroll(() => {
     let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
     //console.log("checkNum="+checkNum);
 
-  // 근사치 계산
-  if (checkNum < 50 && checkNum > -1) {
-    page++;
-    storyLoad();
+  // 근사치 계산 // currentPage = 0부터 시작
+  if (checkNum < 50 && checkNum > -1 && (page < totalPage)) {
+	  console.log(" =|=|=|= currentPage",currentPage);
+	  console.log(" =|=|=|= totalPage",totalPage);
+	  console.log(" =|=|=|= page++",page);
+	  page++;
+	  storyLoad();
   }
 });
 
@@ -69,7 +91,7 @@ function getStoryItem(image) {
 <div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
-		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/></div>
+		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->
@@ -79,8 +101,29 @@ function getStoryItem(image) {
 	<!-- <div class="col-md-5 px-0"> -->
 	<div >
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
-		          <img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="" />
+		`;
+
+	result +=`
+<!-- ####################### 이미지 모달 링크 ###################### -->
+<a   class="btn btn-outline-primary btn-sm"
+ data-bs-toggle="modal"
+ data-bs-target="#image-modal"
+ data-bs-imageid="${image.id}"
+ data-bs-imageurl="${image.postImageUrl}"
+ data-bs-caption="${image.caption}"
+ href="#"
+ role="button" style="outline: none;border: 0;">
+ 
+<img src="/upload/${image.postImageUrl}" `+
+		` style="max-height: 100%; max-width: 100%" alt="이미지"/>
+</a>
+<!-- ####################### 이미지 모달 링크 end ###################### -->
+
+`;
+
+	result +=`	
     </div>
+    <!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
 	<div class="sl__item__contents">
@@ -246,14 +289,11 @@ function addComment(imageId) {
 		let comment = res.data;
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
-			    <p>
-			      <b>${comment.user.name} :</b> ${comment.content}
-			    </p>
+			      ${comment.user.name}: ${comment.content}
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
 			  `;
 		// 코멘트 삭제를 위해 ${comment.id} 삽입
-
 		commentList.prepend(content); // 앞에 붙이기
 		commentInput.val("");
 	}).fail(error=>{

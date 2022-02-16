@@ -86,7 +86,7 @@ function getStoryItem(image) {
 <div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
-		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/person.jpeg'"/></div>
+		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->
@@ -98,7 +98,27 @@ function getStoryItem(image) {
 		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
 		`;
 
-  result +=`<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt=""/>`;
+
+
+  result +=`
+<!-- ####################### 이미지 모달 링크 ###################### -->
+<a   class="btn btn-outline-primary btn-sm"
+ data-bs-toggle="modal"
+ data-bs-target="#image-modal"
+ data-bs-imageid="${image.id}"
+ data-bs-imageurl="${image.postImageUrl}"
+ data-bs-caption="${image.caption}"
+ href="#"
+ role="button" style="outline: none;border: 0;">
+ 
+<img src="/upload/${image.postImageUrl}" `+
+	  			` style="max-height: 100%; max-width: 100%" alt="이미지"/>
+</a>
+<!-- ####################### 이미지 모달 링크 end ###################### -->
+
+`;
+
+
 
   result +=`
     </div>
@@ -261,14 +281,11 @@ function addComment(imageId) {
 		let comment = res.data;
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
-			    <p>
-			      <b>${comment.user.name} :</b> ${comment.content}
-			    </p>
+			      ${comment.user.name}: ${comment.content}
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
 			  `;
 		// 코멘트 삭제를 위해 ${comment.id} 삽입
-
 		commentList.prepend(content); // 앞에 붙이기
 		commentInput.val("");
 	}).fail(error=>{
@@ -293,7 +310,6 @@ function deleteComment(commentId) {
 	    console.log("댓글 삭제 오류",error);
 	});
 }
-
 
 
 

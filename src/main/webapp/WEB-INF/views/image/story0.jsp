@@ -19,7 +19,7 @@
 				</form>
 
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					onerror="this.src='/images/person.jpeg'" id="userProfileImage" />
+					onerror="this.src='/images/noimage.jpg'" id="userProfileImage" />
 
 			</div>
 		</div>
