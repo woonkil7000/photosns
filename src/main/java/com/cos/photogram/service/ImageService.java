@@ -131,7 +131,8 @@ public class ImageService {
 		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.
 
 		// 1. Image table 저장
-		Image image = imageReDto.toEntity(imageFileName,fileContentType, principalDetails.getUser());
+		imageReDto.setContentType(fileContentType); // file Type DB 저장.
+		Image image = imageReDto.toEntity(imageFileName, principalDetails.getUser());
 		Image imageEntity = imageRepository.save(image);
 		//imageRepository.save(image);
 		System.out.println("==================================== 이미지 Entity DB 저장.  =======================================");

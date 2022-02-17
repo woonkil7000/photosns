@@ -6,7 +6,9 @@
 	(4) 댓글쓰기, 댓글삭제
  */
 
+//const mime = require("mime");
 let isNoData=1; // init value: true. still no Data.
+let DataFailed=0; // 데이타 로딩 실패. init value: False
 let page = 0;
 let totalPage=0;
 let currentPage=0;
@@ -47,8 +49,23 @@ function storyLoad() {
 //      $("#storyList").append(storyItem);
 //    });
   }).fail(error=>{
+	  DataFailed=1;
 	  console.log("오류",error);
 	console.log("오류 내용: ",error.responseJSON.message);
+
+	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
+	  console.log("isNoData=",isNoData);
+	  console.log("DataFailed=",DataFailed);
+	  if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
+		  let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			  ": : : : : 이미지가 없습니다 : : : : :</p>";
+		  //$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		  //document.write(storyItem);
+		  //history.back();
+		  // window.location.replace("/");
+		  // location.href=`/user/${userId}`;
+		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	  }
   });
 
 } // storyLoad()
@@ -80,11 +97,7 @@ $(window).scroll(() => {
 	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
 		  ": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-	}else if(isNoData==1){
-	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-		  ": : : : : 이미지 데이타가 없습니다 : : : : :</p>";
-	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-  }
+	}
 
 });
 
@@ -111,16 +124,43 @@ function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 
 
 function getStoryItem(image) {
-	let file=`${image.user.profileImageUrl}`;
+
+	let file=`/upload/${image.user.profileImageUrl}`;
+
+	//let file=`${image.user.profileImageUrl}`;
+	//let mediaTag2 = matchMedia(file);
+	//let mediaTag  = file.contentType();
+	//console.log("============================================== mediaType =",mediaTag);
+	//console.log("============================================== mediaType2 =",mediaTag2);
+	let contentType=`${image.contentType}`;
+	contentType=contentType.substring(0,5)
+	let contentTag;
+	console.log("======================== image.contentType ={} =================================",);
+	if (contentType=='image'){
+		contentTag="<img ";
+		console.log("=============== image ===================");
+	}else if(contentType=='video'){
+		contentTag="<video controls autoplay ";
+		console.log("=============== video ===================");
+	}else{
+		contentTag="<img ";
+		console.log("=============== etc => image ===================");
+	}
+	console.log("======================== contentTag ={} =================================",contentTag);
 
   let result = `
 <!--전체 리스트 아이템-->
 <div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
-		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>
-		${image.caption}
-		</div>
+		<div>`;
+
+  	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+
+	// 사용자 프로필 이미지
+	result += `<img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+
+result +=`		</div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->
@@ -143,10 +183,12 @@ function getStoryItem(image) {
  data-bs-imageurl="${image.postImageUrl}"
  data-bs-caption="${image.caption}" 
  data-bs-userid="${image.user.id}" 
- href="#"
+ data-bs-contenttag="${contentTag}"  
+ href="#" 
  role="button" style="outline: none;border: 0;">
- 
-<img src="/upload/${image.postImageUrl}" `+
+`;
+
+  result += contentTag + ` src="/upload/${image.postImageUrl}" `+
 	  			` style="max-height: 100%; max-width: 100%" alt="이미지"/>
 </a>
 <!-- ####################### 이미지 모달 링크 end ###################### -->

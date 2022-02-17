@@ -16,7 +16,7 @@ public class ImageReqDto {
 	private String tags; // 해당 사진의 부가 정보2
 	private String contentType; // 파일 Type
 	
-	public Image toEntity(String postImageUrl,String contentType, User userEntity) {
+	public Image toEntity(String postImageUrl, User userEntity) {
 		return Image.builder()
 				.caption(caption)
 				.postImageUrl(postImageUrl)

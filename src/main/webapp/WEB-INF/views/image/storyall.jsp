@@ -80,6 +80,7 @@
 								<input type="hidden" id="image_id">
 								<input type="hidden" id="image_url">
 								<input type="hidden" id="user_id">
+								<input type="hidden" id="contenttag">
 								<hr>
 								<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
 							</form>
@@ -109,10 +110,12 @@
 			const imageurl = button.getAttribute("data-bs-imageurl");
 			const userid = button.getAttribute("data-bs-userid");
 			const caption = button.getAttribute("data-bs-caption");
+			const contenttag = button.getAttribute("data-bs-contenttag");
 			console.log("imageid=",imageid);
 			console.log("imageurl=",imageurl);
 			console.log("userid=",userid);
 			console.log("caption=",caption);
+			console.log("contenttag=",contenttag);
 
 			// 모달창에 데이타 반영
 			document.querySelector("#image_id").value=imageid;
@@ -120,6 +123,7 @@
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
 			document.querySelector("#lgimage").src="/upload/"+imageurl;
+			document.querySelector("#contenttag").value=contenttag;
 			// If necessary, you could initiate an AJAX request here
 			// and then do the updating in a callback.
 			// Update the modal's content.

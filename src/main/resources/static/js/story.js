@@ -56,6 +56,7 @@ function storyLoad() {
     //alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
     //history.back();
 	// window.location.replace("/");
+	  // location.href=`/user/${userId}`;
 	//return;
 	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
 	  console.log("isNoData=",isNoData);
