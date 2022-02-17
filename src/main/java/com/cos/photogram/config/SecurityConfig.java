@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -45,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.loginProcessingUrl("/login") // Post => PrincipalDetailsService로 로그인 진행.
 				.defaultSuccessUrl("/") //.usernameParameter() // username 변수를 다르게 사용할때
 				.and()
-			.logout()
+			.logout().clearAuthentication(true)// .clearAuthentication(true) 나중에 추가됨. 2022.02.17
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/")
 			.and()
@@ -54,21 +56,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.userInfoEndpoint()//oauth2로 로그인. 회원정보 바로받음.
 			.userService(oAuth2DetailsService);
 			// OAuth2.0 추가하기!
-
 //				.failureForwardUrl() // 기타 함수 사용법 익히기
 //				.failureUrl()
 //				.successForwardUrl()
-
 /*			.successHandler(new AuthenticationSuccessHandler() {
 			@Override
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 												Authentication authentication) throws IOException, ServletException {
-
 			}
 		})*/
-
-
 	}
+
+	// 2022.02.17 added
+/*	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()
+				.withUser("copycoding").password(password.Encode().encode("copycopy")).roles("ADMIN");
+		auth.inMemoryAuthentication()
+		.withUser("honggil").password(passwordEncode().encode("hoho")).roles("USER");
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}*/
+
 }
 
 

@@ -7,6 +7,9 @@
  */
 
 let page = 0;
+let storyLoadFailCount=0;
+let totalPage=0;
+let currentPage=0;
 
 let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
@@ -18,12 +21,20 @@ function storyLoad() {
     url: `/api/image2?page=${page}`,
     dataType: "json",
   }).done((res) => {
-	console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
-	console.log("-------------------------- res -end- -------------------------------");
+	  console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
+	//console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+	//console.log("-------------------------- res -end- -------------------------------");
+
+	  //totalPage = res.data.totalPages; // 전체 페이지
+	  //currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
     //res.data.forEach((image)=>{ // List로 받을때
-    res.data.content.forEach((image)=>{ // Page로 받을때
+	  console.log("#### res.data.totalPages =",res.data.totalPages);
+	  console.log("#### currentpage : res.data.pageable.pageNumber =",res.data.pageable.pageNumber);
+
+	  res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
-		console.log("#### storyItem ####  = getStoryItem(image) => ",storyItem);
+		console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+		//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
 		console.log("------------------------- forEach -end- --------------------------------");
         $("#storyList").append(storyItem);
     });
@@ -33,8 +44,18 @@ function storyLoad() {
 //      $("#storyList").append(storyItem);
 //    });
   }).fail(error=>{
-    console.log("오류",error);
+	  console.log("오류",error);
+	console.log("오류 내용: ",error.responseJSON.message);
+
+	  if(currentPage==totalPage-1){
+		  console.log("####### storyLoadFailCount = "+storyLoadFailCount);
+		  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			  ": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
+		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	  }
+	  storyLoadFailCount++;
   });
+
 }
 
 storyLoad();
@@ -49,9 +70,13 @@ $(window).scroll(() => {
     let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
     //console.log("checkNum="+checkNum);
 
-  // 근사치 계산
-  if (checkNum < 50 && checkNum > -1) {
-    page++;
+  // 근사치 계산 // currentPage = 0부터 시작
+  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
+	  console.log(" =|=|=|= currentPage",currentPage);
+	  console.log(" =|=|=|= totalPage",totalPage);
+	  console.log(" =|=|=|= page++",page);
+
+	  page++;
     storyLoad();
   }
 });
@@ -107,7 +132,8 @@ function getStoryItem(image) {
  data-bs-target="#image-modal"
  data-bs-imageid="${image.id}"
  data-bs-imageurl="${image.postImageUrl}"
- data-bs-caption="${image.caption}"
+ data-bs-caption="${image.caption}" 
+ data-bs-userid="${image.user.id}" 
  href="#"
  role="button" style="outline: none;border: 0;">
  

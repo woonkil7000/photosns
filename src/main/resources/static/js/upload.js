@@ -4,6 +4,7 @@ function imageChoose(obj) {
 
 	if (!f.type.match("image.*")) {
 		alert("이미지를 등록해야 합니다.");
+		window.history.back();
 		return;
 	}
 

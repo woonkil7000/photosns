@@ -31,7 +31,7 @@
                 <article class="login__form__container">
                    <!--로그인 폼-->
                    <div class="login__form">
-                       <div  class="login__facebook"><img src="/images/logo2.png" width="100" height="20" alt=""></div>
+                       <div  class="login__facebook"><img src="/images/logo2.png" width="150" height="50" alt=""></div>
                         <!--로그인 인풋-->
                         <form class="login__input" action="/login" method="post"><!-- security config login processing -->
                             <!--
@@ -40,7 +40,7 @@
                             -->
                             <input type="text"  name="username" autocomplete="username">
                             <input type="password"  name="password" autocomplete="current-password">
-                            <div class="login__facebook"><span>test user = "test" , pw = "111"</span></div>
+                            <div class="login__facebook"><p>test user = "test"</p><p> pw = "111"</p></div>
                             <button>로그인</button>
                         </form>
                         <!--로그인 인풋end-->

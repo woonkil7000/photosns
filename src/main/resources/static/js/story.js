@@ -22,18 +22,17 @@ function storyLoad() {
     url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
-	console.log("## res=",res);
-	console.log("#### res.data.totalPages =",res.data.totalPages);
-	  console.log("#### currentpage : res.data.pageable.pageNumber =",res.data.pageable.pageNumber);
-    console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
-	console.log("-----------------------  res -end- ----------------------------------");
+	console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
+    //console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
+	//console.log("-----------------------  res -end- ----------------------------------");
 	//return;
     //res.data.forEach((image)=>{ // List로 받을때
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
     res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
-		console.log("#### res.data.content.forEach((image) storyItem = getStoryItem(image) storyItem => "+JSON.stringify(storyItem));
+		console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+		//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
 		console.log("----------------------- forEach -end- ----------------------------------");
         $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
@@ -50,17 +49,17 @@ function storyLoad() {
     //history.back();
 	  //window.location.replace("/");
 	  //return;
-	  if(storyLoadFailCount==0){
-		console.log("storyLoadFailCount = "+storyLoadFailCount);
-	  	let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\"><p></p><p>: : : : : 구독중인 이미지가 더이상 없습니다 : : : : :</p>" +
-		"<p>전체 이미지 목록에서 </p>" +
-			"<p>좀더 흥미로은/관심있는 사진이 있으시다면</p>" +
-		  "<p>해당 이미지 게시자의 프로필을 선택하신 후 </p>" +
-			"<p>\"구독하기\"를 신청하시면 더 많은 이미지를 보실 수 있습니다.</p></span></div>";
-	  	$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-		storyLoadFailCount++;
+
+	  if(currentPage==totalPage-1){
+		  console.log("###### storyLoadFailCount = "+storyLoadFailCount);
+		  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\"><p></p><p>: : : : : 구독중인 이미지가 더이상 없습니다 : : : : :</p>" +
+			  "<p>전체 이미지 목록에서 프로필을 선택하신 후 </p>" +
+			  "<p>\"구독하기\"를 신청하시면 구독중인  이미지를 보실 수 있습니다.</p></span></div>";
+		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	  }
+	  storyLoadFailCount++;
   });
+
 }
 
 storyLoad();
@@ -76,10 +75,11 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 50 && checkNum > -1 && (page < totalPage)) {
+  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
 	  console.log(" =|=|=|= currentPage",currentPage);
 	  console.log(" =|=|=|= totalPage",totalPage);
 	  console.log(" =|=|=|= page++",page);
+
 	  page++;
 	  storyLoad();
   }
@@ -110,7 +110,8 @@ function getStoryItem(image) {
  data-bs-target="#image-modal"
  data-bs-imageid="${image.id}"
  data-bs-imageurl="${image.postImageUrl}"
- data-bs-caption="${image.caption}"
+ data-bs-caption="${image.caption}" 
+ data-bs-userid="${image.user.id}" 
  href="#"
  role="button" style="outline: none;border: 0;">
  
