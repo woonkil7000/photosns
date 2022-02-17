@@ -14,11 +14,13 @@ public class ImageReqDto {
 	private MultipartFile file; // 첨부 파일을 여기로 받는다.
 	private String caption; // 해당 사진의 부가 정보1
 	private String tags; // 해당 사진의 부가 정보2
+	private String contentType; // 파일 Type
 	
-	public Image toEntity(String postImageUrl, User userEntity) {
+	public Image toEntity(String postImageUrl,String contentType, User userEntity) {
 		return Image.builder()
 				.caption(caption)
 				.postImageUrl(postImageUrl)
+				.contentType(contentType)
 				.user(userEntity)
 				.build();
 	}

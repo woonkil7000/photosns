@@ -6,10 +6,12 @@
 	(4) 댓글쓰기, 댓글삭제
  */
 
+let isNoData=1; // init value: true. still no Data.
+let DataFailed=0; // 데이타 로딩 실패. init value: False
 let page = 0;
-let storyLoadFailCount=0;
 let totalPage=0;
 let currentPage=0;
+let appendFlag=0;
 
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
@@ -22,6 +24,7 @@ function storyLoad() {
     url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
+	  isNoData=0; // noData: 0:false. is Be Data.
 	console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
     //console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
 	//console.log("-----------------------  res -end- ----------------------------------");
@@ -36,37 +39,65 @@ function storyLoad() {
 		console.log("----------------------- forEach -end- ----------------------------------");
         $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
-//    let images = res.data.content;
-//    images.forEach((image) => {
-//      let storyItem = getStoryItem(image);
-//      $("#storyList").append(storyItem);
-//    });
+	//    let images = res.data.content;
+	//    images.forEach((image) => {
+	//      let storyItem = getStoryItem(image);
+	//      $("#storyList").append(storyItem);
+	//    });
   }).fail(error=>{
+
+	  DataFailed=1; // 데이타 로딩 실패.
     console.log("오류",error);
     //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
+	//document.write(error.responseJSON.code);
+	//document.write(error.responseJSON.message);
+
     //alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
     //history.back();
-	  //window.location.replace("/");
-	  //return;
-
-	  if(currentPage==totalPage-1){
-		  console.log("###### storyLoadFailCount = "+storyLoadFailCount);
-		  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\"><p></p><p>: : : : : 구독중인 이미지가 더이상 없습니다 : : : : :</p>" +
-			  "<p>전체 이미지 목록에서 프로필을 선택하신 후 </p>" +
-			  "<p>\"구독하기\"를 신청하시면 구독중인  이미지를 보실 수 있습니다.</p></span></div>";
+	// window.location.replace("/");
+	//return;
+	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
+	  console.log("isNoData=",isNoData);
+	  console.log("DataFailed=",DataFailed);
+	  if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
+		  let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			  ": : : : : 구독중인 이미지가 없습니다 : : : : :</p>"+
+			  "<p>전체 이미지에서 </p>"+
+			  "<p>회원 프로필을 선택하여 \"구독하기\"를 신청하면</p>"+
+			  "<p>구독중인 회원의 이미지를 </p>"+
+			  "<p>여기에서 보실 수 있습니다 </p>";
+		  //$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		  //document.write(storyItem);
 		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	  }
-	  storyLoadFailCount++;
   });
 
-}
+  	// 비동기 방식이라서 아래값이 변화가 없음. // ajax 안으로 구문 이동시켜야함.
+	/*
+	console.log("isNoData=",isNoData);
+	console.log("DataFailed=",DataFailed);
+ if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
+		let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			": : : : : 구독 이미지가 없습니다 : : : : :</p>"+
+			"<p>전체 이미지에서 흥미롭거나/관심있는 이미지가 있으시면 </p>"+
+			"<p>해당 이미지의 프로필에서 \"구독하기\"를 신청하시면</p>"+
+			"<p>이 페이지에서 보실 수 있습니다 </p>";
+		//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		document.write(storyItem);
+	}
+	*/
+
+} // storyLoad()
 
 storyLoad();
 
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
 
+	//console.log(" =|=|=|= currentPage",currentPage);
+	//console.log(" =|=|=|= totalPage",totalPage);
+	//console.log(" =|=|=|= page++",page);
     //console.log("문서의 높이",$(document).height());
     //console.log("윈도우 스크롤 탑",$(window).scrollTop());
     //console.log("윈도우 높이",$(window).height());
@@ -76,13 +107,17 @@ $(window).scroll(() => {
 
   // 근사치 계산 // currentPage = 0부터 시작
   if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
-	  console.log(" =|=|=|= currentPage",currentPage);
-	  console.log(" =|=|=|= totalPage",totalPage);
-	  console.log(" =|=|=|= page++",page);
-
-	  page++;
 	  storyLoad();
-  }
+	  page++;
+  	}
+	if ((currentPage==totalPage-1) && appendFlag==0 && isNoData==0){
+		appendFlag=1;
+		// append. no more date message.
+		let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
+		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	}
+
 });
 
 function getStoryItem(image) {

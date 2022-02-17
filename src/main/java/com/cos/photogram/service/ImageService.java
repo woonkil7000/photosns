@@ -108,6 +108,8 @@ public class ImageService {
 
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid+"_"+imageReDto.getFile().getOriginalFilename(); // xxxxxx_1.jpg
+		String fileContentType = imageReDto.getFile().getContentType();
+		// 추후 View 에서 사용하기 위해 file 정보에서 contentType 추출해서 DB에 저장.
 		System.out.println("이미지 파일명 : "+imageFileName);
 
 		// 이미지 파일명 문자열에서 공백제거!!
@@ -129,7 +131,7 @@ public class ImageService {
 		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.
 
 		// 1. Image table 저장
-		Image image = imageReDto.toEntity(imageFileName, principalDetails.getUser());
+		Image image = imageReDto.toEntity(imageFileName,fileContentType, principalDetails.getUser());
 		Image imageEntity = imageRepository.save(image);
 		//imageRepository.save(image);
 		System.out.println("==================================== 이미지 Entity DB 저장.  =======================================");

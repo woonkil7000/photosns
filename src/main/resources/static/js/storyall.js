@@ -6,10 +6,11 @@
 	(4) 댓글쓰기, 댓글삭제
  */
 
+let isNoData=1; // init value: true. still no Data.
 let page = 0;
-let storyLoadFailCount=0;
 let totalPage=0;
 let currentPage=0;
+let appendFlag=0;
 
 let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
@@ -21,15 +22,17 @@ function storyLoad() {
     url: `/api/image2?page=${page}`,
     dataType: "json",
   }).done((res) => {
+	  isNoData=0; // noData: 0:false. is Be Data.
 	  console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
 	//console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
 	//console.log("-------------------------- res -end- -------------------------------");
 
-	  //totalPage = res.data.totalPages; // 전체 페이지
-	  //currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+	  totalPage = res.data.totalPages; // 전체 페이지
+	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
     //res.data.forEach((image)=>{ // List로 받을때
-	  console.log("#### res.data.totalPages =",res.data.totalPages);
-	  console.log("#### currentpage : res.data.pageable.pageNumber =",res.data.pageable.pageNumber);
+	  console.log("======================= res.data.totalPages =",res.data.totalPages);
+	  console.log("======================= currentpage : res.data.pageable.pageNumber =",res.data.pageable.pageNumber);
+	  //console.log("#### file = ",res.data.content)
 
 	  res.data.content.forEach((image)=>{ // Page로 받을때
         let storyItem = getStoryItem(image);
@@ -46,24 +49,20 @@ function storyLoad() {
   }).fail(error=>{
 	  console.log("오류",error);
 	console.log("오류 내용: ",error.responseJSON.message);
-
-	  if(currentPage==totalPage-1){
-		  console.log("####### storyLoadFailCount = "+storyLoadFailCount);
-		  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-			  ": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
-		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-	  }
-	  storyLoadFailCount++;
   });
 
-}
+} // storyLoad()
 
 storyLoad();
 
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
 
-    //console.log("문서의 높이",$(document).height());
+	//console.log(" =|=|=|= currentPage",currentPage);
+	//console.log(" =|=|=|= totalPage",totalPage);
+	//console.log(" =|=|=|= page++",page);
+
+	//console.log("문서의 높이",$(document).height());
     //console.log("윈도우 스크롤 탑",$(window).scrollTop());
     //console.log("윈도우 높이",$(window).height());
 
@@ -72,20 +71,26 @@ $(window).scroll(() => {
 
   // 근사치 계산 // currentPage = 0부터 시작
   if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
-	  console.log(" =|=|=|= currentPage",currentPage);
-	  console.log(" =|=|=|= totalPage",totalPage);
-	  console.log(" =|=|=|= page++",page);
-
-	  page++;
     storyLoad();
+	  page++;
   }
+  if ((currentPage==totalPage-1) && appendFlag==0 && isNoData==0){
+	  appendFlag=1;
+	  // append. no more date message.
+	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+		  ": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
+	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	}else if(isNoData==1){
+	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+		  ": : : : : 이미지 데이타가 없습니다 : : : : :</p>";
+	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+  }
+
 });
 
-function isFileImage(file) {
-	const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png','image/jpg','image/JPG'];
 
-	return file && acceptedImageTypes.includes(file['type'])
-};
+
+
 
 /** 이미지 비율 유지하면 크기 정하기
  * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
@@ -106,12 +111,16 @@ function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 
 
 function getStoryItem(image) {
+	let file=`${image.user.profileImageUrl}`;
+
   let result = `
 <!--전체 리스트 아이템-->
 <div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
-		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></div>
+		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>
+		${image.caption}
+		</div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
 	<!--헤더영역 end-->

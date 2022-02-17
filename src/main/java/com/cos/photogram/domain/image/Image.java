@@ -32,6 +32,7 @@ public class Image {
 	private int id;
 	private String caption; // 오늘 나 너무 피곤했어!!
 	private String postImageUrl; //서버상의 이미지가 저장된 경로.
+	private String contentType; // 파일 Type 저장.
 	
 	@JsonIgnoreProperties({"images"}) // images의 User정보는 무시하라.
 	@ManyToOne(fetch = FetchType.EAGER) // 이미지를 select하면 조인해서 User정보를 같이 들고옴.
