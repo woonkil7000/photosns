@@ -64,7 +64,7 @@
 
 			<!-- 이미지 Modal -->
 			<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
@@ -73,9 +73,8 @@
 
 
 						<div class="modal-body">
-							<img  data-bs-dismiss="modal" class="img-box" src=""
-								  alt="" onerror="this.src='/images/noimage.jpg'"
-								  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />
+							<!--<img  data-bs-dismiss="modal" class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />-->
+							<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 							<form>
 								<input type="hidden" id="image_id">
 								<input type="hidden" id="image_url">
@@ -122,7 +121,7 @@
 			document.querySelector("#caption").innerHTML=caption;
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
-			document.querySelector("#lgimage").src="/upload/"+imageurl;
+			document.querySelector("#lgimage").innerHTML=contenttag; //이미지 삽입부분
 			document.querySelector("#contenttag").value=contenttag;
 			// If necessary, you could initiate an AJAX request here
 			// and then do the updating in a callback.

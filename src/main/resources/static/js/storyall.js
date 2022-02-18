@@ -125,28 +125,38 @@ function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 
 function getStoryItem(image) {
 
-	let file=`/upload/${image.user.profileImageUrl}`;
+	//let file=`/upload/${image.user.profileImageUrl}`;
 
 	//let file=`${image.user.profileImageUrl}`;
 	//let mediaTag2 = matchMedia(file);
 	//let mediaTag  = file.contentType();
 	//console.log("============================================== mediaType =",mediaTag);
 	//console.log("============================================== mediaType2 =",mediaTag2);
+
+	console.log("======================== image.contentType ={} =================================",);
+
+	<!-- Get Content Type -->
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
-	let contentTag;
-	console.log("======================== image.contentType ={} =================================",);
-	if (contentType=='image'){
-		contentTag="<img ";
-		console.log("=============== image ===================");
-	}else if(contentType=='video'){
-		contentTag="<video controls autoplay ";
-		console.log("=============== video ===================");
-	}else{
-		contentTag="<img ";
-		console.log("=============== etc => image ===================");
+	let pathUrl=`/upload/${image.postImageUrl}`;
+
+	function fnContentType(contentType,pathUrl){
+		let contentTag;
+
+		if (contentType=='image'){ // image
+			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			console.log("=============== image ===================");
+		}else if(contentType=='video'){ // video
+			contentTag="<video controls muted autoplay src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			console.log("=============== video ===================");
+		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
+			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			console.log("=============== etc => image ===================");
+		}
+		console.log("======================== contentTag ={} =================================",contentTag);
+		return contentTag;
 	}
-	console.log("======================== contentTag ={} =================================",contentTag);
+	<!-- Get Content Type end  -->
 
   let result = `
 <!--전체 리스트 아이템-->
@@ -183,14 +193,17 @@ result +=`		</div>
  data-bs-imageurl="${image.postImageUrl}"
  data-bs-caption="${image.caption}" 
  data-bs-userid="${image.user.id}" 
- data-bs-contenttag="${contentTag}"  
+ data-bs-contentTag="${fnContentType(contentType,pathUrl)}"    
  href="#" 
  role="button" style="outline: none;border: 0;">
 `;
 
-  result += contentTag + ` src="/upload/${image.postImageUrl}" `+
-	  			` style="max-height: 100%; max-width: 100%" alt="이미지"/>
-</a>
+  		//fnContentType(contentType,pathUrl);
+		// #### || 게시물 이미지 테크 위치  ||  #### <img src=''> #### contentTag ####
+  result += fnContentType(contentType,pathUrl)
+  			//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
+
+	result +=`</a>
 <!-- ####################### 이미지 모달 링크 end ###################### -->
 
 `;

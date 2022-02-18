@@ -99,33 +99,108 @@
 			</c:choose>
 <!-- 이미지 삭제 가능 알림 end -->
 
+
+
 			<!--게시물컨 그리드배열-->
 			<div class="tab-1-content-inner">
 
 				<!--아이템들-->
                 <!--  JSTL 문법  -->
 				<c:forEach var="image" items="${dto.user.images}"><!-- EL 표현식에서 변수명을 적으면 get함수가 자동으로 호출됨. -->
+
+				<script>
+					<!-- Get Content Type -->
+/*
+					let contentType="${image.contentType}";
+					contentType=contentType.substring(0,5)
+					let pathUrl="/upload/" + "${image.postImageUrl}";
+					console.log("#### init contentType=",contentType);
+					console.log("#### init pathUrl=",pathUrl);
+
+					function fnContentType(contentType,pathUrl){
+						let contentTag;
+
+						if (contentType=='image'){ // image
+							contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+							console.log("=============== image ===================");
+						}else if(contentType=='video'){ // video
+							contentTag="<video controls muted autoplay src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='동영상' />";
+							console.log("=============== video ===================");
+						}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
+							contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+							console.log("=============== etc image ===================");
+						}
+						console.log("======================== contentTag = ",contentTag);
+						return contentTag;
+					}*/
+
+					<!-- Get Content Type end  -->
+				</script>
+
 					<!-- profileImageUpload(${dto.user.id},${principal.user.id}) -->
 					<!-- <div class="img-box" onclick="deleteImage(${image.id},${principal.user.id})"> -->
 					<div class="img-box" id="${image.id}">
 						<div  class="col">
 							<c:choose>
 								<c:when test="${dto.pageOwnerState}"> <!-- 페이지 주인일때  -->
+
+
+
+
+
+
+									<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
+										<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
+										<c:set var="contentTag" value=""/>
+										<%--
+										<c:out value=" #### init contentType=${contentType} ####"></c:out>
+										<c:out value=" #### init pathUrl=${pathUrl} ####"></c:out>
+										<c:out value=" #### init contentTag=${contentTag} ####"></c:out>
+										--%>
+										<c:choose>
+											<c:when test="${contentType=='image'}">
+												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
+												<c:out value="${contentTag}"></c:out>
+											</c:when>
+											<c:when test="${contentType=='video'}">
+												<c:set var="contentTag" value="<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
+												<c:out value="${contentTag}"></c:out>
+											</c:when>
+											<c:otherwise>
+												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
+												<c:out value="${contentTag}"></c:out>
+											</c:otherwise>
+										</c:choose>
+
+											<!-- ####################### 이미지 링크 ###################### -->
+											<a   class="btn btn-outline-primary btn-sm"
+											data-bs-toggle="modal"
+											data-bs-target="#delete-modal"
+											data-bs-imageid="${image.id}"
+											data-bs-imageurl="${image.postImageUrl}"
+											data-bs-userid="${principal.user.id}"
+											data-bs-caption="${image.caption}"
+											data-bs-contentTag="${contentTag}"
+											href="#"
+											role="button" style="outline: none;border: 0;">
+												${contentTag}
+
+										<!--<img src="/upload/${image.postImageUrl}"></a>-->
+										<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->
+									</a>
 									<!-- ####################### 이미지 링크 ###################### -->
-									<a   class="btn btn-outline-primary btn-sm"
-										 data-bs-toggle="modal"
-										 data-bs-target="#delete-modal"
-										 data-bs-imageid="${image.id}"
-										 data-bs-imageurl="${image.postImageUrl}"
-										 data-bs-userid="${principal.user.id}"
-										 data-bs-caption="${image.caption}"
-										 href="#"
-										 role="button" style="outline: none;border: 0;"><img src="/upload/${image.postImageUrl}"></a>
-									<!-- ####################### 이미지 링크 ###################### -->
+
+
+
 								</c:when>
 								<c:otherwise> <!-- 페이지 주인 아닐때 -->
 									<!-- ####################### 이미지 링크 ###################### -->
-									<img src="/upload/${image.postImageUrl}">
+									<!--<img src="/upload/${image.postImageUrl}">-->
+									<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->
+									${contentTag}
 									<!-- ####################### 이미지 링크 ###################### -->
 								</c:otherwise>
 							</c:choose>
@@ -228,7 +303,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">이미지 설명 수정 / 삭제</h5>
@@ -237,13 +312,13 @@
 
 
 			<div class="modal-body">
-					<img  class="img-box" src=""
-						  alt="" onerror="this.src='/images/noimage.jpg'"
-						  id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"  />
+					<!--<img  class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"/>-->
+				<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
+					<input type="hidden" id="contenttag">
 					<hr>
 					<label>사진 설명 </label> <input type="text" id="caption" size="45">
 				</form>
@@ -271,17 +346,21 @@
 		const imageurl = button.getAttribute("data-bs-imageurl");
 		const userid = button.getAttribute("data-bs-userid");
 		const caption = button.getAttribute("data-bs-caption");
+		const contenttag = button.getAttribute("data-bs-contenttag");
 		console.log("imageid=",imageid);
 		console.log("imageurl=",imageurl);
 		console.log("userid=",userid);
 		console.log("caption=",caption);
+		console.log("contenttag=",contenttag);
 
 		// 모달창에 데이타 반영
 		document.querySelector("#image_id").value=imageid;
 		document.querySelector("#caption").value=caption;
 		document.querySelector("#user_id").value=userid;
 		document.querySelector("#image_url").value="/upload/"+imageurl;
-		document.querySelector("#delimage").src="/upload/"+imageurl;
+		//document.querySelector("#delimage").src="/upload/"+imageurl;
+		document.querySelector("#lgimage").innerHTML=contenttag; // 이미지 삽입부분
+		document.querySelector("#contenttag").value=contenttag;
 		// If necessary, you could initiate an AJAX request here
 		// and then do the updating in a callback.
 		// Update the modal's content.
@@ -340,7 +419,7 @@
 		// 클릭 이벤트 감지
 		update_button.addEventListener('click',function (event) {
 
-			// 삭제 이미지 객채 생성
+			// 수정 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
 				caption: document.querySelector("#caption").value,
