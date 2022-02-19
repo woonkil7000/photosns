@@ -1,6 +1,10 @@
 package com.cos.photogram.config;
 
+import com.cos.photogram.config.auth.AuthFailureHandler;
+import com.cos.photogram.config.auth.handler.CustomAuthFailureHandler;
+import com.cos.photogram.config.auth.handler.CustomAuthSuccessHandler;
 import com.cos.photogram.config.auth.oauth.OAuth2DetailsService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +14,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +34,21 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	//	@Autowired
+	// 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	/*@Autowired
+	private UserDetailsService userDetailsService;
+	*/
+	//private CustomUserDetailsService userDetailsService;
+
 	private final OAuth2DetailsService oAuth2DetailsService;
 
-	@Bean
-	public BCryptPasswordEncoder encode() {
-		return new BCryptPasswordEncoder();
-	}
-	
+	//private AuthFailureHandler authFailureHandler;
+
+
+
+
 	// 모델 : Image, User, Likes, Subscribe, Tag : 인증 필요함.
 	// auth 주소 : 인증 필요없음.
 	@Override
@@ -39,15 +57,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers("/", "/user/**", "/image/**", "/subscribe/**, /comment/**","/api/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/auth/failLogin").permitAll() //2022.02.19
 			.anyRequest()
 			.permitAll()
 			.and()
 			.formLogin()
 				.loginPage("/auth/signin")
-				.loginProcessingUrl("/login") // Post => PrincipalDetailsService로 로그인 진행.
 				.defaultSuccessUrl("/") //.usernameParameter() // username 변수를 다르게 사용할때
+				.failureUrl("/auth/signin?error=true")
+				//.successHandler(successHandler())//2022.02.19.
+				//.failureHandler(failureHandler()) //2022.02.19.
+				.loginProcessingUrl("/login") // Post => PrincipalDetailsService로 로그인 진행.
 				.and()
 			.logout().clearAuthentication(true)// .clearAuthentication(true) 나중에 추가됨. 2022.02.17
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))// 2022.02.19
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/")
 			.and()
@@ -66,6 +89,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			}
 		})*/
 	}
+
+	/*@Bean
+	@Override
+	public UserDetailsService userDetailsService() {
+		UserDetails user =
+				User.withDefaultPasswordEncoder()
+						.username("user")
+						.password("password")
+						.roles("USER")
+						.build();
+
+		return new InMemoryUserDetailsManager(user);
+	}*/
+	@Bean
+	public BCryptPasswordEncoder encode() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationSuccessHandler successHandler(){
+		return new CustomAuthSuccessHandler();
+	}
+	@Bean
+	public AuthenticationFailureHandler failureHandler(){
+		return new CustomAuthFailureHandler();
+	}
+
+
+	/*@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+		auth.userDetailsService((memberService).encode(encode()));
+	}*/
 
 	// 2022.02.17 added
 /*	@Autowired

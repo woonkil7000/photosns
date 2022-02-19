@@ -37,7 +37,7 @@ public class AuthController {
 		return "auth/signup";
 	}
 
-	@PostMapping("/auth/signup") // /auth/signup.jsp <form action=post
+	@PostMapping("/auth/signup") // /auth/signup.jsp <form action=post //////////// 회원 가입 정보 전송 ///////////////
 	public String join(@Valid SignupDto signupDto, BindingResult bindingResult) {
 
 		/*if(bindingResult.hasFieldErrors()){
@@ -57,6 +57,8 @@ public class AuthController {
 			//User <- SignupDto
 			User user = signupDto.toEntity();
 			//log.info(user.toString());
+
+			////////////////////////////// 중복 id 체크 처리 ?? ///////////////////////////////
 
 			User userEntity = authService.joinMember(signupDto.toEntity());
 			System.out.println(userEntity);

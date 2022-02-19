@@ -20,9 +20,9 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(CustomValidationException.class)
     public String validationException(CustomValidationException e) {
-        // CMRespDto, Script 비교
-        // 1. 클라이언트에게 응답할때는 Script가 좋음.
-        // 2. Ajax, Android 통신할때는 CMRespDto가 좋음.
+        //////////////////////////////// CMRespDto, Script 비교 ////////////////////////////////
+        /////////////////////// 사람: 클라이언트에게 응답할때는 Script가 좋음 /////////////////////////
+        /////////////////////// 기기, Device: Ajax, Android 통신할때는 CMRespDto가 좋음 ////////////
         log.info("===================  (String) validation Exception 실행됨 =============================");
 
         if(e.getErrorMap() == null) {
@@ -34,27 +34,27 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     public String Exception(CustomException e) {
-        // CMRespDto, Script 비교
-        // 1. 클라이언트에게 응답할때는 Script가 좋음.
-        // 2. Ajax, Android 통신할때는 CMRespDto가 좋음.
+        //////////////////////////////// CMRespDto, Script 비교 ////////////////////////////////
+        /////////////////////// 사람: 클라이언트에게 응답할때는 Script가 좋음 /////////////////////////
+        /////////////////////// 기기, Device: Ajax, Android 통신할때는 CMRespDto가 좋음 ////////////
         log.info("===================  (String) Exception 실행됨 =============================");
         return Script.back(e.getMessage());
     }
 
     @ExceptionHandler(CustomValidationApiException.class)
     public ResponseEntity<?> validationApiException(CustomValidationApiException e) {
-        // CMRespDto, Script 비교
-        // 1. 클라이언트에게 응답할때는 Script가 좋음.
-        // 2. Ajax, Android 통신할때는 CMRespDto가 좋음.
+        //////////////////////////////// CMRespDto, Script 비교 ////////////////////////////////
+        /////////////////////// 사람: 클라이언트에게 응답할때는 Script가 좋음 /////////////////////////
+        /////////////////////// 기기, Device: Ajax, Android 통신할때는 CMRespDto가 좋음 ////////////
         log.info("=================== (ResponseEntity) validation ApiException 실행됨 =============================");
         return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
 
     }
 
     //    public CMRespDto<?> validationApiException(CustomValidationApiException e){
-    //      // CMRespDto, Script 비교
-    //      // 1. 클라이언트에게 응답할때는 Script가 좋음.
-    //      // 2. Ajax, Android 통신할때는 CMRespDto가 좋음.
+    //////////////////////////////// CMRespDto, Script 비교 ////////////////////////////////
+    /////////////////////// 사람: 클라이언트에게 응답할때는 Script가 좋음 /////////////////////////
+    /////////////////////// 기기, Device: Ajax, Android 통신할때는 CMRespDto가 좋음 ////////////
     //        return new CMRespDto<>(-1,e.getMessage(),e.getErrorMap());
     //    }
     @ExceptionHandler(CustomApiException.class)

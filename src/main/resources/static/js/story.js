@@ -29,16 +29,27 @@ function storyLoad() {
     //console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
 	//console.log("-----------------------  res -end- ----------------------------------");
 	//return;
-    //res.data.forEach((image)=>{ // List로 받을때
+
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+
+	  console.log("######### page++ ############ page++ [from 0]=",page);
+	  console.log("######### totalPages ############ res.data.totalPages =",res.data.totalPages);
+	  console.log("######### current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
+	  //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
+
         let storyItem = getStoryItem(image);
+		////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
+		/////////////// getStoryItem() 함수 호출
+
 		console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
 		//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
 		console.log("----------------------- forEach -end- ----------------------------------");
         $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     });
+
+	page++;
 	//    let images = res.data.content;
 	//    images.forEach((image) => {
 	//      let storyItem = getStoryItem(image);
@@ -109,7 +120,7 @@ $(window).scroll(() => {
   // 근사치 계산 // currentPage = 0부터 시작
   if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
 	  storyLoad();
-	  page++;
+	  //page++;
   	}
 	if ((currentPage==totalPage-1) && appendFlag==0 && isNoData==0){
 		appendFlag=1;
@@ -118,6 +129,8 @@ $(window).scroll(() => {
 			": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
 		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
+
+	{passive: true}
 
 });
 
