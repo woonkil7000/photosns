@@ -142,7 +142,7 @@
 					<div class="img-box" id="${image.id}">
 						<div  class="col">
 							<c:choose>
-								<c:when test="${dto.pageOwnerState}"> <!-- 페이지 주인일때  -->
+								<c:when test="${dto.pageOwnerState}">
 
 
 
@@ -161,17 +161,17 @@
 											<c:when test="${contentType=='image'}">
 												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
-												<c:out value="${contentTag}"></c:out>
+												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:when test="${contentType=='video'}">
-												<c:set var="contentTag" value="<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<c:set var="contentTag" value="<video controls  preload='auto' muted autoplay  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 												<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
-												<c:out value="${contentTag}"></c:out>
+												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:otherwise>
 												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
-												<c:out value="${contentTag}"></c:out>
+												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:otherwise>
 										</c:choose>
 
@@ -196,7 +196,7 @@
 
 
 								</c:when>
-								<c:otherwise> <!-- 페이지 주인 아닐때 -->
+								<c:otherwise>
 									<!-- ####################### 이미지 링크 ###################### -->
 									<!--<img src="/upload/${image.postImageUrl}">-->
 									<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->

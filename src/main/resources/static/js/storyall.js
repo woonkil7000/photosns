@@ -87,7 +87,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
+  if (checkNum < 100 && checkNum > -1 && (page <= totalPage-1)) {
     storyLoad();
 	  page++;
   }
@@ -147,7 +147,7 @@ function getStoryItem(image) {
 			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video controls muted autoplay src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<video controls preload='auto' muted autoplay src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";

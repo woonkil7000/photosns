@@ -35,6 +35,10 @@
                     
                 </form>
                 <!--사진업로드 Form-->
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple>
+                </div>
             </section>
             <!--사진업로드 박스 end-->
         </main>

@@ -65,6 +65,11 @@ public class ImageController {
 		return "/image/storyall";
 	}
 
+	@GetMapping("/fetchaxios")
+	public String fetchaxios() {
+		return "/image/fetchaxios";
+	}
+
 	//  주소 : /image?page=0
 	@GetMapping("/image") // imageApi json data
 	public @ResponseBody CMRespDto<?> image(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, 
