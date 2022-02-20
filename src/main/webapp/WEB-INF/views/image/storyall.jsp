@@ -64,17 +64,19 @@
 
 			<!-- 이미지 Modal -->
 			<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-dialog  modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
+							<!-- ///////////// 모달 닫기 버튼  tag: data-bs-dismiss="modal"  /////////////-->
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 
 
 						<div class="modal-body">
 							<!--<img  data-bs-dismiss="modal" class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />-->
-							<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
+							<!--  ///////////// 이미지/영상 삽입되는 div  /////////////  -->
+							<div class="img-box" data-bs-dismiss="modal" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 							<form>
 								<input type="hidden" id="image_id">
 								<input type="hidden" id="image_url">
@@ -133,6 +135,6 @@
 		})
 	}
 </script>
-<script src="/js/storyall.js"></script>
+<script src="/js/storyall2.js"></script>
 </body>
 </html>

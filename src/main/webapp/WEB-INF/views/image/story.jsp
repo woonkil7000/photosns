@@ -65,22 +65,26 @@
 
 			<!-- 이미지 Modal -->
 			<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
+							<!-- ///////////// 모달 닫기 버튼  tag: data-bs-dismiss="modal"  /////////////-->
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 
 
 						<div class="modal-body">
-							<img  data-bs-dismiss="modal" class="img-box" src=""
+							<!--<img  data-bs-dismiss="modal" class="img-box" src=""
 								  alt="" onerror="this.src='/images/noimage.jpg'"
-								  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />
+								  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  /> -->
+							<!--  ///////////// 이미지/영상 삽입되는 div  /////////////  -->
+							<div class="img-box" data-bs-dismiss="modal" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 							<form>
 								<input type="hidden" id="image_id">
 								<input type="hidden" id="image_url">
 								<input type="hidden" id="user_id">
+								<input type="hidden" id="contenttag">
 								<hr>
 								<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
 							</form>
@@ -111,17 +115,22 @@
 			const imageurl = button.getAttribute("data-bs-imageurl");
 			const userid = button.getAttribute("data-bs-userid");
 			const caption = button.getAttribute("data-bs-caption");
+			const contenttag = button.getAttribute("data-bs-contenttag");
 			console.log("imageid=",imageid);
 			console.log("imageurl=",imageurl);
 			console.log("userid=",userid);
 			console.log("caption=",caption);
+			console.log("contenttag=",contenttag);
 
 			// 모달창에 데이타 반영
 			document.querySelector("#image_id").value=imageid;
 			document.querySelector("#caption").innerHTML=caption;
 			document.querySelector("#user_id").value=userid;
-			document.querySelector("#image_url").value="/upload/"+imageurl;
-			document.querySelector("#lgimage").src="/upload/"+imageurl;
+			//document.querySelector("#image_url").value="/upload/"+imageurl;
+			//document.querySelector("#lgimage").src="/upload/"+imageurl;
+			document.querySelector("#lgimage").innerHTML=contenttag; //이미지 삽입부분
+			document.querySelector("#contenttag").value=contenttag;
+
 			// If necessary, you could initiate an AJAX request here
 			// and then do the updating in a callback.
 			// Update the modal's content.

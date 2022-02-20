@@ -164,7 +164,7 @@
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:when test="${contentType=='video'}">
-												<c:set var="contentTag" value="<video controls  preload='auto' muted autoplay  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<c:set var="contentTag" value="<video playsinline loop controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 												<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
@@ -303,10 +303,10 @@
 
 <!-- Modal -->
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">이미지 설명 수정 / 삭제</h5>
+				<h5 class="modal-title" id="exampleModalLabel">이미지 설명 수정 / 이미지 삭제</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
@@ -323,10 +323,16 @@
 					<label>사진 설명 </label> <input type="text" id="caption" size="45">
 				</form>
 			</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="update-btn">설명 수정</button>
-				<button type="button" class="btn btn-primary" id="delete-btn">이미지 삭제</button>
+			<div class="modal-footer">
+					<div>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
+					</div>
+					<div>
+						<button type="button" class="btn btn-primary" id="update-btn">설명 수정</button>
+					</div>
+					<div>
+						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">이미지 삭제</button>
+					</div>
 			</div>
 		</div>
 	</div>

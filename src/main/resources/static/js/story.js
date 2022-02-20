@@ -33,9 +33,10 @@ function storyLoad() {
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
 
-	  console.log("######### page++ ############ page++ [from 0]=",page);
-	  console.log("######### totalPages ############ res.data.totalPages =",res.data.totalPages);
-	  console.log("######### current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
+	  console.log("########################################## PAGE ########################################################");
+	  console.log("///////////////////// page++ ############ page++ [from 0]=",page);
+	  console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
+	  console.log("///////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
 	  //res.data.forEach((image)=>{ // List로 받을때
     res.data.content.forEach((image)=>{ // Page로 받을때
 
@@ -118,7 +119,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
+  if (checkNum < 100 && checkNum > -1 && (page <= totalPage-1)) {
 	  storyLoad();
 	  //page++;
   	}
@@ -130,16 +131,44 @@ $(window).scroll(() => {
 		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 
-	{passive: true}
+	//{passive: true}
 
 });
 
 function getStoryItem(image) {
+
+	console.log("======================== image.contentType ={} =================================",);
+
+	<!-- Get Content Type -->
+	let contentType=`${image.contentType}`;
+	contentType=contentType.substring(0,5)
+	let pathUrl=`/upload/${image.postImageUrl}`;
+
+	function fnContentType(contentType,pathUrl){
+		let contentTag;
+
+		if (contentType=='image'){ // image
+			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			console.log("=============== image ===================");
+		}else if(contentType=='video'){ // video
+			contentTag="<video playsinline loop controls preload='metadata' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
+			console.log("=============== video ===================");
+		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
+			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			console.log("=============== etc => image ===================");
+		}
+		console.log("======================== contentTag ={} =================================",contentTag);
+		return contentTag;
+	}
+	<!-- Get Content Type end  -->
+
+
   let result = `
 <!--전체 리스트 아이템-->
 <div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
+		<!-- 사용자 프로필 이미지 -->
 		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
 	</div>
@@ -161,12 +190,21 @@ function getStoryItem(image) {
  data-bs-imageurl="${image.postImageUrl}"
  data-bs-caption="${image.caption}" 
  data-bs-userid="${image.user.id}" 
+ data-bs-contentTag="${fnContentType(contentType,pathUrl)}" 
  href="#"
  role="button" style="outline: none;border: 0;">
  
-<img src="/upload/${image.postImageUrl}" `+
-		` style="max-height: 100%; max-width: 100%" alt="이미지"/>
-</a>
+	<!-- <img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/> -->
+`;
+
+
+	//fnContentType(contentType,pathUrl);
+	// #### || 게시물 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
+	result += fnContentType(contentType,pathUrl)
+	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
+
+
+	result += `</a>
 <!-- ####################### 이미지 모달 링크 end ###################### -->
 
 `;
