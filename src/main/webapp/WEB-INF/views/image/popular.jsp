@@ -28,20 +28,20 @@
                             --%>
 						<c:choose>
 							<c:when test="${contentType=='image'}">
-								<c:set var="contentTag" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<c:set var="contentTag2" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 								<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
 								<%--<c:out value="${contentTag}"></c:out>--%>
 							</c:when>
 							<c:when test="${contentType=='video'}">
-								<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-								<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+								<c:set var="contentTag" value="<video playsinline preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+								<c:set var="contentTag2" value="<video playsinline controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 								<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 								<%--<c:out value="${contentTag}"></c:out>--%>
 							</c:when>
 							<c:otherwise>
-								<c:set var="contentTag" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<c:set var="contentTag2" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 								<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 								<%--<c:out value="${contentTag}"></c:out>--%>
 								<%-- //////////// contentTag:페이지용, contentTag2: 모달페이지용으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>

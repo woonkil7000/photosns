@@ -31,11 +31,15 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 			+ " t) and userId != :principalId  ", nativeQuery = true)
 	*/
 
-	// popular page: 좋아요 랭킹 10. 좋아요가 많은 순으로 사진 정렬. 내 id 사진 제외.
+	// popular page: 좋아요 랭킹 20. 좋아요가 많은 순으로 사진 정렬.
 
+//	@Query(value = "select * from image i inner join "
+//			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc,imageId desc limit 20) l "
+//			+" on i.id = l.imageId where i.userId != :principalId", nativeQuery = true)
 	@Query(value = "select * from image i inner join "
 			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc,imageId desc limit 20) l "
-			+" on i.id = l.imageId where i.userId != :principalId", nativeQuery = true)
+			+" on i.id = l.imageId ", nativeQuery = true)
+
 	List<Image> mExplore(int principalId);
 
 	//@Query(value = "select * from image where id in (select imageId from (select imageId, count(imageId) likeCount from likes group by imageId order by 2 desc) t) and userId != :principalId  ", nativeQuery = true)

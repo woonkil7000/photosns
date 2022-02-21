@@ -127,8 +127,8 @@
 										--%>
 										<c:choose>
 											<c:when test="${contentType=='image'}">
-												<c:set var="contentTag" value="<img data-bs-dismiss='modal'  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-												<c:set var="contentTag2" value="<img data-bs-dismiss='modal'  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
@@ -139,8 +139,8 @@
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:otherwise>
-												<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-												<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 
@@ -183,8 +183,8 @@
                                     --%>
 									<c:choose>
 										<c:when test="${contentType=='image'}">
-											<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-											<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 											<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
 											<%--<c:out value="${contentTag}"></c:out>--%>
 										</c:when>
@@ -195,8 +195,8 @@
 											<%--<c:out value="${contentTag}"></c:out>--%>
 										</c:when>
 										<c:otherwise>
-											<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-											<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 											<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 											<%--<c:out value="${contentTag}"></c:out>--%>
 

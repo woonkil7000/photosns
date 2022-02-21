@@ -27,7 +27,7 @@ public class ImageApiController {
 
     @GetMapping("/api/image")
     public ResponseEntity<?> imageStory(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                        @PageableDefault(size=3) Pageable pageable){
+                                        @PageableDefault(size=5) Pageable pageable){
         Page<Image> images = imageService.이미지스토리(principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
         if (images.isEmpty()) { // ############### 구독자가 없는 경우 에러
@@ -37,7 +37,7 @@ public class ImageApiController {
         }
     }
     @GetMapping("/api/image2")
-    public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=3) Pageable pageable){
+    public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=5) Pageable pageable){
         Page<Image> images = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable);
         // 로그인 사용자 ID와  페이지 전달 // imageRepository 에서 인자로 사용.
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable) #######################");

@@ -9,26 +9,23 @@
 //const mime = require("mime");
 let isNoData=1; // init value: true. still no Data.
 let DataFailed=0; // 데이타 로딩 실패. init value: False
-let page = 0;
+let page;
 let totalPage=0;
 let currentPage=0;
-let appendLastFlag=0; // 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
+let isLastPage=false;
+let appendLastFlag=0;// 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
 
 let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
 
-async function storyLoad() {
-	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ page="+page)
-	let response = await fetch(`/api/image2?page=${page}`)
-		.then((response) => {
-			if (!response.ok) { //////////////////// 에러 처리
-				throw new Error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 400 아니면 500 에러남')
-				console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 400 아니면 500 에러남')
-			}
-			return response.json()
-		})
-		.then((res) => {
-			console.log(res.data)
+function storyLoad() {
+	// ajax로 Page<Image> 가져올 예정 (3개)
+	$.ajax({
+	type:"get",
+		url:`/api/image2?page=${page}`,
+		datatype: "json",
+}).done((res)=>{
+			//console.log(res.data)
 			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
 			isNoData=0; // noData: 0:false. is Be Data.
 			console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
@@ -36,11 +33,13 @@ async function storyLoad() {
 			//console.log("-------------------------- res -end- -------------------------------");
 			totalPage = res.data.totalPages; // 전체 페이지
 			currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+			isLastPage=res.data.last;
 			console.log("######################################## PAGE ##########################################################");
 			console.log("######################################## PAGE ##########################################################");
 			console.log("/////////////////// page  ############ page++ [from 0]=",page);
 			console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
-			console.log("############ currentpage = res.data.pageable.pageNumber [from 0]= @@@@@@@@@@@@@@@@@@@ pageNumber=",res.data.pageable.pageNumber);
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentpage [from 0]=  pageNumber=",res.data.pageable.pageNumber);
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
 			//console.log("#### file = ",res.data.content)
 
 			//res.data.forEach((image)=>{ // List로 받을때
@@ -54,37 +53,29 @@ async function storyLoad() {
 				console.log("------------------------- forEach -end- --------------------------------");
 				$("#storyList").append(storyItem);
 			});
-			page++;
+			page=currentPage+1;
 
-			/////////////////////////////////////// if OK -END-  /////////////////////////////////////////////
-		})
-		.catch(() => { /////////////////////// 에러 처리
-			console.log('에러 남')
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			DataFailed=1;
-			console.log("오류",error);
-			console.log("오류 내용: ",error.responseJSON.message);
+}).fail(error=>{
 
-			// 비동기 방식이라서  구문 안으로 이동시켜야함.
-			console.log("isNoData=",isNoData);
-			console.log("DataFailed=",DataFailed);
-			if(isNoData==1 && DataFailed==1){ // 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
-				let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-					": : : : : 이미지가 없습니다 : : : : :</p>";
-				//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-				//document.write(storyItem);
-				//history.back();
-				// window.location.replace("/");
-				// location.href=`/user/${userId}`;
-				$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-			}
-		});
-			//////////////////////////////////////// if failed -END- //////////////////////////////////////////////
+		DataFailed=1; // 데이타 로딩 실패
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		console.log("오류",error);
+		console.log("오류 내용: ",error.responseJSON.message);
+		console.log("isNoData=",isNoData);
+		console.log("DataFailed=",DataFailed);
+		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
+		if(isNoData==1&&DataFailed==1){
+		let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			": : : : : 이미지가 없습니다 : : : : :</p>";
+		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
+		}
 
-}
-storyLoad().catch(()=>{
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!catch 에러 남')
-}); // new storyLoad() -END-
+	})
+
+} // new storyLoad() -END-
+
+// 첫 로딩때 실행.
+storyLoad();
 
 //storyLoad();
 
@@ -94,7 +85,6 @@ $(window).scroll(() => {
 	//console.log(" =|=|=|= currentPage",currentPage);
 	//console.log(" =|=|=|= totalPage",totalPage);
 	//console.log(" =|=|=|= page++",page);
-
 	//console.log("문서의 높이",$(document).height());
     //console.log("윈도우 스크롤 탑",$(window).scrollTop());
     //console.log("윈도우 높이",$(window).height());
@@ -103,11 +93,11 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 100 && checkNum > -1 && (page <= (totalPage-1))) {
-    storyLoad();
-	  //page++;
+  if (checkNum < 1 && checkNum > -1 && (page <= (totalPage-1))) {
+
+	  storyLoad();
   }
-  if ((currentPage==totalPage-1) && appendLastFlag==0 && isNoData==0){
+  if (isLastPage==true&&appendLastFlag!=1){ // 데이타의 마지막 페이지
 	  appendLastFlag=1;
 	  // append. no more date message.
 	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
@@ -119,19 +109,6 @@ $(window).scroll(() => {
 });
 
 
-
-
-
-/** 이미지 비율 유지하면 크기 정하기
- * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
- * images to fit into a certain area.
- *
- * @param {Number} srcWidth width of source image
- * @param {Number} srcHeight height of source image
- * @param {Number} maxWidth maximum available width
- * @param {Number} maxHeight maximum available height
- * @return {Object} { width, height }
- */
 function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 
 	let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
@@ -171,7 +148,7 @@ function getStoryItem(image) {
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video playsinline controls preload='metadata' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
+			contentTag ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.

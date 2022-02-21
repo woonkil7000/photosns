@@ -8,16 +8,17 @@
 
 let isNoData=1; // init value: true. still no Data.
 let DataFailed=0; // 데이타 로딩 실패. init value: False
-let page = 0;
+let page;
 let totalPage=0;
 let currentPage=0;
+let isLastPage=false;
 let appendFlag=0;
 
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
 
-async function storyLoad() {
+/*async function storyLoad() {
 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ page="+page)
 	let response = await fetch(`/api/image?page=${page}`)
 		.then((response) => {
@@ -36,11 +37,13 @@ async function storyLoad() {
 			//console.log("-------------------------- res -end- -------------------------------");
 			totalPage = res.data.totalPages; // 전체 페이지
 			currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+			isLastPage=res.data.last;
 			console.log("######################################## PAGE ##########################################################");
 			console.log("######################################## PAGE ##########################################################");
 			console.log("/////////////////// page  ############ page++ [from 0]=",page);
 			console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
-			console.log("############ currentpage = res.data.pageable.pageNumber [from 0]= @@@@@@@@@@@@@@@@@@@ pageNumber=",res.data.pageable.pageNumber);
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentpage [from 0]=  pageNumber=",res.data.pageable.pageNumber);
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
 			//console.log("#### file = ",res.data.content)
 
 			//res.data.forEach((image)=>{ // List로 받을때
@@ -60,49 +63,52 @@ async function storyLoad() {
 			/////////////////////////////////////// if OK -END-  /////////////////////////////////////////////
 		})
 		.catch(() => { /////////////////////// 에러 처리
+
+			DataFailed=1;
 			console.log('에러 남')
 			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			DataFailed=1;
 			console.log("오류",error);
 			console.log("오류 내용: ",error.responseJSON.message);
-
-			// 비동기 방식이라서  구문 안으로 이동시켜야함.
-			console.log("isNoData=",isNoData);
-			console.log("DataFailed=",DataFailed);
-			if(isNoData==1 && DataFailed==1){ // 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
-				let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-					": : : : : 이미지가 없습니다 : : : : :</p>";
-				//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-				//document.write(storyItem);
-				//history.back();
-				// window.location.replace("/");
-				// location.href=`/user/${userId}`;
-				$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-			}
 		});
 	//////////////////////////////////////// if failed -END- //////////////////////////////////////////////
 
-}
-storyLoad().catch(()=>{
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!catch 에러 남')
-}); // new storyLoad() -END-
+	// 비동기 방식이라서  구문 안으로 이동시켜야함.
+	console.log("isNoData=",isNoData);
+	console.log("DataFailed=",DataFailed);
+	if(isNoData==1 && DataFailed==1){ // 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
+		let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+			": : : : : 이미지가 없습니다 : : : : :</p>";
+		//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		//document.write(storyItem);
+		//history.back();
+		// window.location.replace("/");
+		// location.href=`/user/${userId}`;
+		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	}
 
-/* old function storyLoad() {
+
+} // new storyLoad() -END-*/
+
+
+function storyLoad() {
   // ajax로 Page<Image> 가져올 예정 (3개)
   $.ajax({
     type: "get",
     url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
+
+	  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
 	  isNoData=0; // noData: 0:false. is Be Data.
-	console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
+	  console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+	  isLastPage=res.data.last;
 	  console.log("########################################## PAGE ########################################################");
 	  console.log("///////////////////// page++ ############ page++ [from 0]=",page);
 	  console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
 	  console.log("///////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
-
+	  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
 	 	//res.data.forEach((image)=>{ // List로 받을때
 		res.data.content.forEach((image)=>{ // Page로 받을때
 			let storyItem = getStoryItem(image);
@@ -111,7 +117,7 @@ storyLoad().catch(()=>{
 			console.log("----------------------- forEach -end- ----------------------------------");
 			$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     	});
-	page++;
+	page=currentPage+1;
   }).fail(error=>{
 	  DataFailed=1; // 데이타 로딩 실패.
     console.log("오류",error);
@@ -120,7 +126,7 @@ storyLoad().catch(()=>{
 	  console.log("isNoData=",isNoData);
 	  console.log("DataFailed=",DataFailed);
 	  if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
-		  let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+		  let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
 			  ": : : : : 구독중인 이미지가 없습니다 : : : : :</p>"+
 			  "<p>전체 이미지에서 </p>"+
 			  "<p>회원 프로필을 선택하여 \"구독하기\"를 신청하면</p>"+
@@ -128,13 +134,13 @@ storyLoad().catch(()=>{
 			  "<p>여기에서 보실 수 있습니다 </p>";
 		  //$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 		  //document.write(storyItem);
-		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		  $("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	  }
   });
-} // storyLoad() -END-*/
+} // storyLoad() -END-
 
 
-//storyLoad();
+storyLoad();
 
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
@@ -150,16 +156,16 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 100 && checkNum > -1 && (page <= totalPage-1)) {
+  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
+
 	  storyLoad();
-	  //page++;
-  	}
-	if ((currentPage==totalPage-1) && appendFlag==0 && isNoData==0){
+  }
+	if (isLastPage==true&&appendFlag!=1){
 		appendFlag=1;
 		// append. no more date message.
-		let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+		let noImage = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
 			": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
-		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
 
 	{passive: true}
@@ -182,7 +188,7 @@ function getStoryItem(image) {
 			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls preload='metadata' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
