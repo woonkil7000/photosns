@@ -162,7 +162,7 @@ $(window).scroll(() => {
 		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 
-	//{passive: true}
+	{passive: true}
 
 });
 

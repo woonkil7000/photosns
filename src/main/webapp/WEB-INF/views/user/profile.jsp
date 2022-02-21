@@ -108,35 +108,6 @@
                 <!--  JSTL 문법  -->
 				<c:forEach var="image" items="${dto.user.images}"><!-- EL 표현식에서 변수명을 적으면 get함수가 자동으로 호출됨. -->
 
-				<script>
-					<!-- Get Content Type -->
-/*
-					let contentType="${image.contentType}";
-					contentType=contentType.substring(0,5)
-					let pathUrl="/upload/" + "${image.postImageUrl}";
-					console.log("#### init contentType=",contentType);
-					console.log("#### init pathUrl=",pathUrl);
-
-					function fnContentType(contentType,pathUrl){
-						let contentTag;
-
-						if (contentType=='image'){ // image
-							contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
-							console.log("=============== image ===================");
-						}else if(contentType=='video'){ // video
-							contentTag="<video controls muted autoplay src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='동영상' />";
-							console.log("=============== video ===================");
-						}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
-							contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
-							console.log("=============== etc image ===================");
-						}
-						console.log("======================== contentTag = ",contentTag);
-						return contentTag;
-					}*/
-
-					<!-- Get Content Type end  -->
-				</script>
-
 					<!-- profileImageUpload(${dto.user.id},${principal.user.id}) -->
 					<!-- <div class="img-box" onclick="deleteImage(${image.id},${principal.user.id})"> -->
 					<div class="img-box" id="${image.id}">
@@ -148,6 +119,7 @@
 										<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
 										<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
 										<c:set var="contentTag" value=""/>
+										<c:set var="contentTag2" value=""/>
 										<%--
 										<c:out value=" #### init contentType=${contentType} ####"></c:out>
 										<c:out value=" #### init pathUrl=${pathUrl} ####"></c:out>
@@ -155,7 +127,8 @@
 										--%>
 										<c:choose>
 											<c:when test="${contentType=='image'}">
-												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag" value="<img data-bs-dismiss='modal'  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag2" value="<img data-bs-dismiss='modal'  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
@@ -166,9 +139,12 @@
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:otherwise>
-												<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+												<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
+
+												<%-- //////////// contentTag: 페이지용, contentTag2: 모달용 으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
 											</c:otherwise>
 										</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
 
@@ -186,52 +162,72 @@
 												${contentTag}
 
 										<!-- //////////// contentTag2 는 video 속성 controls 추가됨 ////////////// -->
-										<!--<img src="/upload/${image.postImageUrl}"></a>-->
-										<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->
 									</a>
 									<!-- ####################### 이미지 링크 ###################### -->
 
 
 								</c:when><%-- pageOwnerState -END- --%>
-								<c:otherwise>
-									<!-- ####################### 미디어 링크 테그 ###################### -->
-									${contentTag}
-									<!-- ####################### 미디어 링크 테그 ###################### -->
-								</c:otherwise>
+								<c:otherwise><%-- 페이지 주인이 아닐때 start --%>
+									<!-- ####################### 페이지 주인이 아닐때 링크 테그 start ###################### -->
+
+
+									<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
+									<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
+									<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
+									<c:set var="contentTag" value=""/>
+									<c:set var="contentTag2" value=""/>
+									<%--
+                                    <c:out value=" #### init contentType=${contentType} ####"></c:out>
+                                    <c:out value=" #### init pathUrl=${pathUrl} ####"></c:out>
+                                    <c:out value=" #### init contentTag=${contentTag} ####"></c:out>
+                                    --%>
+									<c:choose>
+										<c:when test="${contentType=='image'}">
+											<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
+											<%--<c:out value="${contentTag}"></c:out>--%>
+										</c:when>
+										<c:when test="${contentType=='video'}">
+											<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+											<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+											<!--<video controls preload='metadata' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
+											<%--<c:out value="${contentTag}"></c:out>--%>
+										</c:when>
+										<c:otherwise>
+											<c:set var="contentTag" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<c:set var="contentTag2" value="<img data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+											<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
+											<%--<c:out value="${contentTag}"></c:out>--%>
+
+											<%-- //////////// contentTag: 페이지용, contentTag2: 모달용 으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
+										</c:otherwise>
+									</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
+
+									<!-- ####################### 이미지 링크 ###################### -->
+									<a   class="btn btn-outline-primary btn-sm"
+										 data-bs-toggle="modal"
+										 data-bs-target="#delete-modal"
+										 data-bs-imageid="${image.id}"
+										 data-bs-imageurl="${image.postImageUrl}"
+										 data-bs-userid="${principal.user.id}"
+										 data-bs-caption="${image.caption}"
+										 data-bs-contentTag="${contentTag2}"
+										 href="#"
+										 role="button" style="outline: none;border: 0;">
+											${contentTag}
+
+										<%-- //////////// contentTag:페이지용, contentTag2: 모달페이지용으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
+									</a>
+									<!-- ####################### 이미지 링크 ###################### -->
+
+
+
+									<!-- ####################### 페이지 주인이 아닐때 링크 테그 END ###################### -->
+								</c:otherwise><%-- 페이지 주인이 아닐때 END --%>
 							</c:choose>
 						</div>
-						<!--
-						fn:substring(string객체, 시작index, 종료index)
-						-->
 						<div><span style="font-size: 16px; color: Dodgerblue;">${fn:substring(image.caption,0,7)}</span></div>
-
-						<!-- 프로필 페이지 주인에게만 이미지 삭제 버튼 보임 -->
-						<c:choose>
-							<c:when test="${dto.pageOwnerState}">
-
-						<!-- 이미지 삭제 모달 트리거 버튼 -->
-
-						<!--
-						<div  class="col-sm-10">
-						<a  class="btn btn-outline-primary btn-sm"
-							data-bs-toggle="modal"
-							data-bs-target="#delete-modal"
-							data-bs-imageid="${image.id}"
-							data-bs-imageurl="${image.postImageUrl}"
-							data-bs-userid="${principal.user.id}"
-							data-bs-caption="${image.caption}"
-							href="#"
-							role="button">수정|삭제</a>
-						</div>
-						-->
-
-						<!-- 이미지 삭제 모달 크리거 버튼 end -->
-
-						</c:when>
-					</c:choose>
-						<!-- 이미지 삭제 버튼 보임 end -->
-
-
 						<div>
 							<span style="font-size: 16px; color: Dodgerblue; padding-right: 16px;"><i class="fas fa-heart"></i> ${image.likeCount}</span>
 						</div>
@@ -296,16 +292,14 @@
 -->
 
 
-<!-- Modal -->
+<!-- 이미지 수정 삭제 Modal start -->
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">이미지 설명 수정 / 이미지 삭제</h5>
+				<h5 class="modal-title" id="exampleModalLabel">이미지 상세 페이지</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-
-
 			<div class="modal-body">
 					<!--<img  class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"/>-->
 				<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
@@ -314,6 +308,7 @@
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
 					<input type="hidden" id="contenttag">
+
 					<hr>
 					<label>사진 설명 </label> <input type="text" id="caption" size="45">
 				</form>
@@ -322,16 +317,22 @@
 					<div>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
 					</div>
+					<!-- 프로필 페이지 주인에게만 이미지 삭제 버튼 보임 -->
+					<c:choose>
+						<c:when test="${dto.pageOwnerState}">
 					<div>
 						<button type="button" class="btn btn-primary" id="update-btn">설명 수정</button>
 					</div>
 					<div>
 						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">이미지 삭제</button>
 					</div>
+						</c:when>
+					</c:choose>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- 이미지 수정 삭제 Modal END -->
 
 <!-- 이미지 삭제 모달 이벤트 처리 -->
 <script>

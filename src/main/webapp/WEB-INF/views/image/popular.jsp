@@ -28,7 +28,8 @@
                             --%>
 						<c:choose>
 							<c:when test="${contentType=='image'}">
-								<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag2" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 								<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
 								<%--<c:out value="${contentTag}"></c:out>--%>
 							</c:when>
@@ -39,9 +40,11 @@
 								<%--<c:out value="${contentTag}"></c:out>--%>
 							</c:when>
 							<c:otherwise>
-								<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<c:set var="contentTag2" value="<img   data-bs-dismiss='modal' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 								<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 								<%--<c:out value="${contentTag}"></c:out>--%>
+								<%-- //////////// contentTag:페이지용, contentTag2: 모달페이지용으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
 							</c:otherwise>
 						</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
 
@@ -94,7 +97,7 @@
 				<!--<img  data-bs-dismiss="modal" class="img-box" src=""
 					  alt="" onerror="this.src='/images/noimage.jpg'"
 					  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />-->
-				<div class="img-box" data-bs-dismiss="modal" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
+				<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">
