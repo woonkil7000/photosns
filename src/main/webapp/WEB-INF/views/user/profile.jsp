@@ -142,14 +142,10 @@
 					<div class="img-box" id="${image.id}">
 						<div  class="col">
 							<c:choose>
-								<c:when test="${dto.pageOwnerState}">
+								<c:when test="${dto.pageOwnerState}"><%-- 프로필 제이지 주인일 때 --%>
 
-
-
-
-
-
-									<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
+										<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
+										<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
 										<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
 										<c:set var="contentTag" value=""/>
 										<%--
@@ -164,8 +160,9 @@
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:when test="${contentType=='video'}">
-												<c:set var="contentTag" value="<video playsinline loop controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-												<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
+												<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<!--<video controls preload='metadata' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
 											<c:otherwise>
@@ -173,7 +170,7 @@
 												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:otherwise>
-										</c:choose>
+										</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
 
 											<!-- ####################### 이미지 링크 ###################### -->
 											<a   class="btn btn-outline-primary btn-sm"
@@ -183,25 +180,23 @@
 											data-bs-imageurl="${image.postImageUrl}"
 											data-bs-userid="${principal.user.id}"
 											data-bs-caption="${image.caption}"
-											data-bs-contentTag="${contentTag}"
+											data-bs-contentTag="${contentTag2}"
 											href="#"
 											role="button" style="outline: none;border: 0;">
 												${contentTag}
 
+										<!-- //////////// contentTag2 는 video 속성 controls 추가됨 ////////////// -->
 										<!--<img src="/upload/${image.postImageUrl}"></a>-->
 										<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->
 									</a>
 									<!-- ####################### 이미지 링크 ###################### -->
 
 
-
-								</c:when>
+								</c:when><%-- pageOwnerState -END- --%>
 								<c:otherwise>
-									<!-- ####################### 이미지 링크 ###################### -->
-									<!--<img src="/upload/${image.postImageUrl}">-->
-									<!--<script>document.write(fnContentType('${image.contentType.substring(0,5)}','/upload/${image.postImageUrl}'));</script>-->
+									<!-- ####################### 미디어 링크 테그 ###################### -->
 									${contentTag}
-									<!-- ####################### 이미지 링크 ###################### -->
+									<!-- ####################### 미디어 링크 테그 ###################### -->
 								</c:otherwise>
 							</c:choose>
 						</div>

@@ -18,6 +18,7 @@ let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
 
 async function storyLoad() {
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ page="+page)
 	let response = await fetch(`/api/image2?page=${page}`)
 		.then((response) => {
 			if (!response.ok) { //////////////////// 에러 처리
@@ -28,7 +29,7 @@ async function storyLoad() {
 		})
 		.then((res) => {
 			console.log(res.data)
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
 			isNoData=0; // noData: 0:false. is Be Data.
 			console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
 			//console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
@@ -39,12 +40,11 @@ async function storyLoad() {
 			console.log("######################################## PAGE ##########################################################");
 			console.log("/////////////////// page  ############ page++ [from 0]=",page);
 			console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
-			console.log("/////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
+			console.log("############ currentpage = res.data.pageable.pageNumber [from 0]= @@@@@@@@@@@@@@@@@@@ pageNumber=",res.data.pageable.pageNumber);
 			//console.log("#### file = ",res.data.content)
 
 			//res.data.forEach((image)=>{ // List로 받을때
 			res.data.content.forEach((image)=>{ // Page로 받을때
-
 				let storyItem = getStoryItem(image);
 				////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
 				/////////////// getStoryItem() 함수 호출
@@ -84,9 +84,9 @@ async function storyLoad() {
 }
 storyLoad().catch(()=>{
 	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!catch 에러 남')
-});
+}); // new storyLoad() -END-
 
-storyLoad();
+//storyLoad();
 
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
@@ -115,7 +115,7 @@ $(window).scroll(() => {
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 
-	//{passive: true}
+	{passive: true}
 });
 
 
@@ -171,7 +171,7 @@ function getStoryItem(image) {
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video playsinline loop controls preload='metadata' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
+			contentTag ="<video playsinline controls preload='metadata' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
@@ -198,7 +198,7 @@ function getStoryItem(image) {
   	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
 
 	// 사용자 프로필 이미지
-	result += `${image.id}<img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+	result += `<img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
 
 	result +=`		</div>
 		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>

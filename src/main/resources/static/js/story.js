@@ -17,7 +17,77 @@ let appendFlag=0;
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
 
-function storyLoad() {
+async function storyLoad() {
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ page="+page)
+	let response = await fetch(`/api/image?page=${page}`)
+		.then((response) => {
+			if (!response.ok) { //////////////////// 에러 처리
+				throw new Error('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 400 아니면 500 에러남')
+				console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 400 아니면 500 에러남')
+			}
+			return response.json()
+		})
+		.then((res) => {
+			console.log(res.data)
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
+			isNoData=0; // noData: 0:false. is Be Data.
+			console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
+			//console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
+			//console.log("-------------------------- res -end- -------------------------------");
+			totalPage = res.data.totalPages; // 전체 페이지
+			currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+			console.log("######################################## PAGE ##########################################################");
+			console.log("######################################## PAGE ##########################################################");
+			console.log("/////////////////// page  ############ page++ [from 0]=",page);
+			console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
+			console.log("############ currentpage = res.data.pageable.pageNumber [from 0]= @@@@@@@@@@@@@@@@@@@ pageNumber=",res.data.pageable.pageNumber);
+			//console.log("#### file = ",res.data.content)
+
+			//res.data.forEach((image)=>{ // List로 받을때
+			res.data.content.forEach((image)=>{ // Page로 받을때
+
+				let storyItem = getStoryItem(image);
+				////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
+				/////////////// getStoryItem() 함수 호출
+
+				console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+				//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
+				console.log("------------------------- forEach -end- --------------------------------");
+				$("#storyList").append(storyItem);
+			});
+			page++;
+
+			/////////////////////////////////////// if OK -END-  /////////////////////////////////////////////
+		})
+		.catch(() => { /////////////////////// 에러 처리
+			console.log('에러 남')
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			DataFailed=1;
+			console.log("오류",error);
+			console.log("오류 내용: ",error.responseJSON.message);
+
+			// 비동기 방식이라서  구문 안으로 이동시켜야함.
+			console.log("isNoData=",isNoData);
+			console.log("DataFailed=",DataFailed);
+			if(isNoData==1 && DataFailed==1){ // 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
+				let storyItem = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+					": : : : : 이미지가 없습니다 : : : : :</p>";
+				//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+				//document.write(storyItem);
+				//history.back();
+				// window.location.replace("/");
+				// location.href=`/user/${userId}`;
+				$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+			}
+		});
+	//////////////////////////////////////// if failed -END- //////////////////////////////////////////////
+
+}
+storyLoad().catch(()=>{
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!catch 에러 남')
+}); // new storyLoad() -END-
+
+/* old function storyLoad() {
   // ajax로 Page<Image> 가져올 예정 (3개)
   $.ajax({
     type: "get",
@@ -26,50 +96,26 @@ function storyLoad() {
   }).done((res) => {
 	  isNoData=0; // noData: 0:false. is Be Data.
 	console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
-    //console.log("## /api/image?page return responseEntity => "+JSON.stringify(res));
-	//console.log("-----------------------  res -end- ----------------------------------");
-	//return;
-
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
-
 	  console.log("########################################## PAGE ########################################################");
 	  console.log("///////////////////// page++ ############ page++ [from 0]=",page);
 	  console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
 	  console.log("///////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
-	  //res.data.forEach((image)=>{ // List로 받을때
-    res.data.content.forEach((image)=>{ // Page로 받을때
 
-        let storyItem = getStoryItem(image);
-		////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
-		/////////////// getStoryItem() 함수 호출
-
-		console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
-		//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
-		console.log("----------------------- forEach -end- ----------------------------------");
-        $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-    });
-
+	 	//res.data.forEach((image)=>{ // List로 받을때
+		res.data.content.forEach((image)=>{ // Page로 받을때
+			let storyItem = getStoryItem(image);
+			console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+			//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
+			console.log("----------------------- forEach -end- ----------------------------------");
+			$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+    	});
 	page++;
-	//    let images = res.data.content;
-	//    images.forEach((image) => {
-	//      let storyItem = getStoryItem(image);
-	//      $("#storyList").append(storyItem);
-	//    });
   }).fail(error=>{
-
 	  DataFailed=1; // 데이타 로딩 실패.
     console.log("오류",error);
-    //console.log("오류 내용: ",error.responseJSON.data.content);
     console.log("오류 내용: ",error.responseJSON.message);
-	//document.write(error.responseJSON.code);
-	//document.write(error.responseJSON.message);
-
-    //alert("\n\n게시물의 더이상 없거나 아직 \"구독\" 중인 게시물이 없습니다.\n\n마음에 드는 사진의 유저 프로필에서 \"구독하기\"를 신청하세요\n\n구독중인 유저의 새로운 사진들을 보실 수 있습니다 ");
-    //history.back();
-	// window.location.replace("/");
-	  // location.href=`/user/${userId}`;
-	//return;
 	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
 	  console.log("isNoData=",isNoData);
 	  console.log("DataFailed=",DataFailed);
@@ -85,25 +131,10 @@ function storyLoad() {
 		  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	  }
   });
+} // storyLoad() -END-*/
 
-  	// 비동기 방식이라서 아래값이 변화가 없음. // ajax 안으로 구문 이동시켜야함.
-	/*
-	console.log("isNoData=",isNoData);
-	console.log("DataFailed=",DataFailed);
- if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
-		let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-			": : : : : 구독 이미지가 없습니다 : : : : :</p>"+
-			"<p>전체 이미지에서 흥미롭거나/관심있는 이미지가 있으시면 </p>"+
-			"<p>해당 이미지의 프로필에서 \"구독하기\"를 신청하시면</p>"+
-			"<p>이 페이지에서 보실 수 있습니다 </p>";
-		//$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
-		document.write(storyItem);
-	}
-	*/
 
-} // storyLoad()
-
-storyLoad();
+//storyLoad();
 
 // 스토리 스크롤 페이징하기
 $(window).scroll(() => {
@@ -151,7 +182,7 @@ function getStoryItem(image) {
 			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline loop controls preload='metadata' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<video playsinline controls preload='metadata' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
@@ -182,29 +213,57 @@ function getStoryItem(image) {
 		`;
 
 	result +=`
-<!-- ####################### 이미지 모달 링크 ###################### -->
-<a   class="btn btn-outline-primary btn-sm"
- data-bs-toggle="modal"
- data-bs-target="#image-modal"
- data-bs-imageid="${image.id}"
- data-bs-imageurl="${image.postImageUrl}"
- data-bs-caption="${image.caption}" 
- data-bs-userid="${image.user.id}" 
- data-bs-contentTag="${fnContentType(contentType,pathUrl)}" 
- href="#"
- role="button" style="outline: none;border: 0;">
- 
-	<!-- <img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/> -->
-`;
+	<!-- ####################### 이미지 모달 링크 ###################### -->
+	`;
 
+	/////////////// contentType이 이미지인 경우만 <a tag 시작부 삽입 ////////////////////
+	function before_atag(){
+		let atag;
+		if(contentType=='image'||contentType=='null' || contentType==''){
 
-	//fnContentType(contentType,pathUrl);
+			atag =` <a   class='btn btn-outline-primary btn-sm' `;
+			atag +=` data-bs-toggle='modal' `;
+			atag +=` data-bs-target='#image-modal' `;
+			atag +=` data-bs-imageid='${image.id}' `;
+			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
+			atag +=` data-bs-caption='${image.caption}' `;
+			atag +=` data-bs-userid='${image.user.id}' `;
+			atag +=` data-bs-contentTag="${fnContentType(contentType,pathUrl)}" `;
+			atag +=` href='#' `;
+			atag +=` role='button' style='outline: none;border: 0;'>`;
+		}else{
+			atag = "";
+		}
+		return atag;
+	}
+	//////////////// contentType이 이미지인 경우만 <a  tag 시작부 삽입 -END- ///////////////////
+
+	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
+	function after_atag(){
+		let atag;
+		if(contentType=='image' || contentType=='null'||contentType=='') {
+			atag = "</a>";
+		}else{
+			atag = "";
+		}
+		return atag;
+	}
+	/////////////// contentType이 이미지인 경우만 </a tag 삽입종료부 -END- ////////////////////
+
+	// fnContentType(contentType,pathUrl);
 	// #### || 게시물 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
+
+	result += before_atag();
+
 	result += fnContentType(contentType,pathUrl)
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 
+	result += after_atag();
 
-	result += `</a>
+	result +=`<!-- </a> -->
+		<!-- /////////////// contentType이 이미지인 경우만 <a> tag 삽입 //////////////////// -->`;
+
+	result +=` 
 <!-- ####################### 이미지 모달 링크 end ###################### -->
 
 `;

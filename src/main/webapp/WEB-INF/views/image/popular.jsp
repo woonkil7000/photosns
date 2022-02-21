@@ -10,22 +10,61 @@
 
 			<c:forEach var="image" items="${images}">
 				<div class="p-img-box" style="padding-top: 30px;">
-					<!-- <a href="/user/${image.user.id}"> -->
 					<div>
 						<!-- 이미지 링크 -->
 						<!-- ####################### 이미지 모달 링크 ###################### -->
+
+
+
+
+							<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
+						<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
+						<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
+						<c:set var="contentTag" value=""/>
+							<%--
+                            <c:out value=" #### init contentType=${contentType} ####"></c:out>
+                            <c:out value=" #### init pathUrl=${pathUrl} ####"></c:out>
+                            <c:out value=" #### init contentTag=${contentTag} ####"></c:out>
+                            --%>
+						<c:choose>
+							<c:when test="${contentType=='image'}">
+								<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
+								<%--<c:out value="${contentTag}"></c:out>--%>
+							</c:when>
+							<c:when test="${contentType=='video'}">
+								<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+								<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+								<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
+								<%--<c:out value="${contentTag}"></c:out>--%>
+							</c:when>
+							<c:otherwise>
+								<c:set var="contentTag" value="<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
+								<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
+								<%--<c:out value="${contentTag}"></c:out>--%>
+							</c:otherwise>
+						</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
+
+						<!-- ####################### 이미지 링크 ###################### -->
 						<a   class="btn btn-outline-primary btn-sm"
 							 data-bs-toggle="modal"
 							 data-bs-target="#image-modal"
 							 data-bs-imageid="${image.id}"
 							 data-bs-imageurl="${image.postImageUrl}"
+							 data-bs-userid="${principal.user.id}"
 							 data-bs-caption="${image.caption}"
-							 data-bs-userid="${image.user.id}"
+							 data-bs-contentTag="${contentTag2}"
 							 href="#"
 							 role="button" style="outline: none;border: 0;">
-							<img src="/upload/${image.postImageUrl}"
-								  style="max-height: 100%;max-width: 100%;" alt="이미지"/>
+								${contentTag}
+
+							<!-- //////////// contentTag2 는 video 속성 controls 추가됨 ////////////// -->
 						</a>
+
+						<!-- ####################### 이미지 링크 ###################### -->
+
+
+
 						<!-- ####################### 이미지 모달 링크 end ###################### -->
 						<!-- 이미지 링크 end -->
 					</div>
@@ -52,13 +91,15 @@
 
 
 			<div class="modal-body">
-				<img  data-bs-dismiss="modal" class="img-box" src=""
+				<!--<img  data-bs-dismiss="modal" class="img-box" src=""
 					  alt="" onerror="this.src='/images/noimage.jpg'"
-					  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />
+					  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />-->
+				<div class="img-box" data-bs-dismiss="modal" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
+					<input type="hidden" id="contenttag">
 					<hr>
 					<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
 				</form>
@@ -86,17 +127,22 @@
 			const imageurl = button.getAttribute("data-bs-imageurl");
 			const userid = button.getAttribute("data-bs-userid");
 			const caption = button.getAttribute("data-bs-caption");
+			const contenttag = button.getAttribute("data-bs-contenttag");
 			console.log("imageid=",imageid);
 			console.log("imageurl=",imageurl);
 			console.log("userid=",userid);
 			console.log("caption=",caption);
+			console.log("contenttag=",contenttag);
 
 			// 모달창에 데이타 반영
 			document.querySelector("#image_id").value=imageid;
 			document.querySelector("#caption").innerHTML=caption;
 			document.querySelector("#user_id").value=userid;
-			document.querySelector("#image_url").value="/upload/"+imageurl;
-			document.querySelector("#lgimage").src="/upload/"+imageurl;
+			//document.querySelector("#image_url").value="/upload/"+imageurl;
+			//document.querySelector("#lgimage").src="/upload/"+imageurl;
+			document.querySelector("#lgimage").innerHTML=contenttag; //이미지 삽입부분
+			document.querySelector("#contenttag").value=contenttag;
+
 			// If necessary, you could initiate an AJAX request here
 			// and then do the updating in a callback.
 			// Update the modal's content.
