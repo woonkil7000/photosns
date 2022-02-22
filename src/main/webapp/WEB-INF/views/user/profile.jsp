@@ -21,17 +21,15 @@
 			</div>
 		</div>
 		<!-- user name -->
-		<div   class="profile-right text-nowrap bd-highlight">
+		<div   class="profile-right text-nowrap bd-highlight align-middle" style="color: Dodgerblue;"">
 			<p> </p><p> </p><p> </p>
-			<span  class="align-middle" style="color: Dodgerblue;"><h2>${dto.user.name}</h2>${fn:substring(dto.user.username,0,15)}</span>
+			<p><h2><i class="fa fa-user"></i> ${dto.user.name}</h2>${fn:substring(dto.user.username,0,15)}</p>
 		</div>
 		<!--유저이미지end-->
-
 	</div>
-
 </section>
+<section><p class="align-middle" style="color: Dodgerblue;"> 프로필 이미지는 수정 가능합니다</p></section>
 <!--프로필 섹션 end-->
-
 <section  class="profile">
 	<div class="profileContainer">
 	<!--유저정보 및 사진등록 구독하기-->
@@ -44,7 +42,7 @@
 					<div>
 					<div><button class="modi" onclick="location.href='/image/upload'"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-cloud-upload-alt"></i>새로운 사진 등록</span></button>
 					</div>
-					<div><button class="modi" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i><i class="fas fa-power-off"></i>정보수정/로그아웃</span></button>
+					<div><button class="modi" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i>정보수정/로그아웃</span></button>
 					</div>
 					</div>
 				</c:when>

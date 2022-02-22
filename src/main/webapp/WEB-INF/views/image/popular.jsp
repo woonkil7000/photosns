@@ -4,7 +4,7 @@
 <!--인기 게시글-->
 <main class="popular">
 	<div class="exploreContainer">
-		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;">좋아요 랭킹 20</span></div>
+		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 좋아요 랭킹20</span></div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
 
