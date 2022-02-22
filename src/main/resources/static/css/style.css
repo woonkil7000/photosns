@@ -185,3 +185,7 @@ span {
   background: #0095f6 !important;
   color: #fff !important;
 }
+
+a {
+  text-decoration: none !important;
+}

@@ -43,13 +43,13 @@
 .navi > .navi-list .navi-item {
   flex: 1;
   text-align: center;
-  margin: 0 22px;
+  margin: 0 5px;
   display: flex;
 }
 .navi > .navi-list .navi-item a i {
-  font-size: 15px;
-  color: #808080;
-  margin-top: 4px;
+  font-size: 35px;
+  color: #0095f6;
+  margin-top: 8px;
 }
 
 /* @media screen and (max-width: 935px) { */

@@ -310,7 +310,8 @@
 					<input type="hidden" id="contenttag">
 
 					<hr>
-					<label>사진 설명 </label> <input type="text" id="caption" size="45">
+					<!--<label>사진 설명</label><input type="text" id="caption" size="45">-->
+					<textarea class="form-control"  placeholder="사진/영상 제목" name="caption" id="caption"></textarea>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -357,7 +358,7 @@
 
 		// 모달창에 데이타 반영
 		document.querySelector("#image_id").value=imageid;
-		document.querySelector("#caption").value=caption;
+		document.querySelector("#caption").innerHTML=caption;
 		document.querySelector("#user_id").value=userid;
 		document.querySelector("#image_url").value="/upload/"+imageurl;
 		//document.querySelector("#delimage").src="/upload/"+imageurl;

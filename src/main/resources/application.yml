@@ -64,8 +64,8 @@ spring:
   servlet: # this servlet must be at spring zone, no server zone
     multipart:
         enabled: true
-        max-file-size: 100MB
-        max-request-size: 100MB
+        max-file-size: 1000MB
+        max-request-size: 1000MB
         file-size-threshold: 1MB
         location: D:/Temp
 

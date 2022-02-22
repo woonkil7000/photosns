@@ -14,7 +14,7 @@ let totalPage=0;
 let currentPage=0;
 let isLastPage=false;
 let appendLastFlag=0;// 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
-
+let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
 
@@ -65,7 +65,7 @@ function storyLoad() {
 		console.log("DataFailed=",DataFailed);
 		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
 		if(isNoData==1&&DataFailed==1){
-		let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
+		let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
 			": : : : : 이미지가 없습니다 : : : : :</p>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}
@@ -86,22 +86,37 @@ $(window).scroll(() => {
 	//console.log(" =|=|=|= totalPage",totalPage);
 	//console.log(" =|=|=|= page++",page);
 	//console.log("문서의 높이",$(document).height());
-    //console.log("윈도우 스크롤 탑",$(window).scrollTop());
-    //console.log("윈도우 높이",$(window).height());
-
+	//console.log("윈도우 스크롤 탑",$(window).scrollTop());
+	//console.log("윈도우 높이",$(window).height());
     let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
-    //console.log("checkNum="+checkNum);
+    //console.log("@@@@@@@@@@@@@@ checkNum="+checkNum);
 
-  // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 1 && checkNum > -1 && (page <= (totalPage-1))) {
+	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
+  // 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
+  if ((checkNum < 500 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
+	  // Set Timer 걸기. 동시이벤트 걸러내기.
 	  storyLoad();
+	  storyLoadUnlock=false;
+	  // console.time("X");
+	  // console.timeStamp("시작 시간");
+	  //console.log("@@@@ storyLoad() 함수 호출 실행됨 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	  // console.log("@@@@ after storyLoad() 불가 storyLoadUnlock=",storyLoadUnlock);
+	  setTimeout(function(){
+		  storyLoadUnlock=true; // 3초후 허용
+		  //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
+		  // console.timeEnd("X");
+		  // console.timeStamp("종료 시간");
+	  },1000)
+
+	  //window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
   }
   if (isLastPage==true&&appendLastFlag!=1){ // 데이타의 마지막 페이지
 	  appendLastFlag=1;
 	  // append. no more date message.
-	  let storyItem = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-		  ": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
+	  let storyItem = "<div  class=\"alert alert-warning\" role=\"alert\">"+
+		  "<span style=\"font-size: 16px; color: Dodgerblue;\">" +
+		  ": : : : : 더이상 이미지가 없습니다 : : : : :</span></div>";
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 
@@ -175,10 +190,10 @@ function getStoryItem(image) {
   	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
 
 	// 사용자 프로필 이미지
-	result += `<img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+	result += `<a class="profile-image" href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
 
-	result +=`		</div>
-		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
+	result +=`</a></div>
+		<div><span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}">${image.user.name}</a></span></div>
 	</div>
 	<!--헤더영역 end-->
 

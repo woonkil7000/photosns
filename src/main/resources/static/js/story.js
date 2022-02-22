@@ -13,7 +13,7 @@ let totalPage=0;
 let currentPage=0;
 let isLastPage=false;
 let appendFlag=0;
-
+let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
@@ -126,12 +126,14 @@ function storyLoad() {
 	  console.log("isNoData=",isNoData);
 	  console.log("DataFailed=",DataFailed);
 	  if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
-		  let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-			  ": : : : : 구독중인 이미지가 없습니다 : : : : :</p>"+
-			  "<p>전체 이미지에서 </p>"+
-			  "<p>회원 프로필을 선택하여 \"구독하기\"를 신청하면</p>"+
-			  "<p>구독중인 회원의 이미지를 </p>"+
-			  "<p>여기에서 보실 수 있습니다 </p>";
+		  let noImage = "<div  class=\"alert alert-warning\" role=\"alert\"><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
+			  "아직 구독을 신청한 회원이 없습니다</span>"+
+			  "<p> </p>"+
+			  "<p>초기 화면의 이미지 목록에서</p>"+
+			  "<p>다른 회원 프로필을 선택하여</p>"+
+			  "<p>\"구독하기\"를 신청하면</p>"+
+			  "<p>구독중인 회원들의 이미지를 </p>"+
+			  "<p>여기에 모아서 볼 수 있습니다 </p></div>";
 		  //$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 		  //document.write(storyItem);
 		  $("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
@@ -156,15 +158,25 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 1 && checkNum > -1 && (page <= totalPage-1)) {
+  if ((checkNum < 500 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
+	  storyLoadUnlock=false;
+	  //console.time("X");
+	  //console.timeStamp("시작 시간");
+	  setTimeout(function(){
+		  storyLoadUnlock=true; // 2초후 허용
+		  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
+		  // console.timeEnd("X");
+		  // console.timeStamp("종료 시간");
+	  },1000)
+
   }
 	if (isLastPage==true&&appendFlag!=1){
 		appendFlag=1;
 		// append. no more date message.
-		let noImage = "<div><span style=\"font-size: 13px; color: Dodgerblue;\">" +
-			": : : : : 더이상 이미지가 없습니다 : : : : :</p>";
+		let noImage = "<div class=\"alert alert-warning\" role=\"alert\"><span style=\"font-size: 16px; color: Dodgerblue;\">" +
+			": : : : : 더이상 이미지가 없습니다 : : : : :</span></div>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
 
@@ -206,8 +218,8 @@ function getStoryItem(image) {
 	<!--리스트 아이템 헤더영역-->
 	<div class="sl__item__header">
 		<!-- 사용자 프로필 이미지 -->
-		<div><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></div>
-		<div><span style="font-size: 18px; color: Dodgerblue;">${image.user.name} <a href="/user/${image.user.id}"><i class="far fa-user"></i></a></span></div>
+		<div><a href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></a></div>
+		<div><span style="font-size: 18px; color: Dodgerblue;"><a href="/user/${image.user.id}">${image.user.name}</a></span></div>
 	</div>
 	<!--헤더영역 end-->
 
