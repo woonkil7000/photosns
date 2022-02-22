@@ -15,6 +15,8 @@ let currentPage=0;
 let isLastPage=false;
 let appendLastFlag=0;// 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
 let storyLoadUnlock=true; // storyLoad() 초기값 허용.
+let totalElements;
+
 let principalId = $("#principalId").val(); // input hidden value
 let principalUsername = $("#principalUsername").val();
 
@@ -33,6 +35,7 @@ function storyLoad() {
 			//console.log("-------------------------- res -end- -------------------------------");
 			totalPage = res.data.totalPages; // 전체 페이지
 			currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+			totalElements=res.data.totalElements;
 			isLastPage=res.data.last;
 			console.log("######################################## PAGE ##########################################################");
 			console.log("######################################## PAGE ##########################################################");
@@ -65,13 +68,11 @@ function storyLoad() {
 		console.log("DataFailed=",DataFailed);
 		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
 		if(isNoData==1&&DataFailed==1){
-		let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-			": : : : : 이미지가 없습니다 : : : : :</p>";
+			let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
+				": : : : : 이미지가 없습니다 : : : : :</p>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}
-
-	})
-
+	});
 } // new storyLoad() -END-
 
 // 첫 로딩때 실행.
@@ -93,7 +94,7 @@ $(window).scroll(() => {
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
   // 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-  if ((checkNum < 500 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+  if ((checkNum < 1000 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 	  // Set Timer 걸기. 동시이벤트 걸러내기.
 	  storyLoad();
@@ -116,21 +117,11 @@ $(window).scroll(() => {
 	  // append. no more date message.
 	  let storyItem = "<div  class=\"alert alert-warning\" role=\"alert\">"+
 		  "<span style=\"font-size: 16px; color: Dodgerblue;\">" +
-		  ": : : : : 더이상 이미지가 없습니다 : : : : :</span></div>";
+		  ": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
-
-	{passive: true}
+	//{passive: true}
 });
-
-
-function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-
-	let ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-
-	return { width: srcWidth*ratio, height: srcHeight*ratio };
-}
-
 
 function getStoryItem(image) {
 

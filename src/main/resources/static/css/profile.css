@@ -12,9 +12,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /*
-  width: 935px;
-  */
   width: 350px;
   margin: 0 auto;
   height: 100%;
@@ -42,10 +39,6 @@
   flex-basis: 60%;
 }
 .profile .profile-left .profile-img-wrap {
-  /*
-  width: 162px;
-  height: 162px;
-   */
   width: 162px;
   height: 162px;
   padding: 6px;
@@ -113,7 +106,7 @@
 }
 .story .profileContainer {
   <!-- padding: 0 48px;-->
-  padding: 0 10px;
+  padding: 0 48px;
   display: flex;
   justify-content: flex-start;
 }

@@ -39,6 +39,37 @@ public class ImageService {
 	private final TagRepository tagRepository;
 
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
+	public Page<Image> 유저이미지스토리(int pageUserId,int principalId, Pageable pageable){
+		Page<Image> images=imageRepository.userStory(pageUserId,pageable);
+
+		if (images.isEmpty()) {  // 유저가 등록한 이미지가 없는 경우.
+			log.info("#################### 유저가 등록한 이미지가 없는 경우");
+		} else {
+			System.out.println("################## ImageService{} public Page<Image> 유저이미지스토리() ##################");
+			System.out.println("##################  Page<Image> images=imageRepository.userStory() ##################");
+			System.out.println(images);
+
+			// ############ images에 좋아요 상태 likeState: true/false 담기 ######### //
+			// 2(cos) 로그인에서
+			images.forEach((image -> {
+				// 좋아요 카운트 값 저장.
+				image.setLikeCount(image.getLikes().size());
+
+				/*image.getLikes().forEach(likes -> {
+					if (likes.getUser().getId() == principalId) { //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
+						image.setLikeState(true);
+					}
+				});*/
+			}));
+
+			System.out.println("######################################## End of Page[Image] images ###################################################");
+			log.info("imageRepository.유저이미지스토리(String.valueOf( [images] ) =============>>>>>>>>>> " + String.valueOf(images));
+			log.info("###################  return Page[Image] images=imageRepository.userStory(principalId,pageable)    ######################### ");
+		}
+		return images;
+	}
+
+	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
 		Page<Image> images=imageRepository.mStory(principalId,pageable);
 

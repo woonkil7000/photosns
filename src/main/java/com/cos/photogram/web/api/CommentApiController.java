@@ -22,6 +22,7 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
+    // 댓글 쓰기
     @PostMapping("/api/comment")
     public ResponseEntity<?>commentSave(@Valid @RequestBody CommentDto commentDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails){ // 전달값이 json을 받을때는 @RequestBody 사용.
 //        System.out.println("commentDto json-data="+commentDto);
@@ -44,6 +45,7 @@ public class CommentApiController {
         return new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기 성공",comment), HttpStatus.CREATED);
     }
 
+    // 댓글 삭제
     @DeleteMapping("/api/comment/{id}")
     public ResponseEntity<?>commentDelete(@PathVariable int id,@AuthenticationPrincipal PrincipalDetails principalDetails){
 

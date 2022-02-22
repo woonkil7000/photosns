@@ -27,16 +27,17 @@ public class AuthController {
 
 	private SignupDto signupDto;
 
+	// 로그인
 	@GetMapping("/auth/signin") // to auth/signin.jsp :login Form 으로
 	public String loginForm() {
 		return "auth/signin";
 	}
-
+	// 회원가입 폼
 	@GetMapping("/auth/signup") // to auth/signup.jsp joinForm: auth/signup 회원가입폼으로.
 	public String joinForm() {
 		return "auth/signup";
 	}
-
+	// 회원가입 데이타 전송
 	@PostMapping("/auth/signup") // /auth/signup.jsp <form action=post //////////// 회원 가입 정보 전송 ///////////////
 	public String join(@Valid SignupDto signupDto, BindingResult bindingResult) {
 

@@ -1,5 +1,6 @@
 package com.cos.photogram.service;
 
+import java.awt.print.Pageable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +11,7 @@ import com.cos.photogram.domain.comment.handler.ex.CustomException;
 import com.cos.photogram.domain.comment.handler.ex.CustomValidationApiException;
 import com.cos.photogram.web.dto.user.UserProfileDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +40,10 @@ public class UserService {
 
 		// UserprofileDto
 		UserProfileDto dto = new UserProfileDto();
+		// : pageOwnerState, imageCount, subscribeState, subscribeCount, User user
 
 		// UserProfileDto dto has
-		// : pageOwnerState,imageCount,subscribeState,subscribeCount,User user
+		// : pageOwnerState, imageCount, subscribeState, subscribeCount, User user
 
 		// select * from Image where userId=:userId;
 		// image has id,createDate,imageId,userId
@@ -53,9 +56,10 @@ public class UserService {
 //		System.out.println("================== userEntity . getImages() 호출됨. ======================");
 //		userEntity.getImages().get(0);
 
+		// DTO 정보를 채우자~ user data 는 기본이고 기타 등등 ....
 		dto.setUser(userEntity);
-		dto.setPageOwnerState(pageUserId == principalId); // 1은 페이지 주인/ -1은 주인아님
-		dto.setImageCount(userEntity.getImages().size());
+		dto.setPageOwnerState(pageUserId == principalId); // True=1  페이지 주인/ -1은 주인아님
+		dto.setImageCount(userEntity.getImages().size()); // 본인이  등록한 이미지 갯수?
 
 		// 구독 여부: 프로필페이지 주인 = principaId가 subscribe 에서 구독중인가 아닌가?
 		int subscribeState = subscribeRepository.mSubscribeState(principalId,pageUserId);
@@ -65,13 +69,13 @@ public class UserService {
 		int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
 		dto.setSubscribeCount(subscribeCount);
 
-		// 좋아요 카운트 추가하기
+		// 좋아요 카운트 저장.
 		userEntity.getImages().forEach((image -> {
 			image.setLikeCount(image.getLikes().size());
 		}));
 
 		//return userEntity;
-		return dto;
+		return dto; // userProfileDto
 	}
 
 	@Transactional

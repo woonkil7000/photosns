@@ -6,9 +6,12 @@ import com.cos.photogram.service.SubscribeService;
 import com.cos.photogram.service.UserService;
 import com.cos.photogram.web.dto.CMRespDto;
 import com.cos.photogram.web.dto.subscribe.SubscribeDto;
+import com.cos.photogram.web.dto.user.UserProfileDto;
 import com.cos.photogram.web.dto.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.util.List;
 
 //@MultipartConfig(
@@ -33,6 +37,7 @@ public class UserApiController {
     private final UserService userService;
     private final SubscribeService subscribeService;
 
+    // 프로필 사진 변경
     @PostMapping("/api/user/{principalId}/profileImageUrl")
     public ResponseEntity<?>profileImageUrlUpdate(@PathVariable int principalId, MultipartFile profileImageFile,
                                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
@@ -47,6 +52,7 @@ public class UserApiController {
         return new ResponseEntity<>(new CMRespDto<>(1,"프로필사진변경 성공",null),HttpStatus.OK);
     }
 
+    // 구독자 리스트 조회
     @GetMapping("/api/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@AuthenticationPrincipal PrincipalDetails principalDetails,@PathVariable int pageUserId){
 
@@ -58,8 +64,7 @@ public class UserApiController {
         return new ResponseEntity<>(new CMRespDto<>(1,"구독자 정보리스트 가져오기 성공",subscribeDto),HttpStatus.OK);
     }
 
-
-
+    // 회원정보 수정
     @PutMapping("/api/user/{id}") // update.js에서 redirect?
     public CMRespDto<?> update(
             @PathVariable int id,

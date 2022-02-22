@@ -96,23 +96,21 @@ public class ImageController {
 			return "image/popular"; // /image/popular.jsp로 model data를 전달
 		}
 	}
-	
-
-	
+	// 좋아요 추가
 	@PostMapping("/image/{imageId}/likes")
 	public @ResponseBody CMRespDto<?> like(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){
 		likesService.좋아요(imageId, principalDetails.getUser().getId());
 		//return new CMRespDto<>(1, null);
 		return null;
 	}
-	
+	// 좋아요 취소
 	@DeleteMapping("/image/{imageId}/likes")
 	public @ResponseBody CMRespDto<?> unLike(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){
 		likesService.좋아요취소(imageId, principalDetails.getUser().getId());
 		//return new CMRespDto<>(1, null);
 		return null;
 	}
-
+	// 이미지 삭제
 	@DeleteMapping("/image/{imageId}/delete")
 	public @ResponseBody CMRespDto<?> delete(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){
 		imageService.이미지삭제(imageId, principalDetails.getUser().getId());

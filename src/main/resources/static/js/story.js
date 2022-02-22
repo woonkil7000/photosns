@@ -14,6 +14,7 @@ let currentPage=0;
 let isLastPage=false;
 let appendFlag=0;
 let storyLoadUnlock=true; // storyLoad() 초기값 허용.
+let totalElements;
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
@@ -104,6 +105,7 @@ function storyLoad() {
 	  totalPage = res.data.totalPages; // 전체 페이지
 	  currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
 	  isLastPage=res.data.last;
+	  totalElements=res.data.totalElements;
 	  console.log("########################################## PAGE ########################################################");
 	  console.log("///////////////////// page++ ############ page++ [from 0]=",page);
 	  console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
@@ -118,10 +120,12 @@ function storyLoad() {
 			$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
     	});
 	page=currentPage+1;
+
   }).fail(error=>{
+
 	  DataFailed=1; // 데이타 로딩 실패.
-    console.log("오류",error);
-    console.log("오류 내용: ",error.responseJSON.message);
+	  console.log("오류",error);
+	  console.log("오류 내용: ",error.responseJSON.message);
 	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
 	  console.log("isNoData=",isNoData);
 	  console.log("DataFailed=",DataFailed);
@@ -141,7 +145,7 @@ function storyLoad() {
   });
 } // storyLoad() -END-
 
-
+// 첫 로딩 실행
 storyLoad();
 
 // 스토리 스크롤 페이징하기
@@ -158,7 +162,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if ((checkNum < 500 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
+  if ((checkNum < 1000 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
 	  storyLoadUnlock=false;
@@ -176,12 +180,10 @@ $(window).scroll(() => {
 		appendFlag=1;
 		// append. no more date message.
 		let noImage = "<div class=\"alert alert-warning\" role=\"alert\"><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-			": : : : : 더이상 이미지가 없습니다 : : : : :</span></div>";
+			": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
-
-	{passive: true}
-
+	//{passive: true}
 });
 
 function getStoryItem(image) {

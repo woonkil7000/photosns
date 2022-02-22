@@ -35,6 +35,7 @@ public class UserController {
 	private final UserService userService;
 	private final SubscribeService subscribeService;
 
+	// 구독자 조회
 	@GetMapping("/user/{pageUserId}/subscribe") // data 리턴하는 것
 	public @ResponseBody CMRespDto<?> followList(@AuthenticationPrincipal PrincipalDetails principalDetails,
 			@PathVariable int pageUserId) {
@@ -43,7 +44,7 @@ public class UserController {
 		//return new CMRespDto<>(1, subscribeRespDto);
 		return null;
 	}
-
+	// 회원 프로필 정보 조회 // profile.jsp 페이지로 dto 리턴
 	@GetMapping("/user/{pageUserId}")
 	public String profile(@PathVariable int pageUserId,Model model,@AuthenticationPrincipal PrincipalDetails principalDetails){
 
@@ -51,9 +52,9 @@ public class UserController {
 		UserProfileDto dto = userService.회원프로필(pageUserId,principalDetails.getUser().getId());
 		// dto 로 data:User, PageOwnerState,ImageCount,subscribeState,subScribeCount 를 받는다
 		model.addAttribute("dto",dto);
-		return "user/profile"; // userEntity를 user속성으로 전달한다.
+		return "user/profile2"; // userEntity를 user속성으로 전달한다.
 	}
-
+	// 로그인 세션 정보 업데이트?
 	@GetMapping("/user/{id}/update")
 	public String profileSetting(@PathVariable int id,@AuthenticationPrincipal PrincipalDetails principalDetails,Model model) {
 
@@ -64,11 +65,10 @@ public class UserController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		log.info("==================세션정보:(PrincipalDetails)) auth.getPrincipal()="+mPrincipalDetails.getUser());
 		*/
-
 		model.addAttribute("principal",principalDetails.getUser());
 		return "user/update";
 	}
-
+	// 회원 정보 수정
 	@PutMapping("/user/{id}")
 	public @ResponseBody CMRespDto<?> profileUpdate(@PathVariable int id, User user,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -77,7 +77,7 @@ public class UserController {
 		//return new CMRespDto<>(1, null);
 		return null;
 	}
-
+	// 프로필 사진 변경
 	@PutMapping("/user/{id}/profileImageUrl")
 	public @ResponseBody CMRespDto<?> profileImageUrlUpdate(@PathVariable int id, MultipartFile profileImageFile,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {

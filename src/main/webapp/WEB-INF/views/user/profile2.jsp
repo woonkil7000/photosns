@@ -17,7 +17,12 @@
 				</form>
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
 					 alt="" onerror="this.src='/images/noimage.jpg'"
-					 id="userProfileImage" /><p class="align-middle" style="font-size: 12px; color: Dodgerblue;"> 프로필 이미지 수정</p>
+					 id="userProfileImage" />
+				<c:choose>
+					<c:when test="${dto.pageOwnerState}">
+						<p class="align-middle" style="font-size: 12px; color: Dodgerblue;"> 프로필 이미지 수정</p>
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
 		<!-- user name -->
@@ -99,7 +104,8 @@
 
 
 
-			<!--게시물컨 그리드배열-->
+
+			<!--게시물 그리드배열-->
 			<div class="tab-1-content-inner">
 
 				<!--아이템들-->
@@ -111,7 +117,8 @@
 					<div class="img-box" id="${image.id}">
 						<div  class="img">
 							<c:choose>
-								<c:when test="${dto.pageOwnerState}"><%-- 프로필 제이지 주인일 때 --%>
+								<%-- 프로필 페이지의 주인일 때 --%>
+								<c:when test="${dto.pageOwnerState}">
 
 										<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
 										<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
@@ -164,11 +171,14 @@
 									<!-- ####################### 이미지 링크 ###################### -->
 
 
-								</c:when><%-- pageOwnerState -END- --%>
-								<c:otherwise><%-- 페이지 주인이 아닐때 start --%>
+								</c:when>
+								<%-- 프로필 페이지 주인일 때 pageOwnerState -END- --%>
+
+
+
+								<%-- 페이지 주인이 아닐때 start --%>
+								<c:otherwise>
 									<!-- ####################### 페이지 주인이 아닐때 링크 테그 start ###################### -->
-
-
 									<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
 									<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
 									<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
@@ -224,19 +234,23 @@
 									<!-- ####################### 페이지 주인이 아닐때 링크 테그 END ###################### -->
 								</c:otherwise><%-- 페이지 주인이 아닐때 END --%>
 							</c:choose>
+							<%--  --%>
 						</div>
 						<div><span style="font-size: 16px; color: Dodgerblue;">${fn:substring(image.caption,0,7)}</span></div>
 						<div>
 							<span style="font-size: 16px; color: Dodgerblue; padding-right: 16px;"><i class="fas fa-heart"></i> ${image.likeCount}</span>
 						</div>
-					</div>
+					</div><!-- for each 바로 안쪽 테그. class="img-box"  -->
 				</c:forEach>
+				<!--아이템들 end-->
 
-				<!--아이템들end-->
-			</div>
-		</div>
+			</div><!-- class="tab-1-content-inner" -->
+		</div><!--그냥 감싸는 div (지우면이미지커짐)-->
 	</div>
+	<!-- 게시물 컨테이너 -->
 </section>
+
+
 
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
@@ -456,5 +470,5 @@
 	}
 </script>
 <!-- -->
-<script src="/js/profile.js"></script>
+<script src="/js/profile2.js"></script>
 <%@ include file="../layout/footer.jsp"%>
