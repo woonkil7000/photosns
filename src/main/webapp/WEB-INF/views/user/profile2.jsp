@@ -4,7 +4,7 @@
 
 <input type="hidden" id="userId" value="${dto.user.id}" /> <!-- UserProfileDto returned -->
 
-<!--프로필 섹션-->
+<!--프로필 섹션 --->
 <section class="profile">
 	<!--유저정보 컨테이너-->
 	<div class="profileContainer">
