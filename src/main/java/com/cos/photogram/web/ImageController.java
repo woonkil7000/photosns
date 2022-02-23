@@ -40,7 +40,7 @@ public class ImageController {
 	}
 
 	// 이미지 업로딩
-	@PostMapping("/image") // upload.js 에서 post 로 받음.
+	@PostMapping("/image") // upload.jsp 에서 post 로 받음.
 	public String image(ImageReqDto imageReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
 		if(imageReqDto.getFile().isEmpty()) {
@@ -51,6 +51,15 @@ public class ImageController {
 		imageService.사진업로드(imageReqDto, principalDetails);
 
 		return "redirect:/user/"+principalDetails.getUser().getId();
+	}
+	// 유튜브 주소 전송폼
+	@PostMapping("/youtube") // upload.jsp 에서 post 로 받음.
+	public String youtube(ImageReqDto imageReqDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+		// 서비스 호출
+		imageService.유튜브전송(imageReqDto, principalDetails);
+
+		return "redirect:/user/"+principalDetails.getUser().getId(); // 프로필 페이지
 	}
 
 	// /image/story.jsp 구독중인 사진 리스트 페이지로 리텀됨

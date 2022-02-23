@@ -120,7 +120,7 @@ $(window).scroll(() => {
 		  ": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
-	//{passive: true}
+	{passive: false}
 });
 
 function getStoryItem(image) {
@@ -139,8 +139,13 @@ function getStoryItem(image) {
 	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
+	let pathUrl;
 	console.log("/////////////////////////// contentType='" +contentType+ "'//////////////////////////////////////");
-	let pathUrl="/upload/"+`${image.postImageUrl}`;
+	if(contentType=='youtu'){ // when youtube
+		pathUrl=`${image.postImageUrl}`;
+	}else{
+		pathUrl="/upload/"+`${image.postImageUrl}`;
+	}
 	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
 
 	// ############# fnContentType(contentType,pathUrl) ###############
@@ -157,6 +162,9 @@ function getStoryItem(image) {
 			contentTag ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
+		}else if(contentType=='youtu'){ // youtube
+		contentTag ="<iframe width='320' height='280' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
+			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
@@ -445,7 +453,52 @@ function deleteComment(commentId) {
 	});
 }
 
+// for YouTube
+{
+	// 2. This code loads the IFrame Player API code asynchronously.
+	var tag = document.createElement('script');
 
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height: '390',
+			width: '640',
+			videoId: 'M7lc1UVf-VE',
+			playerVars: {
+				'playsinline': 1
+			},
+			events: {
+				'onReady': onPlayerReady,
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+		event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && !done) {
+		setTimeout(stopVideo, 6000);
+		done = true;
+	}
+	}
+	function stopVideo() {
+		player.stopVideo();
+	}
+}
 
 
 

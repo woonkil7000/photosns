@@ -15,6 +15,7 @@ public class ImageReqDto {
 	private String caption; // 해당 사진의 부가 정보1
 	private String tags; // 해당 사진의 부가 정보2
 	private String contentType; // 파일 Type
+	private String uAddress; // 유튜브 주소
 	
 	public Image toEntity(String postImageUrl, User userEntity) {
 		return Image.builder()

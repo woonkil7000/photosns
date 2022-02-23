@@ -183,7 +183,7 @@ $(window).scroll(() => {
 			": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
-	//{passive: true}
+	{passive: false}
 });
 
 function getStoryItem(image) {

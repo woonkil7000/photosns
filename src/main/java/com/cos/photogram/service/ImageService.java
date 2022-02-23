@@ -176,6 +176,28 @@ public class ImageService {
 		tagRepository.saveAll(tags);
 
 	}
+	@Transactional
+	public void 유튜브전송(ImageReqDto imageReDto, PrincipalDetails principalDetails) {
+		String fileContentType = "youtube";
+		// 추후 View 에서 사용하기 위해 file 정보에서 contentType 추출해서 DB에 저장.
+
+		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.
+
+		// 1. Image table 저장
+		imageReDto.setContentType(fileContentType); // file Type DB 저장.
+		String imageFileName = imageReDto.getUAddress(); // 파일네임을 유튜브 주소로 대체
+		Image image = imageReDto.toEntity(imageFileName, principalDetails.getUser());
+		Image imageEntity = imageRepository.save(image);
+		System.out.println("==================================== 이미지 Entity DB 저장.  =======================================");
+		//System.out.println(imageEntity);
+		// ########## imageEntity를 출력하면 무한 참조로 no session Error 발생시킴 ###########
+		//log.info(imageEntity.toString());
+
+		// 2. Tag 저장
+		List<Tag> tags = TagUtils.parsingToTagObject(imageReDto.getTags(), imageEntity);
+		tagRepository.saveAll(tags);
+
+	}
 
 	@Transactional(readOnly = true)
 	public List<Image> 인기사진(int principalId){ // mExplore:
