@@ -272,3 +272,18 @@ function modalClose() {
 function modalDelete() {
 	$(".modal-imgdelete").css("display", "none");
 }
+
+
+function myCheck(test) {
+	let result;
+	let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+	if (confirm(text) == true) {
+	//text = "You pressed OK!";
+		result = true;
+} else {
+	//text = "You canceled!";
+		result=false;
+}
+	//document.getElementById("demo").innerHTML = text;
+	return result;
+} //myCheck();

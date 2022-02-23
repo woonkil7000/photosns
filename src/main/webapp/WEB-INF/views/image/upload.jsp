@@ -6,11 +6,12 @@
            <!--사진업로드 박스-->
             <section class="upload">
                <!--사진업로드 로고-->
-                <div class="upload-top">
-                    <a href="home.html" class="">
+                <!--<div class="upload-top">
                         <img src="/images/logo2.png"  width="50" height="50" alt="">
-                    </a>
-                    <p>사진 업로드</p>
+                </div>
+                -->
+                <div class="btn btn-outline-primary"><span style="font-size: 24px; color: Dodgerblue;"><i class="fas fa-file-upload"></i></span>
+                    <span style="font-size: 20px; color: Dodgerblue;"> 사진 / 영상 업로드</span>
                 </div>
                 <!--사진업로드 로고 end-->
                 <!--사진업로드 Form-->
@@ -20,14 +21,14 @@
                         <img src="/images/noimage.jpg" alt="" id="imageUploadPreview" />
                     </div>
                     <!--사진설명 + 업로드버튼-->
-                    <div class="alert alert-danger" role="alert">파일 업로드가 완료되면 화면이 자동전환됩니다.용량이 큰 파일은 잠시 기다려주세요.</div>
+                    <div class="alert alert-primary" role="alert"><b>전송 완료시 [화면이 전환]됩니다.</b> 용량이 큰 파일은 [화면이 전환]될 때 까지 잠시 기다려주세요</div>
                     <div class="upload-form-detail form-floating">
                    		 <!--<input type="text" placeholder="사진설명" name="caption">-->
                         <!--<div class="form-floating">-->
-                        <textarea class="form-control"  placeholder="사진/영상 제목" name="caption" id="floatingTextarea"></textarea>
-                        <label for="floatingTextarea">사진/영상 제목</label>
-                        <input class="form-control" type="text" placeholder="#태그" name="tags">
-                        <button class="cta blue btn btn-primary btn-lg">파일 업로드</button>
+                        <textarea class="form-control"  placeholder="사진/영상 설명" name="caption" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea">사진 제목 입력(선택사항)</label>
+                        <input class="form-control" type="text" placeholder="#해시 태그 입력(선택사항)" name="tags">
+                        <button class="btn btn-primary btn-lg">파일 전송 시작</button>
                     </div>
                     <!--사진설명end-->
                 </form>

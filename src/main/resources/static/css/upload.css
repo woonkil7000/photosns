@@ -7,15 +7,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 70px;
+  <!--margin-top: 150px;-->
 }
 
 /*업로드섹션*/
 .upload {
-  /*
-  width: 600px;
-  */
-  width: 350px;
+  width: 340px;
+  /*  width: 600px;  */
   display: flex;
   flex-direction: column;
   padding: 10px 40px;
@@ -29,7 +28,7 @@
 
 /*업로드박스 이미지*/
 .upload .upload-top img {
-  width: 200px;
+  width: 150px;
   margin: 10px 0 20px;
 }
 
@@ -77,8 +76,8 @@
   width: 400px;
   height: 300px;
   */
-  width: 200px;
-  height: 150px;
+  width: 150px;
+  height: 120px;
   margin-bottom: 5px;
 }
 
@@ -98,8 +97,7 @@
 /*이미지에 대한 설명인풋 + 버튼*/
 .upload .upload-form .upload-form-detail input,
 .upload .upload-form .upload-form-detail button {
-  <!-- width: 340px; -->
-  width: 380px;
+  width: 340px;
 }
 .upload .upload-form .upload-form-detail input {
   text-indent: 10px;

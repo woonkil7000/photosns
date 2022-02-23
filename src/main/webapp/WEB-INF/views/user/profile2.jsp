@@ -43,12 +43,7 @@
 
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
-					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
-					<div>
-					<div><button class="modi" onclick="location.href='/image/upload'"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-cloud-upload-alt"></i>새로운 사진 / 영상 등록</span></button>
-					</div>
 					<div><button class="modi" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i>정보수정 / 로그아웃</span></button>
-					</div>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -95,7 +90,7 @@
 				<c:when test="${dto.pageOwnerState}">
 					<!--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>-->
 					<div class="alert btn-primary d-flex align-items-center" role="alert">
-						<div>아래에서 이미지를 선택하면 설명(caption)을 수정하거나 사진을 삭제할 수 있습니다
+						<div>이미지를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다
 						</div>
 					</div>
 				</c:when>
@@ -139,7 +134,7 @@
 											</c:when>
 											<c:when test="${contentType=='video'}">
 												<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-												<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+												<c:set var="contentTag2" value="<video playinline controls loop preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 												<!--<video controls preload='metadata' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 											</c:when>
@@ -149,7 +144,7 @@
 												<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
 												<%--<c:out value="${contentTag}"></c:out>--%>
 
-												<%-- //////////// contentTag: 페이지용, contentTag2: 모달용 으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
+												<%-- //////////// contentTag: 프로필 페이지용 // contentTag2: 모달window용 으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
 											</c:otherwise>
 										</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
 
@@ -198,7 +193,7 @@
 										</c:when>
 										<c:when test="${contentType=='video'}">
 											<c:set var="contentTag" value="<video preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-											<c:set var="contentTag2" value="<video controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
+											<c:set var="contentTag2" value="<video playinline controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 											<!--<video controls preload='metadata' src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 											<%--<c:out value="${contentTag}"></c:out>--%>
 										</c:when>
@@ -334,7 +329,7 @@
 					<c:choose>
 						<c:when test="${dto.pageOwnerState}">
 					<div>
-						<button type="button" class="btn btn-primary" id="update-btn">설명 수정</button>
+						<button type="button" class="btn btn-primary" id="update-btn">이미지 설명 수정</button>
 					</div>
 					<div>
 						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">이미지 삭제</button>
@@ -393,37 +388,39 @@
 	// 클릭 이벤트 감지
 		delete_button.addEventListener('click',function (event) {
 
-			// 삭제 이미지 객채 생성
-			const image = {
-				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
-				userid: document.querySelector("#user_id").value,
-				url: document.querySelector("#image_url").value
-			};
-			console.log("image object =", image);
 
-			// 삭제 REST API 호출 - fetch()
-			const url="/api/image/"+image.id+"/delete";
-			console.log("fetch url=",url);
+			if(myCheck("이미지 삭제")) {
+				// 삭제 이미지 객채 생성
+				const image = {
+					id: document.querySelector("#image_id").value,
+					caption: document.querySelector("#caption").value,
+					userid: document.querySelector("#user_id").value,
+					url: document.querySelector("#image_url").value
+				};
+				console.log("image object =", image);
 
-			// fetch(url,{})
-			fetch(url,{
-				method: "DELETE", // method = 삭제요청
-				body: JSON.stringify(image), // 객체를 JSON 으로 전달
-				headers: {
-					"Content-Type": "application/json"
-				}
+				// 삭제 REST API 호출 - fetch()
+				const url = "/api/image/" + image.id + "/delete";
+				console.log("fetch url=", url);
 
-			// }).then(function (response) {}) -->> response => {}
-			}).then(response => {
-				// http 응답 코드에 따른 메시지 출력
-				const msg = (response.ok) ? "이미지 삭제 완료~" : "이미지 삭제 실패!!";
-				console.log(msg);
-				//alert(msg);
-				// 현재 페이지를 새로 고침
-				window.location.reload();
-			})
+				// fetch(url,{})
+				fetch(url, {
+					method: "DELETE", // method = 삭제요청
+					body: JSON.stringify(image), // 객체를 JSON 으로 전달
+					headers: {
+						"Content-Type": "application/json"
+					}
 
+					// }).then(function (response) {}) -->> response => {}
+				}).then(response => {
+					// http 응답 코드에 따른 메시지 출력
+					const msg = (response.ok) ? "이미지 삭제 완료~" : "이미지 삭제 실패!!";
+					console.log(msg);
+					//alert(msg);
+					// 현재 페이지를 새로 고침
+					window.location.reload();
+				})
+			}
 		});
 
 	}
