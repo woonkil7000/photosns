@@ -9,6 +9,54 @@
   (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달 
   (8) 구독자 정보 모달 닫기
  */
+let uTubePathUrl;
+//let pageUserId=`${principalId}`;
+let page=1;
+//let user=`${user.}`;
+let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
+console.log("userId=",userId)
+// (0) 페이지 유저 id로 페이지<이미지> 리스트 가져오기
+function imageList() {
+
+	// alert(pageUserId);
+	$(".img").css("display", "flex");
+	userId = $("#userId").val(); // pageUserId 해당 페이지의 주인 id
+
+	$.ajax({
+		url: `/api/image/${userId}/?page=${page}`,
+		dataType:"json"
+	}).done((res) => {
+
+		//console.log("url=",url);
+		console.log("res=",res);
+		console.log("res.data=",res.data);
+
+		// res.data.forEach((u) // 오류!!! @@@@@@@@@@@@@@@@ forEach 돌리기전 res 출력해서 object 구조 먼저 확인 할 것!! @@@@@@@@@@@@
+
+		res.data.content.forEach((u) => {
+			let item = getImageItem(u); // return html tag applied list
+			console.log("item=",item);
+			$("#img").append(item);
+		});
+	}).fail((error) => {
+
+		console.log("리스트 불러오기 오류 : ",error);
+		return;
+	});
+}
+
+function getImageItem(image){
+	let imageId=`${image.id}`;
+	let result = `<div class="img" id="${image.id}"><img src="${image.postImageUrl}">`;
+	result +=`</div>`;
+	console.log("imageId=",imageId);
+	console.log("result=",result);
+	return result;
+}
+
+//imageList();
+
+
 
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
 function toggleSubscribe(userId, obj) {

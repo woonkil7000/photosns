@@ -27,6 +27,13 @@
                             <c:out value=" #### init contentTag=${contentTag} ####"></c:out>
                             --%>
 						<c:choose>
+							<c:when test="${contentType eq 'youtu'}">
+								<c:set var="pathUrl" value="${image.postImageUrl}"/>
+							</c:when>
+						</c:choose>
+						<c:set var="contentTag" value=""/>
+						<c:set var="contentTag2" value=""/>
+						<c:choose>
 							<c:when test="${contentType=='image'}">
 								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
 								<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
@@ -38,6 +45,10 @@
 								<c:set var="contentTag2" value="<video playsinline controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 								<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
 								<%--<c:out value="${contentTag}"></c:out>--%>
+							</c:when>
+							<c:when test="${contentType=='youtu'}">
+								<c:set var="contentTag" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+								<c:set var="contentTag2" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
 							</c:when>
 							<c:otherwise>
 								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>

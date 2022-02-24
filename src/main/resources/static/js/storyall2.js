@@ -163,7 +163,8 @@ function getStoryItem(image) {
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-		contentTag ="<iframe width='320' height='280' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
+			contentTag ="<iframe width='340' height='300' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
@@ -172,7 +173,7 @@ function getStoryItem(image) {
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}
-		console.log("======================== contentTag ={} =================================",contentTag);
+		//console.log("======================== contentTag ={} =================================",contentTag);
 		return contentTag;
 	}
 	// ############# fnContentType(contentType,pathUrl) -END- ###############
@@ -200,7 +201,6 @@ function getStoryItem(image) {
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
 	<div >
-		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
 		`;
 
 
@@ -453,25 +453,59 @@ function deleteComment(commentId) {
 	});
 }
 
+// 유튜브 아이디 추출
+function youtubeId(url) {
+	var tag = "";
+	if(url)  {
+		var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+		var matchs = url.match(regExp);
+		if (matchs) {
+		//tag += "유튜브 아이디 : "+matchs[7];
+			tag += matchs[7];
+		}
+	return tag;
+	}
+}
+/*
+	var s1 = "https://www.youtube.com/watch?v=Vrwyo1A8XNg";
+	var s2 = "http://youtu.be/Vrwyo1A8XNg";
+	document.write(youtubeId(s1));
+	document.write("<br />");
+	document.write(youtubeId(s2));
+*/
+// utube Id extract
+function extractVideoID(url) {
+	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+	var match = url.match(regExp);
+	if (match && match[7].length == 11) {
+		return match[7];
+	} else {
+		alert("Could not extract video ID.");
+	}
+}
+
 // for YouTube
 {
+	<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+	//<div id="player"></div>
+
 	// 2. This code loads the IFrame Player API code asynchronously.
 	var tag = document.createElement('script');
-
 	tag.src = "https://www.youtube.com/iframe_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
 	var player;
 	function onYouTubeIframeAPIReady() {
 		player = new YT.Player('player', {
-			height: '390',
-			width: '640',
-			videoId: 'M7lc1UVf-VE',
+			height: '280',
+			width: '325',
+			videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
 			playerVars: {
-				'playsinline': 1
+				'playsinline': 1,
+				'volumn': 40,
+				'controls': 1,
 			},
 			events: {
 				'onReady': onPlayerReady,
@@ -482,7 +516,7 @@ function deleteComment(commentId) {
 
 	// 4. The API will call this function when the video player is ready.
 	function onPlayerReady(event) {
-		event.target.playVideo();
+		//event.target.playVideo();
 	}
 
 	// 5. The API calls this function when the player's state changes.
@@ -491,7 +525,7 @@ function deleteComment(commentId) {
 	var done = false;
 	function onPlayerStateChange(event) {
 		if (event.data == YT.PlayerState.PLAYING && !done) {
-		setTimeout(stopVideo, 6000);
+		//setTimeout(stopVideo, 10000);
 		done = true;
 	}
 	}

@@ -63,7 +63,7 @@ public class ImageService {
 			}));
 
 			System.out.println("######################################## End of Page[Image] images ###################################################");
-			log.info("imageRepository.유저이미지스토리(String.valueOf( [images] ) =============>>>>>>>>>> " + String.valueOf(images));
+			log.info("imageRepository.유저이미지스토리(String.valueOf( [images] ) =============>>>>>>>>>> String.valueOf(images)");
 			log.info("###################  return Page[Image] images=imageRepository.userStory(principalId,pageable)    ######################### ");
 		}
 		return images;
@@ -278,9 +278,12 @@ public class ImageService {
 		// transaction 처리.
 		Image image = imageRepository.findById(imageId).orElseThrow();
 		User user = image.getUser();
+		String contentType = image.getContentType();
+		// 유튜브 데이터는 파일 삭제 없이 db에서만 삭제.
 		log.info("#### #### principalId ={}",princialId);
 		log.info("#### #### to delete image's user ={}",user);
 		log.info("#### #### imageId ={}",imageId);
+		log.info("################################################################# contentType='{}'",contentType);
 
 		// user.id == principalId // image.user.getId 과 principalId 가 같을 때
 		if(princialId==user.getId()) {
@@ -290,50 +293,65 @@ public class ImageService {
 			// if(file.exists()) {
 			// 	파일이 존재하면 file.delete(); // 파일 삭제
 			// }
-			Path imageFilePath = Path.of(uploadFolder + image.getPostImageUrl());
-			log.info("#### #### To delete imageFilePath={}", imageFilePath);
 
-			if(Files.exists(imageFilePath)) {
+			// "문자열" 비교할때 != == 사용하지 않는다! equals()메소드 사용!!
+			if (!contentType.equals("youtube")) {
 
-				try {
-					System.out.println("--------  :: 파일삭제 시도 :: --------");
+				log.info("#############################  contentType != youtube ####################################");
+				Path imageFilePath = Path.of(uploadFolder + image.getPostImageUrl());
+				log.info("#### #### To delete imageFilePath={}", imageFilePath);
+				// 해당 경로에 파일이 있고 contentType 이 유튜브 데이타가 아니면. 파일 삭제 시도.
+				if (Files.exists(imageFilePath)) {
 
-					Files.delete(imageFilePath); // #### 파일 삭제 ####
+					try {
+						System.out.println("--------  :: 파일삭제 시도 :: --------");
 
-					System.out.println(" ==== Files.delete(imageFilePath) : 파일삭제 ==== ");
-					// 파일 삭제(경로포함 파일경로)
-					// Files.delete(imageFilePath);
-					// imageFilePath.toFile().delete() // ????
-					// 삭제후 삭제 파일 exists 로 체크.
-					if(Files.exists(imageFilePath)) {
-						System.out.println("Files.exists 체크: 파일이 삭제되지 않았습니다.");
-					}else{
-						System.out.println("Files.exists 체크: 파일이 삭제된 것을 학인합니다.");
-						System.out.println("관련 DB data 도 삭제해 주세요.");
-						// 파일 삭제시 DB 에서 파일 경로 정보를 참조하므로 파일 삭제 후 디비 삭제하는 로직으로
-						// comment, likes, tag, image  delete by imageId
-						// tagRepository.deleteById(imageId);
-						// likesRepository.deleteById(imageId);
-						// commentRepository.deleteById(imageId);
-						imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
+						Files.delete(imageFilePath); // #### 파일 삭제 ####
+
+						System.out.println(" ==== Files.delete(imageFilePath) : 파일삭제 ==== ");
+						// 파일 삭제(경로포함 파일경로)
+						// Files.delete(imageFilePath);
+						// imageFilePath.toFile().delete() // ????
+						// 삭제후 삭제 파일 exists 로 체크.
+						if (Files.exists(imageFilePath)) {
+							System.out.println("Files.exists 체크: 파일이 삭제되지 않았습니다.");
+						} else {
+							System.out.println("Files.exists 체크: 파일이 삭제된 것을 학인합니다.");
+							System.out.println("관련 DB data 도 삭제해 주세요.");
+							// 파일 삭제시 DB 에서 파일 경로 정보를 참조하므로 파일 삭제 후 디비 삭제하는 로직으로
+							// comment, likes, tag, image  delete by imageId
+							// tagRepository.deleteById(imageId);
+							// likesRepository.deleteById(imageId);
+							// commentRepository.deleteById(imageId);
+							imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace(); // 예외상황 기록하기.
 					}
 
-				} catch (Exception e) {
-					e.printStackTrace(); // 예외상황 기록하기.
+				} else { // Files.exists // 파일이 없거나 contentType 이 유튜브 데이터 등 이면.
+
+					System.out.println(" ==== Files.exists() :: 삭제할 파일이 존재하지 않습니다. ==== ");
+					System.out.println(" ==== 유트브 데이터 일때도 이부분 실행(DB 에서만 데이터 삭제) ==== ");
+
+					// #### 삭제할 파일이 없으면 DB 가 잘못된 파일 경로 데이터를 가지고 있으므로  DB 에서 삭제하자 ####
+					imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
 				}
 
-			} else { // Files.exists
 
-				System.out.println(" ==== Files.exists() :: 삭제할 파일이 존재하지 않습니다. ==== ");
+			}else{ // when contentType= youtubu
 
-				// #### 삭제할 파일이 없으면 DB 가 잘못된 파일 경로 데이터를 가지고 있으므로  DB 에서 삭제하자 ####
+				log.info("#############################  contentType == youtube ####################################");
 				imageRepository.deleteById(imageId); // on delete cascade: delete with FK constraint
+				log.info("##########   유튜브 데이터 DB 에서 삭제 ########");
+				// ####   유튜브 데이터 DB 에서 삭제 ####
 			}
 
-
 		} else {
-			log.info("삭제할 이미지의 주인이 아닙니다.");
-		}
+				log.info("삭제할 이미지의 주인이 아닙니다.");
+			}
+
 	}
 
 	@Transactional

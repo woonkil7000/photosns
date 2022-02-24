@@ -16,7 +16,7 @@
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">파일 전송</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">유튜브 영상 공유</button>
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">YouTube 공유</button>
                 </li>
                 <!--
                 <li class="nav-item" role="presentation">
@@ -27,9 +27,9 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                         <!-- 파일 업로드 -->
-                        <div class="upload-top"><button type="button" class="btn btn-outline-primary" disabled data-bs-toggle="button" autocomplete="off">
+                        <div class="upload-top">
                             <span style="font-size: 18px; color: Dodgerblue;"><i class="fas fa-file-upload"></i></span>
-                            <span style="font-size: 14px; color: Dodgerblue;"> 사진/영상 파일 업로드</span></button>
+                            <span style="font-size: 18px; color: Dodgerblue;"> 사진/영상 파일 업로드</span>
                         </div>
                         <!--사진업로드 Form-->
                         <form class="upload-form" method="POST" enctype="multipart/form-data" action="/image">
@@ -56,27 +56,27 @@
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <!-- 유튜브 주소 붙여넣기 -->
 
-                        <div class="upload-top mb-3"><button type="button" class="btn btn-outline-primary" disabled data-bs-toggle="button" autocomplete="off">
-                            <span style="font-size: 18px; color: Dodgerblue;"><i class="fas fa-file-upload"></i></span>
-                            <span style="font-size: 14px; color: Dodgerblue;"> 유튜브 주소 붙여넣기</span></button>
+                        <div class="upload-top mb-3">
+                            <span style="font-size: 18px; color: Dodgerblue;"> YouTube [공유] 링크 복사해서 붙여넣기</span>
                         </div>
                         <!-- 유튜브 업로드 Form-->
-                        <form class="upload-form" method="POST" action="/youtube">
+                        <form class="upload-form" method="POST" action="/youtube" onsubmit="jbSubmit();">
+                            <input type="hidden" name="uAddress" id="uAddress" value="">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon3">주소:</span>
-                                <input type="text" name="uAddress" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="youtube 주소를 여기에...">
+                                <span class="input-group-text" id="basic-addon3">link:</span>
+                                <input type="text" name="iAddress" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="here..">
                             </div>
                             <!--유튜브 설명 + 업로드버튼-->
                             <div class="alert alert-primary" role="alert">
-                                <span style="font-size: 18px; color: Dodgerblue;">https://youtu.be/abcdefg 이렇게 생긴 공유용 주소를 붙여넣으시면 안됩니다.</span>
-                                <span style="font-size: 18px; color: Dodgerblue;">유튜브 퍼가기에 들어가면 나오는 코드에 있는 https://www.youtube.com/embed/abcdefg 이런식의 주소를 붙여넣어야해요.</span></div>
+                                <span style="font-size: 16px; color: Dodgerblue;">YouTube [공유] 링크 복사한 후 붙여넣기 하세요</span>
+                            </div>
                             <div class="upload-form-detail form-floating">
                                 <!--<input type="text" placeholder="사진설명" name="caption">-->
                                 <!--<div class="form-floating">-->
                                 <textarea class="form-control"  placeholder="사진/영상 설명" name="caption" id="floatingTextarea2"></textarea>
-                                <label for="floatingTextarea">유튜브 제목 입력(선택사항)</label>
+                                <label for="floatingTextarea">YouTube 제목 입력(선택사항)</label>
                                 <input class="form-control" type="text" placeholder="#해시 태그 입력(선택사항)" name="tags">
-                                <button class="btn btn-primary btn-lg">유튜브 주소 전송</button>
+                                <button class="btn btn-primary btn-lg">YouTube 주소 전송</button>
                             </div>
                             <!--유튜브 설명end-->
                         </form>
@@ -102,6 +102,45 @@
             <!--사진업로드 박스 end-->
         </main>
         <br/><br/>
-	
-	<script src="/js/upload.js" ></script>
-    <%@ include file="../layout/footer.jsp" %>
+
+<script>
+function jbSubmit(){
+    let address=document.querySelector("#basic-url").value;
+    let uid=youtubeId(address);
+    document.querySelector("#uAddress").value=uid;
+    //alert(document.querySelector("#uAddress").value);
+    //return false;
+}
+// 유튜브 아이디 추출
+function youtubeId(url) {
+    var tag = "";
+    if(url)  {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var matchs = url.match(regExp);
+        if (matchs) {
+            //tag += "유튜브 아이디 : "+matchs[7];
+            tag += matchs[7];
+        }
+        return tag;
+    }
+}
+/*
+    var s1 = "https://www.youtube.com/watch?v=Vrwyo1A8XNg";
+    var s2 = "http://youtu.be/Vrwyo1A8XNg";
+    document.write(youtubeId(s1));
+    document.write("<br />");
+    document.write(youtubeId(s2));
+*/
+// utube Id extract
+function extractVideoID(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[7].length == 11) {
+        return match[7];
+    } else {
+        alert("Could not extract video ID.");
+    }
+}
+</script>
+<script src="/js/upload.js" ></script>
+<%@ include file="../layout/footer.jsp" %>

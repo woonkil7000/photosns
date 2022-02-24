@@ -191,9 +191,17 @@ function getStoryItem(image) {
 	console.log("======================== image.contentType ={} =================================",);
 
 	<!-- Get Content Type -->
+	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
-	let pathUrl=`/upload/${image.postImageUrl}`;
+	let pathUrl;
+	console.log("/////////////////////////// contentType='" +contentType+ "'//////////////////////////////////////");
+	if(contentType=='youtu'){ // when youtube
+		pathUrl=`${image.postImageUrl}`;
+	}else{
+		pathUrl="/upload/"+`${image.postImageUrl}`;
+	}
+	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
 
 	function fnContentType(contentType,pathUrl){
 		let contentTag;
@@ -204,6 +212,10 @@ function getStoryItem(image) {
 		}else if(contentType=='video'){ // video
 			contentTag="<video playsinline controls loop preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
+		}else if(contentType=='youtu'){ // youtube
+			contentTag ="<iframe width='340' height='300' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
+			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			console.log("=============== etc => image ===================");
