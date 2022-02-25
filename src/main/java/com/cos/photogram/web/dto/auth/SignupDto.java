@@ -2,6 +2,7 @@ package com.cos.photogram.web.dto.auth;
 
 import com.cos.photogram.domain.user.User;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
@@ -19,6 +20,8 @@ public class SignupDto {
     private String name; // 이름
     @Email
     private String email;
+    //@ColumnDefault("noimage.png") //default
+    private String profileImageUrl = "noimage.png";
 
     public User toEntity(){
         return User.builder()
@@ -26,6 +29,7 @@ public class SignupDto {
                 .password(password)
                 .email(email)
                 .name(name)
+                .profileImageUrl(profileImageUrl)
                 .build();
 
     }

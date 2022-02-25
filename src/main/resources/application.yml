@@ -120,6 +120,9 @@ file:
   path: D:/src/springbootwork-sts/upload/
 #  path: /home/user/uploadImages/
 
+# 프로필 이미지 noimage.png upload 폴더에 저장해 놓을것.(/images/ 폴더에 있는 noimage.png 파일)
+# // noimage.png: DB profileImageUrl 기본설정된 값임.
+# <img onerror= 아이폰 크롬에서 작동 안함.
 # 프로필 이미지도 여기에 저장됨을 참고.
 # 항상 "/"로 끝나도록 설정할 것
 

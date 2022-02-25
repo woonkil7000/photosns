@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,8 +37,10 @@ public class User {
 	private String email;
 	private String phone;
 	private String gender;
-	
-	private String profileImageUrl;
+
+	//@Column(columnDefinition = "varchar(255) default 'noimage.png'") // SQL 스키마에서 기본값으로 설정변경
+	@ColumnDefault("noimage.png") // SQL 스키마에서 기본값으로 설정변경
+	private String profileImageUrl; //  = "noimage.png"; // 객체 생성시 기본값으로 설정하기
 	private String provider; // 제공자 Google, Facebook, Naver
 	
 	private String role; // USER, ADMIN

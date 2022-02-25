@@ -28,7 +28,7 @@ public class ImageApiController {
     // pageUserId 로 해당 유저의  Page<이미지> 리스트 가져오기(프로필 페이지에서 사용)
     @GetMapping("/api/image/{pageUserId}")
     public ResponseEntity<?> imageStory3(@PathVariable int pageUserId,@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                         @PageableDefault(size=5) Pageable pageable){
+                                         @PageableDefault(size=6) Pageable pageable){
         Page<Image> images = imageService.유저이미지스토리(pageUserId,principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image3\") :: Page[Image] images  = imageService.유저이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
         if (images.isEmpty()) { // ############### 유저가 등록한 이미지가 없는 경우 에러

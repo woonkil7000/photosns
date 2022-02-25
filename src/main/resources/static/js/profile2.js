@@ -11,7 +11,18 @@
  */
 let uTubePathUrl;
 //let pageUserId=`${principalId}`;
-let page=1;
+let isNoData=1; // init value: true. still no Data.
+let DataFailed=0; // 데이타 로딩 실패. init value: False
+let page=0;
+let totalPage=0;
+let currentPage=0;
+let isLastPage=false;
+let appendLastFlag=0;// 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
+let storyLoadUnlock=true; // storyLoad() 초기값 허용.
+let totalElements;
+
+let principalId = $("#principalId").val(); // input hidden value
+let principalUsername = $("#principalUsername").val();
 //let user=`${user.}`;
 let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
 console.log("userId=",userId)
@@ -27,35 +38,142 @@ function imageList() {
 		dataType:"json"
 	}).done((res) => {
 
+		isNoData=0; // noData: 0:false. is Be Data.
 		//console.log("url=",url);
 		console.log("res=",res);
 		console.log("res.data=",res.data);
+		totalPage = res.data.totalPages; // 전체 페이지
+		currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
+		totalElements=res.data.totalElements;
+		isLastPage=res.data.last;
 
 		// res.data.forEach((u) // 오류!!! @@@@@@@@@@@@@@@@ forEach 돌리기전 res 출력해서 object 구조 먼저 확인 할 것!! @@@@@@@@@@@@
 
 		res.data.content.forEach((u) => {
 			let item = getImageItem(u); // return html tag applied list
-			console.log("item=",item);
-			$("#img").append(item);
+			//console.log("# item=",item);
+			$("#storyList").append(item);
 		});
+		page=currentPage+1;
+
 	}).fail((error) => {
 
 		console.log("리스트 불러오기 오류 : ",error);
-		return;
+		console.log("isNoData=",isNoData);
+		console.log("DataFailed=",DataFailed);
+		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
+		if(isNoData==1&&DataFailed==1){
+			let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
+				": : : : : 이미지가 없습니다 : : : : :</p>";
+			$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
+		}
 	});
 }
 
 function getImageItem(image){
+
+	console.log("======================== image.contentType ={} =================================",);
+
+	<!-- Get Content Type -->
 	let imageId=`${image.id}`;
-	let result = `<div class="img" id="${image.id}"><img src="${image.postImageUrl}">`;
-	result +=`</div>`;
+	let contentType=`${image.contentType}`;
+	contentType=contentType.substring(0,5);
+
+	let pathUrl;
+	console.log("/////////////////////////// contentType='" +contentType+ "'//////////////////////////////////////");
+	if(contentType=='youtu'){ // when youtube
+		pathUrl=`${image.postImageUrl}`;
+	}else{
+		pathUrl="/upload/"+`${image.postImageUrl}`;
+	}
+	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
+
+	// ############# fnContentType(contentType,pathUrl) ###############
+	function fnContentType(contentType,pathUrl){
+		let contentTag;
+		if (contentType=='image'){ // image
+			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
+			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
+			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
+			contentTag ="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			//contentTag +="</a>";
+			console.log("=============== image ===================");
+		}else if(contentType=='video'){ // video
+			contentTag ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			console.log("=============== video ===================");
+		}else if(contentType=='youtu'){ // youtube
+			contentTag ="<iframe width='340' height='300' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
+			console.log("=============== YouTube ===================");
+		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
+			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
+			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
+			contentTag ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			//contentTag +="</a>";
+			console.log("=============== etc => image ===================");
+		}
+		//console.log("======================== contentTag ={} =================================",contentTag);
+		return contentTag;
+	}
+	// ############# fnContentType(contentType,pathUrl) -END- ###############
+	<!-- Get Content Type end  -->
+
+
+	let contentTag = fnContentType(contentType,pathUrl);
+	let result = `<div class="col" id="storyList-${image.id}">${contentTag}</div>`;
+	result +=` `;
 	console.log("imageId=",imageId);
-	console.log("result=",result);
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result=",result);
 	return result;
 }
 
-//imageList();
+imageList();
 
+//
+
+// 스토리 스크롤 페이징하기
+$(window).scroll(() => {
+
+	//console.log(" =|=|=|= currentPage",currentPage);
+	//console.log(" =|=|=|= totalPage",totalPage);
+	//console.log(" =|=|=|= page++",page);
+	//console.log("문서의 높이",$(document).height());
+	//console.log("윈도우 스크롤 탑",$(window).scrollTop());
+	//console.log("윈도우 높이",$(window).height());
+	let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
+	//console.log("@@@@@@@@@@@@@@ checkNum="+checkNum);
+
+	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
+	// 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
+	if ((checkNum < 100 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+
+		// Set Timer 걸기. 동시이벤트 걸러내기.
+		imageList();
+		storyLoadUnlock=false;
+		// console.time("X");
+		// console.timeStamp("시작 시간");
+		//console.log("@@@@ storyLoad() 함수 호출 실행됨 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		// console.log("@@@@ after storyLoad() 불가 storyLoadUnlock=",storyLoadUnlock);
+		setTimeout(function(){
+			storyLoadUnlock=true; // 3초후 허용
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
+			// console.timeEnd("X");
+			// console.timeStamp("종료 시간");
+		},1000)
+
+		//window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
+	}
+	if (isLastPage==true&&appendLastFlag!=1){ // 데이타의 마지막 페이지
+		appendLastFlag=1;
+		// append. no more date message.
+		let storyItem = "<div  class=\"alert alert-warning\" role=\"alert\">"+
+			"<span style=\"font-size: 16px; color: Dodgerblue;\">" +
+			": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
+		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
+	}
+	{passive: false}
+});
 
 
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
@@ -229,47 +347,11 @@ function profileImageUpload(pageUserId,principalId) {
 		});
 
 
-		/*
-		$.ajax({
-			type: 'PUT',
-			url:  prefix + '/MyData',
-			contentType: 'application/json; charset=utf-8',
-			data: JSON.stringify(JSONObject),
-			dataType: 'json',
-			async: true,
-			success: function(result) {
-				alert('At ' + result.time
-					+ ': ' + result.message);
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				alert(jqXHR.status + ' ' + jqXHR.responseText);
-			}
-		});
-*/
 
-
-		/*
-                }).done(res=>{
-
-                    console.log("########## principalId => "+principalId);
-                    console.log("########## 파일전송 ajax.done(res=>)");
-                    // 사진 전송 성공시 이미지 변경
-                    let reader = new FileReader();
-                    reader.onload = (e) => {
-                        $("#userProfileImage").attr("src", e.target.result);
-                    }
-                    reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
-                }).fail(error=>{
-
-                    console.log("########## principalId => "+principalId);
-                    console.log("########## 파일전송 실퍠!",error.responseText);
-                });
-
-        */
 	});
 }
-// 이미지 삭제
 
+// 이미지 삭제
 function deleteImage(imageId,principalId) {
 
 		//let pid = ${u.userId}

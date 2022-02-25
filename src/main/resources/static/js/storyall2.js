@@ -187,10 +187,10 @@ function getStoryItem(image) {
 	<div class="sl__item__header">
 		<div>`;
 
-  	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+  	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
 	// 사용자 프로필 이미지
-	result += `<a class="profile-image" href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
+	result += `<a class="profile-image" href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
 	result +=`</a></div>
 		<div><span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}">${image.user.name}</a></span></div>
@@ -305,7 +305,7 @@ function getStoryItem(image) {
 			<span style="font-size: 18px; color: Dodgerblue;">${image.caption}</span>
 		</div>
 		<!--게시글내용end-->
-
+		<hr>
 		<!-- 댓글 박스 시작 -->
 		<div id="storyCommentList-${image.id}">
 		`;
@@ -313,7 +313,7 @@ function getStoryItem(image) {
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 				<div style="text-align:left;border-radius: 50%;"><a class="profile-image" href="/user/${comment.user.id}">
-				<img style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				<img style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
 				</div>
   				`;
@@ -427,7 +427,7 @@ function addComment(imageId) {
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
 			      <div style="text-align: left;"><a href="/user/${comment.user.id}">
-				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				<img  style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
 				</div>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
@@ -457,6 +457,12 @@ function deleteComment(commentId) {
 	}).fail(error=>{
 	    console.log("댓글 삭제 오류",error);
 	});
+}
+// <img src= 이미지 없을때 에러처리
+function imgError(image) {
+	image.onerror = "";
+	image.src = "/images/noimage.png";
+	return true;
 }
 
 // 유튜브 아이디 추출

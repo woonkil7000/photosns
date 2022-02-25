@@ -63,7 +63,7 @@ public class AuthController {
 
 			User userEntity = authService.joinMember(signupDto.toEntity());
 			System.out.println(userEntity);
-			return "auth/signin";
+			return "auth/signin"; // 로그인 폼
 			//return Script.href("회원가입에 성공하셨습니다.", "/auth/signin"
 
 

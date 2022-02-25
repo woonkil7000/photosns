@@ -46,14 +46,14 @@
   /*
   height: 60px;
    */
-  height: 40px;
+  height: 50px;
   display: flex;
   align-items: center;
 }
 
 /*리스트 아이템 헤더 div*/
 .main .container .story-list .story-list__item .sl__item__header div {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 /*리스트 아이템 헤더 이미지영역 박스*/
@@ -63,8 +63,8 @@
   .story-list__item
   .sl__item__header
   div:nth-child(1) {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   padding: 3px;
   border-radius: 50%;
   position: relative;
@@ -89,7 +89,7 @@
   height: 600px;
   min-height: 300px;
   */
-  height: 400px;
+  height: 300px;
   min-height: 200px;
 
 
@@ -114,7 +114,7 @@
   .story-list__item
   .sl__item__contents
   .sl__item__contents__icon {
-  height: 25px;
+  height: 15px;
   padding: 5px 0;
 }
 
@@ -153,8 +153,8 @@
   .sl__item__contents .like{
 	background-color: transparent;
 	border: 0;
-	color: #aaa;
-	font-size: 14px;
+	color: Dodgerblue;
+	font-size: 18px;
 	margin-bottom: 15px;
 	text-indent: 15px;
 }
@@ -171,7 +171,7 @@
 .sl__item__contents__tags{
   height: 15px;
   padding: 5px 10px;
-  color: #0080ff;
+  color: Dodgerblue;
 }
 
 /*코멘트 = 댓글 */
@@ -187,10 +187,10 @@
   align-items: flex-start;
   background-color: transparent;
   color: #000;
-  font-size: 18px;
+  font-size: 17px;
   padding: 0 5px;
-  margin-bottom: 1px;
-  border-radius: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 /*댓글 삭제버튼*/
@@ -212,8 +212,8 @@
 .main .container .story-list .story-list__item .sl__item__input input {
   /* flex: 9; */
   flex: 7;
-  /*height: 56px;*/
-  height: 24px;
+  height: 36px;
+  /*height: 24px;*/
   border: 0;
   padding-left: 15px;
 }
@@ -221,7 +221,7 @@
 .main .container .story-list .story-list__item .sl__item__input button {
   flex: 3;
   /*height: 56px;*/
-  height: 20px;
+  height: 36px;
   border: 0;
   background-color: transparent;
   /*
@@ -229,7 +229,7 @@
    */
   font-weight: 500;
   color: #0095f6;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 /* Event */

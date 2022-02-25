@@ -343,8 +343,7 @@ function getStoryItem(image) {
 			<span style="font-size: 18px; color: Dodgerblue;">${image.caption}</span>
 		</div>
 		<!--게시글내용end-->
-
-
+		<hr>
 		<!-- 댓글 박스 시작 -->
 		<div id="storyCommentList-${image.id}">
 		`;
