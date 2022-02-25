@@ -5,9 +5,12 @@
 <main class="popular">
 	<div class="exploreContainer">
 		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 좋아요 랭킹20</span></div>
+		<p></p>
+		<div class="alert alert-warning" role="alert">
+			<div  style="font-size: 12px;">유튜브는 테두리 부분을 클릭하면 개별창을 열 수 있습니다.</div>
+		</div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
-
 			<c:forEach var="image" items="${images}">
 				<div class="p-img-box" style="padding-top: 30px;">
 					<div>
@@ -47,8 +50,8 @@
 								<%--<c:out value="${contentTag}"></c:out>--%>
 							</c:when>
 							<c:when test="${contentType=='youtu'}">
-								<c:set var="contentTag" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
-								<c:set var="contentTag2" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+								<c:set var="contentTag" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='1' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+								<c:set var="contentTag2" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='1' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
 							</c:when>
 							<c:otherwise>
 								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
@@ -166,6 +169,56 @@
 			//modalBodyInput.value = recipient
 		})
 	}
-</script>
+
+// for YouTube
+{
+<%-- 1. The <iframe> (and video player) will replace this <div> tag. --%>
+//<div id="player"></div>
+
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+	player = new YT.Player('player', {
+	height: '280',
+	width: '325',
+	videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
+	playerVars: {
+	'playsinline': 0,
+	'volumn': 40,
+	'controls': 1
+	},
+	events: {
+	'onReady': onPlayerReady,
+	'onStateChange': onPlayerStateChange
+	}
+	});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+	//event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+	if (event.data == YT.PlayerState.PLAYING && !done) {
+	//setTimeout(stopVideo, 10000);
+	done = true;
+	}
+	}
+	function stopVideo() {
+	player.stopVideo();
+	}
+	}
+	</script>
 <%@ include file="../layout/footer.jsp"%>
 

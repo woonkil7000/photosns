@@ -8,7 +8,7 @@
 
 let isNoData=1; // init value: true. still no Data.
 let DataFailed=0; // 데이타 로딩 실패. init value: False
-let page;
+let page=0;
 let totalPage=0;
 let currentPage=0;
 let isLastPage=false;
@@ -353,7 +353,10 @@ function getStoryItem(image) {
 
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-				 ${comment.user.name}: ${comment.content}
+				<div style="text-align:left;"><a class="profile-image" href="/user/${comment.user.id}">
+				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				</a>${comment.content}
+				</div>
   				`;
 
     if (principalId == comment.user.id) {
@@ -468,7 +471,10 @@ function addComment(imageId) {
 		let comment = res.data;
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
-			      ${comment.user.name}: ${comment.content}
+			      <div style="text-align: left;"><a href="/user/${comment.user.id}">
+				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				</a>${comment.content}
+				</div>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
 			  `;

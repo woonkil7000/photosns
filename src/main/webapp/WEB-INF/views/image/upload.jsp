@@ -13,10 +13,10 @@
                 <!-- 업로드 선택 탭 -->
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">파일 전송</button>
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">사진영상 파일</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">YouTube 공유</button>
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">유튜브 공유</button>
                 </li>
                 <!--
                 <li class="nav-item" role="presentation">
@@ -29,7 +29,7 @@
                         <!-- 파일 업로드 -->
                         <div class="upload-top">
                             <span style="font-size: 18px; color: Dodgerblue;"><i class="fas fa-file-upload"></i></span>
-                            <span style="font-size: 18px; color: Dodgerblue;"> 사진/영상 파일 업로드</span>
+                            <span style="font-size: 18px; color: Dodgerblue;"> 사진/영상 파일 올리기</span>
                         </div>
                         <!--사진업로드 Form-->
                         <form class="upload-form" method="POST" enctype="multipart/form-data" action="/image">
@@ -57,18 +57,18 @@
                         <!-- 유튜브 주소 붙여넣기 -->
 
                         <div class="upload-top mb-3">
-                            <span style="font-size: 18px; color: Dodgerblue;"> YouTube [공유] 링크 복사해서 붙여넣기</span>
+                            <span style="font-size: 18px; color: Dodgerblue;"> YouTube [공유] 링크 올리기</span>
                         </div>
                         <!-- 유튜브 업로드 Form-->
                         <form class="upload-form" method="POST" action="/youtube" onsubmit="jbSubmit();">
                             <input type="hidden" name="uAddress" id="uAddress" value="">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon3">link:</span>
-                                <input type="text" name="iAddress" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="here..">
+                                <span class="input-group-text" id="basic-addon3">공유 링크:</span>
+                                <input type="text" name="iAddress" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="여기에..">
                             </div>
                             <!--유튜브 설명 + 업로드버튼-->
                             <div class="alert alert-primary" role="alert">
-                                <span style="font-size: 16px; color: Dodgerblue;">YouTube [공유] 링크 복사한 후 붙여넣기 하세요</span>
+                                <span style="font-size: 16px; color: Dodgerblue;">YouTube [공유] 링크를 복사한 후 붙여넣기 하세요</span>
                             </div>
                             <div class="upload-form-detail form-floating">
                                 <!--<input type="text" placeholder="사진설명" name="caption">-->
@@ -76,7 +76,7 @@
                                 <textarea class="form-control"  placeholder="사진/영상 설명" name="caption" id="floatingTextarea2"></textarea>
                                 <label for="floatingTextarea">YouTube 제목 입력(선택사항)</label>
                                 <input class="form-control" type="text" placeholder="#해시 태그 입력(선택사항)" name="tags">
-                                <button class="btn btn-primary btn-lg">YouTube 주소 전송</button>
+                                <button class="btn btn-primary btn-lg">YouTube [공유] 전송</button>
                             </div>
                             <!--유튜브 설명end-->
                         </form>

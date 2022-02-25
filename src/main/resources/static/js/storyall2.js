@@ -9,7 +9,7 @@
 //const mime = require("mime");
 let isNoData=1; // init value: true. still no Data.
 let DataFailed=0; // 데이타 로딩 실패. init value: False
-let page;
+let page=0;
 let totalPage=0;
 let currentPage=0;
 let isLastPage=false;
@@ -312,7 +312,10 @@ function getStoryItem(image) {
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
   image.comments.forEach((comment) => {
     result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-			     ${comment.user.name}: ${comment.content}
+				<div style="text-align:left;border-radius: 50%;"><a class="profile-image" href="/user/${comment.user.id}">
+				<img style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				</a>${comment.content}
+				</div>
   				`;
 
     if (principalId == comment.user.id) {
@@ -418,12 +421,15 @@ function addComment(imageId) {
 		contentType: "application/json;charset=utf-8",
 		dataType: "json" //응답 받을때
 	}).done(res => {
-		console.log("댓글 쓰기 성공: ",res);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 댓글 쓰기 성공: ",res);
 
 		let comment = res.data;
 		let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
-			      ${comment.user.name}: ${comment.content}
+			      <div style="text-align: left;"><a href="/user/${comment.user.id}">
+				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+				</a>${comment.content}
+				</div>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
 			  `;

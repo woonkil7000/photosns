@@ -16,7 +16,7 @@
 						   id="userProfileImageInput" />
 				</form>
 				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					 alt="" onerror="this.src='/images/noimage.jpg'"
+					 alt="" onerror="this.src='/images/noimage.png'"
 					 id="userProfileImage" />
 				<c:choose>
 					<c:when test="${dto.pageOwnerState}">
@@ -90,9 +90,9 @@
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
 					<%--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>--%>
-					<div class="alert btn-primary d-flex align-items-center" role="alert">
-						<div>이미지를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다(유튜브는 테두리 클릭)
-						</div>
+					<div class="alert alert-warning" role="alert">
+						<div style="font-size: 12px;">이미지를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</div>
+						<div style="font-size: 12px;">(*유튜브는 테두리 부분 클릭)</div>
 					</div>
 				</c:when>
 			</c:choose>
@@ -138,8 +138,8 @@
 												<c:set var="contentTag2" value="<video playinline controls loop preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 										</c:when>
 										<c:when test="${contentType=='youtu'}">
-												<c:set var="contentTag" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
-												<c:set var="contentTag2" value="<iframe width='340' height='300' src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+												<c:set var="contentTag" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+												<c:set var="contentTag2" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
 										</c:when>
 										<c:otherwise>
 												<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
@@ -199,8 +199,8 @@
 											<c:set var="contentTag2" value="<video playinline controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
 										</c:when>
 										<c:when test="${contentType=='youtu'}">
-											<c:set var="contentTag" value="<iframe width='320' height='300' src='${pathUrl}?controls=1' style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
-											<c:set var="contentTag2" value="<iframe width='320' height='300' src='${pathUrl}?controls=1' style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+											<c:set var="contentTag" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
+											<c:set var="contentTag2" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='0' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
 										</c:when>
 										<c:otherwise>
 											<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
