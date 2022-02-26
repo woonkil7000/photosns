@@ -31,10 +31,10 @@
                             </div>
                         </div>
                         <div class="content-item__03">
-                            <div class="item__title">유저네임</div>
+                            <div class="item__title">ID</div>
                             <div class="item__input">
-                                <input type="text" name="username" placeholder="유저네임" value="${principal.user.username}"
-                                    readonly="readonly" />
+                                <input type="text" name="username" placeholder="유저네임" value="${fn:substring(principal.user.username,0,10)}"
+                                    readonly="readonly" /> <%--${fn:substring(dto.user.username,0,15)}--%>
                             </div>
                         </div>
                         <div class="content-item__04">

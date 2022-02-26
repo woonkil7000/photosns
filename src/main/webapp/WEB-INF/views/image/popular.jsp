@@ -7,7 +7,7 @@
 		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 좋아요 랭킹20</span></div>
 		<p></p>
 		<div class="alert alert-warning" role="alert">
-			<div  style="font-size: 12px;">유튜브는 테두리 부분을 클릭하면 개별창을 열 수 있습니다.</div>
+			<div  style="font-size: 12px;">유튜브는 테두리 부분을 클릭하면 영상의 개별창을 열 수 있습니다.</div>
 		</div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
@@ -219,6 +219,21 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	player.stopVideo();
 	}
 	}
+
+	<%-- 모달 닫힐때 video  , 유튜브 stop --%>
+	// when : modal id='image-modal' <iframe src=youtube address
+	$('#image-modal').on('hidden.bs.modal', function () {
+		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
+	});
+	// when <video>
+	$(function(){
+		$('#image-modal').modal({
+			show: false
+		}).on('hidden.bs.modal', function(){
+			$(this).find('video')[0].pause();
+		});
+	});
+
 	</script>
 <%@ include file="../layout/footer.jsp"%>
 

@@ -134,6 +134,21 @@
 			//modalBodyInput.value = recipient
 		})
 	}
+
+	<%-- 모달 닫힐때 video  , 유튜브 stop --%>
+	// when : modal id='image-modal' <iframe src=youtube address
+	$('#image-modal').on('hidden.bs.modal', function () {
+		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
+	});
+	// when <video>
+	$(function(){
+		$('#image-modal').modal({
+			show: false
+		}).on('hidden.bs.modal', function(){
+			$(this).find('video')[0].pause();
+		});
+	});
+
 </script>
 <script src="/js/storyall2.js"></script>
 </body>

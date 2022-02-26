@@ -153,7 +153,17 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	console.log("============================== result=",result);
 
 	// preTag(<a href=) + result + sufTag(/a>) // prefix, suffix 접두사 접미사
-	result = preTag()+result+sufTag();
+	result = preTag()+result;
+	// 사진설명,좋아요카운트
+	let likeCount=`${image.likeCount}`;
+	//let caption = `${fn:substring(image.caption,0,7)}`; // 자바스크립트 substring 함수 사용.
+	let caption = `${image.caption}`;
+	caption = caption.substring(0,10);
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ likeCount=",likeCount);
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption=",caption);
+	result +=`<div><p style='font-size: 16px; color: Dodgerblue; padding-right: 16px;'><i class='fas fa-heart'></i> ${likeCount}</p>`;
+	result +=`<p style='font-size: 16px; color: Dodgerblue;'> ${caption}</p></div>`;
+	result += sufTag();
 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result= @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",result);
 	return result;
 }
