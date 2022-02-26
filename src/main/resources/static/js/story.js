@@ -180,7 +180,7 @@ $(window).scroll(() => {
 		appendFlag=1;
 		// append. no more date message.
 		let noImage = "<div class=\"alert alert-warning\" role=\"alert\"><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-			": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
+			" 더이상 데이터가 없습니다(" +totalElements+ ")</span></div>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
 	{passive: false}

@@ -47,7 +47,7 @@ function storyLoad() {
 
 			//res.data.forEach((image)=>{ // List로 받을때
 			res.data.content.forEach((image)=>{ // Page로 받을때
-				let storyItem = getStoryItem(image);
+				let storyItem = getStoryItem(image); // @@@@@@@@@@@@@@@@@@@@@@ <div> Row Data
 				////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
 				/////////////// getStoryItem() 함수 호출
 
@@ -117,13 +117,13 @@ $(window).scroll(() => {
 	  // append. no more date message.
 	  let storyItem = "<div  class=\"alert alert-warning\" role=\"alert\">"+
 		  "<span style=\"font-size: 16px; color: Dodgerblue;\">" +
-		  ": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
+		  " 더이상 데이터가 없습니다(" +totalElements+ ")</span></div>";
 	  $("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 	{passive: false}
 });
 
-function getStoryItem(image) {
+function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	//let file=`/upload/${image.user.profileImageUrl}`;
 
@@ -150,6 +150,8 @@ function getStoryItem(image) {
 
 	// ############# fnContentType(contentType,pathUrl) ###############
 	function fnContentType(contentType,pathUrl){
+		// @@@@@@@@@@@ getStoryItem [Row Data] 내부에서  content 유형에 따라 <div> 안에 들어갈 내용을 contentTag 로 반환하는 함수
+
 		let contentTag;
 		if (contentType=='image'){ // image
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////

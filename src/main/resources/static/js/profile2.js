@@ -22,10 +22,12 @@ let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 let totalElements;
 
 let principalId = $("#principalId").val(); // input hidden value
+console.log("principalId=",principalId);
 let principalUsername = $("#principalUsername").val();
-//let user=`${user.}`;
+console.log("principalUsername=",principalUsername);
 let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
-console.log("userId=",userId)
+console.log("userId=",userId);
+
 // (0) 페이지 유저 id로 페이지<이미지> 리스트 가져오기
 function imageList() {
 
@@ -40,8 +42,8 @@ function imageList() {
 
 		isNoData=0; // noData: 0:false. is Be Data.
 		//console.log("url=",url);
-		console.log("res=",res);
-		console.log("res.data=",res.data);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ res=",res);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ res.data=",res.data);
 		totalPage = res.data.totalPages; // 전체 페이지
 		currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
 		totalElements=res.data.totalElements;
@@ -50,7 +52,7 @@ function imageList() {
 		// res.data.forEach((u) // 오류!!! @@@@@@@@@@@@@@@@ forEach 돌리기전 res 출력해서 object 구조 먼저 확인 할 것!! @@@@@@@@@@@@
 
 		res.data.content.forEach((u) => {
-			let item = getImageItem(u); // return html tag applied list
+			let item = getImageItem(u); // // @@@@@@@@@@@@@ <div> Get Row Data Function. return html tag applied list
 			//console.log("# item=",item);
 			$("#storyList").append(item);
 		});
@@ -64,13 +66,13 @@ function imageList() {
 		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
 		if(isNoData==1&&DataFailed==1){
 			let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-				": : : : : 이미지가 없습니다 : : : : :</p>";
+				" 이미지가 없습니다</p>";
 			$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}
 	});
 }
 
-function getImageItem(image){
+function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	console.log("======================== image.contentType ={} =================================",);
 
@@ -90,6 +92,8 @@ function getImageItem(image){
 
 	// ############# fnContentType(contentType,pathUrl) ###############
 	function fnContentType(contentType,pathUrl){
+		// @@@@@@@@@@@ getImageItem 함수 [Row Data] 내부에서  content 유형에 따라 <div> 안에 들어갈 내용을 contentTag 로 반환하는 함수
+
 		let contentTag;
 		if (contentType=='image'){ // image
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
@@ -103,7 +107,7 @@ function getImageItem(image){
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe width='340' height='300' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' volumn='3' controls='1' frameborder='1' allowfullscreen " +
 				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
@@ -119,12 +123,38 @@ function getImageItem(image){
 	// ############# fnContentType(contentType,pathUrl) -END- ###############
 	<!-- Get Content Type end  -->
 
+	// @@@@ prefix
+	function preTag(){
+		let ptag;
+			ptag =` <a   class='btn btn-outline-primary btn-sm' `;
+			ptag +=` data-bs-toggle='modal' `;
+			ptag +=` data-bs-target='#image-modal' `;
+			ptag +=` data-bs-imageid='${image.id}' `;
+			ptag +=` data-bs-imageurl='${image.postImageUrl}' `;
+			ptag +=` data-bs-caption='${image.caption}' `;
+			ptag +=` data-bs-userid='${image.user.id}' `;
+			ptag +=` data-bs-contentTag="${fnContentType(contentType,pathUrl)}" `;
+			ptag +=` href='#' `;
+			ptag +=` role='button' style='outline: none;border: 0;'>`;
+		return ptag;
+	}//prefix end
+
+	// @@@@ suffix
+	function sufTag(){
+		let stag;
+		stag = "</a>";
+		return stag;
+	} // suffix end
 
 	let contentTag = fnContentType(contentType,pathUrl);
 	let result = `<div class="col" id="storyList-${image.id}">${contentTag}</div>`;
 	result +=` `;
-	console.log("imageId=",imageId);
-	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result=",result);
+	console.log("------------- imageId=",imageId);
+	console.log("============================== result=",result);
+
+	// preTag(<a href=) + result + sufTag(/a>) // prefix, suffix 접두사 접미사
+	result = preTag()+result+sufTag();
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result= @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",result);
 	return result;
 }
 
@@ -142,22 +172,22 @@ $(window).scroll(() => {
 	//console.log("윈도우 스크롤 탑",$(window).scrollTop());
 	//console.log("윈도우 높이",$(window).height());
 	let checkNum = ($(document).height() - $(window).scrollTop() - $(window).height());
-	//console.log("@@@@@@@@@@@@@@ checkNum="+checkNum);
+	//console.log("--------------------------------------------- checkNum="+checkNum);
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
 	// 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-	if ((checkNum < 100 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+	if ((checkNum < 200 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 		// Set Timer 걸기. 동시이벤트 걸러내기.
 		imageList();
 		storyLoadUnlock=false;
 		// console.time("X");
 		// console.timeStamp("시작 시간");
-		//console.log("@@@@ storyLoad() 함수 호출 실행됨 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		// console.log("@@@@ after storyLoad() 불가 storyLoadUnlock=",storyLoadUnlock);
+		//console.log("========================= imageList() 함수 호출 실행됨 ==========================");
+		//console.log("========================= after storyLoad() 불가 storyLoadUnlock=",storyLoadUnlock);
 		setTimeout(function(){
 			storyLoadUnlock=true; // 3초후 허용
-			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
+			//console.log("================================== timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 			// console.timeEnd("X");
 			// console.timeStamp("종료 시간");
 		},1000)
@@ -169,7 +199,7 @@ $(window).scroll(() => {
 		// append. no more date message.
 		let storyItem = "<div  class=\"alert alert-warning\" role=\"alert\">"+
 			"<span style=\"font-size: 16px; color: Dodgerblue;\">" +
-			": : : : 더이상 이미지가 없습니다 : : : : " +totalElements+ "</span></div>";
+			" 더이상 데이터가 없습니다 (" +totalElements+ ")</span></div>";
 		$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 	}
 	{passive: false}

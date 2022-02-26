@@ -3,6 +3,8 @@
 <%@ include file="../layout/header.jsp"%>
 
 <input type="hidden" id="userId" value="${dto.user.id}" /> <%-- UserProfileDto returned --%>
+<input type="hidden" id="principalId" value="${principal.user.id}" />
+<input type="hidden" id="principalUsername" value="${principal.user.username}" />
 
 <%--프로필 섹션 ---%>
 <section class="profile">
@@ -112,14 +114,17 @@
 </section>
 
 
-				<%-- 아이템들 --%>
+				<%-- @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ --%>
 
+<!-- 페이지 주인일 때 -->
+<%-- 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! --%>
 <div class="container">
 	<div class="row row-cols-3" id="storyList"></div>
 	<div class="col"></div>
 </div>
+<!-- 페이지 주인일때 end -->
 
-				<%-- 아이템들 end --%>
+				<%-- @@@@@@@@@@@@@ 아이템들 end @@@@@@@@@@@@@@ --%>
 
 
 
@@ -176,11 +181,11 @@
 
 
 <%-- 이미지 수정 삭제 Modal start --%>
-<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">이미지 상세 페이지</h5>
+				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
@@ -222,7 +227,7 @@
 <script>
 	{	// 모달 요소 선택
 	//const delete_modal = document.getElementById('#delete-modal'); // 모달 id
-	const delete_modal = document.querySelector('#delete-modal'); // 모달 id
+	const delete_modal = document.querySelector('#image-modal'); // 모달 id
 	// 모달 이벤트 감지
 	delete_modal.addEventListener('show.bs.modal', function (event) {
 		// 트리거 버트 선택

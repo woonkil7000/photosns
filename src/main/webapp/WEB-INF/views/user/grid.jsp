@@ -6,7 +6,7 @@
 
   <div class="img-box" id="${image.id}">
       <c:choose>
-        <%-- 프로필 페이지의 주인일 때 --%>
+        <%-- 프로필 페이지의 주인일 때 [아닐때 차이점] 기능 버튼의 노출 여부?? --%>
         <c:when test="${dto.pageOwnerState}">
 
           <%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
