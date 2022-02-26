@@ -143,19 +143,14 @@
 
 
 
-	<%-- 모달 닫힐때 video  , 유튜브 stop --%>
-	// when : modal id='image-modal' <iframe src=youtube address
+	<%-- 모달 닫힐때 영상 포즈 --%>
+	// modal <div id='image-modal' ....> <iframe src='youtube address'> youtube player
+	// modal <div id='image-modal' ....> <video src='......'> video player
 	$('#image-modal').on('hidden.bs.modal', function () {
 		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
+		$("#image-modal video").attr("src", $("#image-modal video").attr("src"));
 	});
-	// when <video>
-	$(function(){
-		$('#image-modal').modal({
-			show: false
-		}).on('hidden.bs.modal', function(){
-			$(this).find('video')[0].pause();
-		});
-	});
+
 
 </script>
 <script src="/js/story.js"></script>
