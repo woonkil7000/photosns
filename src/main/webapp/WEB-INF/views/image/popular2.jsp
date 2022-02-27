@@ -7,11 +7,13 @@
 <!--인기 게시글-->
 <main class="popular">
 	<div class="exploreContainer">
-		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> poular2 좋아요 랭킹</span></div>
+		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 좋아요 랭킹 </span></div>
 		<p></p>
+		<!--
 		<div class="alert alert-warning" role="alert">
 			<div  style="font-size: 12px;">유튜브의 경우 영상 바깥 하단 부분을 클릭해야 개별창을 열 수 있습니다.</div>
 		</div>
+		-->
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
 		</div>

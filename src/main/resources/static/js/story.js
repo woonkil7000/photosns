@@ -135,9 +135,10 @@ function storyLoad() {
 			  "<p> </p>"+
 			  "<p>초기 화면의 이미지 목록에서</p>"+
 			  "<p>다른 회원 프로필을 선택하여</p>"+
+			  "<span style=\"font-size: 16px; color: Dodgerblue;\">"+
 			  "<p>\"구독하기\"를 신청하면</p>"+
-			  "<p>구독중인 회원들의 이미지를 </p>"+
-			  "<p>여기에 모아서 볼 수 있습니다 </p></div>";
+			  "<p>구독중인 회원들의 게시물을 </p>"+
+			  "<p>여기에서 볼 수 있습니다 </p></span></div>";
 		  //$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
 		  //document.write(storyItem);
 		  $("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
@@ -180,7 +181,7 @@ $(window).scroll(() => {
 		appendFlag=1;
 		// append. no more date message.
 		let noImage = "<div class=\"alert alert-warning\" role=\"alert\"><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-			" 더이상 데이터가 없습니다(" +totalElements+ ")</span></div>";
+			" 더이상 미디어 데이터가 없습니다(" +totalElements+ ")</span></div>";
 		$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 	}
 	{passive: false}

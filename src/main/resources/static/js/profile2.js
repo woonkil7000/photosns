@@ -36,7 +36,7 @@ function imageList() {
 	userId = $("#userId").val(); // pageUserId 해당 페이지의 주인 id
 
 	$.ajax({
-		url: `/api/image/${userId}/?page=${page}`,
+		url: `/api/image/${userId}?page=${page}`,
 		dataType:"json"
 	}).done((res) => {
 
@@ -60,13 +60,16 @@ function imageList() {
 
 	}).fail((error) => {
 
+		DataFailed=1; // 데이타 로딩 실패.
 		console.log("리스트 불러오기 오류 : ",error);
 		console.log("isNoData=",isNoData);
 		console.log("DataFailed=",DataFailed);
 		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
 		if(isNoData==1&&DataFailed==1){
-			let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-				" 이미지가 없습니다</p>";
+
+			let	noImage ="<div class='col'></div><div class='col'><span style='font-size: 16px; color: Dodgerblue;'>";
+			noImage +=" 아직 미디어 데이터가 없습니다</span></div><div class='col'></div>";
+			//console.log("no image=",noImage);
 			$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}
 	});

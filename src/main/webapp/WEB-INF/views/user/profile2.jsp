@@ -121,7 +121,6 @@
 <%-- 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! --%>
 <div class="container">
 	<div class="row row-cols-3" id="storyList"></div>
-	<div class="col"></div>
 </div>
 <!-- 페이지 주인일때 end -->
 

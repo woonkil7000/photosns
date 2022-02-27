@@ -20,7 +20,7 @@ let isLastPage=false;
 let appendLastFlag=0;// 더이상 데이타가 없습니다. 멘트 덧붙이기 했나? 안했나?
 let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 let totalElements;
-
+let orderNum=1;
 let principalId = $("#principalId").val(); // input hidden value
 console.log("principalId=",principalId);
 let principalUsername = $("#principalUsername").val();
@@ -52,15 +52,13 @@ function imageList() {
 
 		// res.data.forEach((u) // 오류!!! @@@@@@@@@@@@@@@@ forEach 돌리기전 res 출력해서 object 구조 먼저 확인 할 것!! @@@@@@@@@@@@
 
-		let itemCount=0;
-		let orderNum=0;
 		res.data.content.forEach((u) => {
-			orderNum = (itemCount*currentPage)+(itemCount+1);
-			let item = getImageItem(u); // // @@@@@@@@@@@@@ <div> Get Row Data Function. return html tag applied list
+
+			let item = getImageItem(u,orderNum); // // @@@@@@@@@@@@@ <div> Get Row Data Function. return html tag applied list
 			console.log("@@@@@@@ orderNum=",orderNum);
 			console.log("@@@@@@@ item=",item);
 			$("#storyList").append(item);
-			itemCount++;
+			orderNum++;
 		});
 		page=currentPage+1;
 
@@ -72,13 +70,13 @@ function imageList() {
 		// 이미지 데이타가 하나도 없을대 //데이터도 없고 데이타 로딩을 실패했을때
 		if(isNoData==1&&DataFailed==1){
 			let noImage = "<div><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
-				" 이미지가 없습니다</p>";
+				" 미디어 데이터가 없습니다</p>";
 			$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}
 	});
 }
 
-function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
+function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	console.log("======================== image.contentType ={} =================================",);
 
@@ -167,7 +165,7 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	caption = caption.substring(0,10);
 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ likeCount=",likeCount);
 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption=",caption);
-	result +=`<div><p style='font-size: 16px; color: Dodgerblue; padding-right: 16px;'>${image.id}<i class='fas fa-heart'></i> ${likeCount}</p>`;
+	result +=`<div><p style='font-size: 16px; color: Dodgerblue; padding-right: 16px;'><b>${order}</b>th  <i class='fas fa-heart'></i> ${likeCount}</p>`;
 	result +=`<p style='font-size: 16px; color: Dodgerblue;'> ${caption}</p></div>`;
 	result += sufTag();
 	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result= @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",result);

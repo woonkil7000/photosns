@@ -14,7 +14,7 @@
                         <div class="item__img"><img src="/upload/${principal.user.profileImageUrl}" alt=""
                                 onerror="this.src='/images/noimage.jpg'" /></div>
                         <div class="item__username">
-                            <h2>${principal.user.username}</h2>
+                            <h2>${fn:substring(principal.user.username,0,12)}</h2>
                         </div>
                     </div>
                     <!--프로필셋팅 아이디영역end-->
@@ -33,7 +33,7 @@
                         <div class="content-item__03">
                             <div class="item__title">ID</div>
                             <div class="item__input">
-                                <input type="text" name="username" placeholder="유저네임" value="${fn:substring(principal.user.username,0,10)}"
+                                <input type="text" name="username" placeholder="유저네임" value="${fn:substring(principal.user.username,0,12)}"
                                     readonly="readonly" /> <%--${fn:substring(dto.user.username,0,15)}--%>
                             </div>
                         </div>
