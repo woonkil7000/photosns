@@ -79,7 +79,7 @@ public class ImageController {
 		return "/image/fetchaxios";
 	}
 
-	//  주소 : /image?page=0
+/*	//  주소 : /image?page=0
 	@GetMapping("/image") // imageApi json data
 	public @ResponseBody CMRespDto<?> image(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, 
 			@PageableDefault(size=3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -87,13 +87,13 @@ public class ImageController {
 		Page<Image> pages = imageService.피드이미지(principalDetails.getUser().getId(), pageable);
 		//return new CMRespDto<>(1, pages); // MessageConverter 발동 = Jackson = 무한참조
 		return null;
-	}
+	}*/
 	
 	
 	// API로 구현을 한다면 -이유- 브라우저요청이 아니라 안드로이드나 iOS에서 요청시.
 	// 좋아요 랭킹!!  인기많은 사진순으로  리턴 됨.
 	@GetMapping("/image/popular")
-	public String explore(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+	public String explore(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails,Pageable pageable) {
 
 		// API는 데이터를 리턴하는 서버!!
 		List<Image> images = imageService.인기사진(principalDetails.getUser().getId());
@@ -105,6 +105,20 @@ public class ImageController {
 			return "image/popular"; // /image/popular.jsp로 model data를 전달
 		}
 	}
+	@GetMapping("/image/popular2")
+	public String explore2(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails,Pageable pageable) {
+
+		// API는 데이터를 리턴하는 서버!!
+		Page<Image> images = imageService.인기사진2(principalDetails.getUser().getId(),pageable);
+
+		if (images.isEmpty()) { // likes table 에 좋아요가 아직 없는 경우
+			return "image/nolike";
+		}else {
+			model.addAttribute("images", images);
+			return "image/popular2"; // /image/popular2.jsp로 model data를 전달
+		}
+	}
+
 	// 좋아요 추가
 	@PostMapping("/image/{imageId}/likes")
 	public @ResponseBody CMRespDto<?> like(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int imageId){

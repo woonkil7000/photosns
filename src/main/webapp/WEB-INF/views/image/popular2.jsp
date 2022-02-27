@@ -1,100 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 
+<input type="hidden" id="userId" value="${dto.user.id}" /> <%-- UserProfileDto returned --%>
+<input type="hidden" id="principalId" value="${principal.user.id}" />
+<input type="hidden" id="principalUsername" value="${principal.user.username}" />
 <!--인기 게시글-->
 <main class="popular">
 	<div class="exploreContainer">
-		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 좋아요 랭킹20</span></div>
+		<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> poular2 좋아요 랭킹</span></div>
 		<p></p>
 		<div class="alert alert-warning" role="alert">
-			<div  style="font-size: 12px;">유튜브의 경우 테두리 부분을 클릭해야 개별창을 열 수 있습니다.</div>
+			<div  style="font-size: 12px;">유튜브의 경우 영상 바깥 하단 부분을 클릭해야 개별창을 열 수 있습니다.</div>
 		</div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
-			<c:forEach var="image" items="${images}">
-				<div class="p-img-box" style="padding-top: 30px;">
-					<div>
-						<!-- 이미지 링크 -->
-						<!-- ####################### 이미지 모달 링크 ###################### -->
-
-
-
-
-							<%-- ///////////////////// String contentTag: 삽입할 미디어 테그 결정 <img  or  <video  /////////////////////--%>
-						<c:set var="contentType" value="${image.contentType.substring(0,5)}"/>
-						<c:set var="pathUrl" value="/upload/${image.postImageUrl}"/>
-						<c:set var="contentTag" value=""/>
-							<%--
-                            <c:out value=" #### init contentType=${contentType} ####"></c:out>
-                            <c:out value=" #### init pathUrl=${pathUrl} ####"></c:out>
-                            <c:out value=" #### init contentTag=${contentTag} ####"></c:out>
-                            --%>
-						<c:choose>
-							<c:when test="${contentType eq 'youtu'}">
-								<c:set var="pathUrl" value="${image.postImageUrl}"/>
-							</c:when>
-						</c:choose>
-						<c:set var="contentTag" value=""/>
-						<c:set var="contentTag2" value=""/>
-						<c:choose>
-							<c:when test="${contentType=='image'}">
-								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<%--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지1' />--%>
-								<%--<c:out value="${contentTag}"></c:out>--%>
-							</c:when>
-							<c:when test="${contentType=='video'}">
-								<c:set var="contentTag" value="<video playsinline preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-								<c:set var="contentTag2" value="<video playsinline controls preload='metadata' src='${pathUrl}#t=0.1' style='max-height:100%;max-width:100%' alt='동영상'/>"/>
-								<!--<video controls muted autoplay src='${pathUrl}' style='max-height:100%;max-width:100%' alt='동영상2' />-->
-								<%--<c:out value="${contentTag}"></c:out>--%>
-							</c:when>
-							<c:when test="${contentType=='youtu'}">
-								<c:set var="contentTag" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='1' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
-								<c:set var="contentTag2" value="<iframe src='https://www.youtube.com/embed/${pathUrl}' frameborder='1' allowfullscreen style='max-height:100%;max-width:100%' alt='유튜브'></iframe>"/>
-							</c:when>
-							<c:otherwise>
-								<c:set var="contentTag" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<c:set var="contentTag2" value="<img src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지'/>"/>
-								<!--<img  src='${pathUrl}' style='max-height:100%;max-width:100%' alt='이미지3' />-->
-								<%--<c:out value="${contentTag}"></c:out>--%>
-								<%-- //////////// contentTag:페이지용, contentTag2: 모달페이지용으로 video 속성 controls 추가됨/ img 는 테그 같음. ////////////// --%>
-							</c:otherwise>
-						</c:choose><%-- /////////////////////  String contentTag: 삽입할 미디어 테그 결정 <img or <video  -END-  /////////////////////--%>
-
-						<!-- ####################### 이미지 링크 ###################### -->
-						<a   class="btn btn-outline-primary btn-sm"
-							 data-bs-toggle="modal"
-							 data-bs-target="#image-modal"
-							 data-bs-imageid="${image.id}"
-							 data-bs-imageurl="${image.postImageUrl}"
-							 data-bs-userid="${principal.user.id}"
-							 data-bs-caption="${image.caption}"
-							 data-bs-contentTag="${contentTag2}"
-							 href="#"
-							 role="button" style="outline: none;border: 0;">
-								${contentTag}
-
-							<!-- //////////// contentTag2 는 video 속성 controls 추가됨 ////////////// -->
-						</a>
-
-						<!-- ####################### 이미지 링크 ###################### -->
-
-
-
-						<!-- ####################### 이미지 모달 링크 end ###################### -->
-						<!-- 이미지 링크 end -->
-					</div>
-					<div><p style="font-size: 16px; color: Dodgerblue; padding-right: 16px;">${image.id}:${fn:substring(image.user.name,0,5)} <i class="fas fa-heart"></i> ${image.likeCount}</p>
-					</div>
-					<div><p style="font-size: 16px; color: Dodgerblue; padding-right: 16px;">${fn:substring(image.caption,0,7)}</p>
-					</div>
-				</div>
-			</c:forEach>
-
 		</div>
+		<!--인기게시글 갤러리(GRID배치) end -->
 	</div>
 </main>
+
+<%-- @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ --%>
+
+<%-- 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! --%>
+<div class="container">
+	<div class="row row-cols-3" id="storyList"></div>
+	<div class="col"></div>
+</div>
+<!-- 페이지 주인일때 end -->
+
+<%-- @@@@@@@@@@@@@ 아이템들 end @@@@@@@@@@@@@@ --%>
 
 
 <!-- 이미지 Modal -->
@@ -230,5 +164,6 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 
 	</script>
+<script src="/js/popular2.js"></script>
 <%@ include file="../layout/footer.jsp"%>
 

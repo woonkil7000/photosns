@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,34 @@ public class ImageApiController {
             return new ResponseEntity<>(new CMRespDto<>(1, "List images 담기 성공", images), HttpStatus.OK);
         }
     }
+    // popular 인기게시물 페이지 리스트 가져오기
+    @GetMapping("/api/image/popular")
+    public ResponseEntity<?> popularRank(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                         @PageableDefault(size=12) Pageable pageable){
+        Page<Image> images = imageService.인기사진2(principalDetails.getUser().getId(),pageable);
+        System.out.println("######################### imageService.인기사진2() #######################");
+        if (images.isEmpty()) { // ############### 이미지가 없는 경우 에러
+            return new ResponseEntity<>(new CMRespDto<>(-1,"List images 없음",null), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(new CMRespDto<>(1, "List images 담기 성공", images), HttpStatus.OK);
+        }
+    }
+    /*
+    // API로 구현을 한다면 -이유- 브라우저요청이 아니라 안드로이드나 iOS에서 요청시.
+    // 좋아요 랭킹!!  인기많은 사진순으로  리턴 됨.
+    @GetMapping("/image/popular")
+    public String explore(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        // API는 데이터를 리턴하는 서버!!
+        List<Image> images = imageService.인기사진(principalDetails.getUser().getId());
+
+        if (images.isEmpty()) { // likes table 에 좋아요가 아직 없는 경우
+            return "image/nolike";
+        }else {
+            model.addAttribute("images", images);
+            return "image/popular2"; // /image/popular2.jsp로 model data를 전달
+        }
+    }*/
 
     // 구독 이미지 조회
     @GetMapping("/api/image")

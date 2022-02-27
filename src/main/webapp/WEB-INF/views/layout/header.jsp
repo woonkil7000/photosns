@@ -72,7 +72,7 @@
 					<li class="navi-item"><a href="/image/story" alt="subscribe">
 						<i class="fas fa-newspaper"></i>
 					</a></li>
-					<li class="navi-item"><a href="/image/popular" alt="popular">
+					<li class="navi-item"><a href="/image/popular2" alt="popular">
 						<i class="fas fa-heart"></i>
 						</a></li>
 					<li class="navi-item"><a href="/image/upload" alt="upload">

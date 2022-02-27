@@ -200,13 +200,12 @@ public class ImageService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Image> 인기사진(int principalId){ // mExplore:
-
+	public List<Image> 인기사진(int principalId){
+		// mExplore:
 		//return imageRepository.mExplore(principalId);
 		//List<Image> images = imageRepository.mExplore(principalId);
 		List<Image> images = imageRepository.mExplore(principalId);
 		//ImageRankDto imageRankDto = new ImageRankDto();
-
 		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
 			log.info("#################### 좋아요를 표시한 사진이 없는 경우에 해당 imageRepository.mExplore(principalId)");
 		} else {
@@ -214,9 +213,39 @@ public class ImageService {
 		}
 		System.out.println("#################  인기사진 List<Image> images = imageRepository.mExplore(principalId)  #####################");
 
+		// 좋아요 하트 색깔 로직 + 좋아요 카운트 로직
+		images.forEach((image)-> {
 
+			int likeCount = image.getLikes().size();
+			image.setLikeCount(likeCount); // set dto.image.likeCount = likeCount;
 
+			image.getLikes().forEach((like)->{
+				if(like.getUser().getId() == principalId) {
+					image.setLikeState(true); // set dto.image.likeState = true;
+				}
+			});
+		});
 
+		// StackOverflow 발생시킴. 에러방지를 위해 toString 처리에서 userEntity제외함.
+		//log.info("##### imageService: 인기사진: 인기사진 리스트 받음:{}",images);
+		return images;
+		// 콘트롤러에서 아래와 같이 수행함.
+		// model.addAttribute("images", images);
+		// return "image/popular"; // /image/popular.jsp 에서  model data 사용
+	}
+	@Transactional(readOnly = true) // api popular images. return Page<Image>.
+	public Page<Image> 인기사진2(int principalId,Pageable pageable){
+		// popular:
+		//return imageRepository.mExplore(principalId);
+		//List<Image> images = imageRepository.mExplore(principalId);
+		Page<Image> images = imageRepository.popularRank(pageable);
+		//ImageRankDto imageRankDto = new ImageRankDto();
+		if (images.isEmpty()) {  // 조화 결과가 없을때 // 구독이 없는 경우.
+			log.info("####################  imageRepository.popular() no data ############################");
+		} else {
+			System.out.println("##################  Page<Image> images = imageRepository.popular() ##################");
+		}
+		System.out.println("#################  인기사진 List<Image> images = imageRepository.popular()  #####################");
 
 		// 좋아요 하트 색깔 로직 + 좋아요 카운트 로직
 		images.forEach((image)-> {
@@ -224,24 +253,21 @@ public class ImageService {
 			int likeCount = image.getLikes().size();
 			image.setLikeCount(likeCount);
 
-			/*image.getLikes().forEach((like)->{
+			image.getLikes().forEach((like)->{
 				if(like.getUser().getId() == principalId) {
 					image.setLikeState(true);
 				}
 			});
-			 */
-		});
 
+		});
 
 		// StackOverflow 발생시킴. 에러방지를 위해 toString 처리에서 userEntity제외함.
 		//log.info("##### imageService: 인기사진: 인기사진 리스트 받음:{}",images);
 		return images;
-
 		// 콘트롤러에서 아래와 같이 수행함.
 		// model.addAttribute("images", images);
 		// return "image/popular"; // /image/popular.jsp 에서  model data 사용
 	}
-	
 	
 //	@Value("${file.path}")
 //	private String uploadFolder;

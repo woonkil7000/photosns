@@ -41,10 +41,20 @@ public interface ImageRepository extends JpaRepository<Image, Integer>{
 //			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc,imageId desc limit 20) l "
 //			+" on i.id = l.imageId where i.userId != :principalId", nativeQuery = true)
 	@Query(value = "select * from image i inner join "
-			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc,imageId desc limit 20) l "
+			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc, imageId desc limit 20) l "
 			+" on i.id = l.imageId ", nativeQuery = true)
-
 	List<Image> mExplore(int principalId);
+
+
+	// 인기사진2 for api & page list
+	@Query(value = "select * from image i inner join "
+			+" (select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc, imageId desc) l "
+			+" on i.id = l.imageId ",
+			countQuery = "select count(*) from image i inner join "
+					+"(select imageId,count(imageId) likeCount from likes group by imageId order by likeCount desc, imageId desc) l "
+					+" on i.id = l.imageId ",
+			nativeQuery = true)
+	Page<Image> popularRank(Pageable pageable);
 
 	//@Query(value = "select * from image where id in (select imageId from (select imageId, count(imageId) likeCount from likes group by imageId order by 2 desc) t) and userId != :principalId  ", nativeQuery = true)
 	//List<Image> mExplore(int principalId);
