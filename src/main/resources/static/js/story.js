@@ -107,14 +107,14 @@ function storyLoad() {
 	  isLastPage=res.data.last;
 	  totalElements=res.data.totalElements;
 	  console.log("########################################## PAGE ########################################################");
-	  console.log("///////////////////// page++ ############ page++ [from 0]=",page);
-	  console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
-	  console.log("///////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
-	  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
+	  //console.log("///////////////////// page++ ############ page++ [from 0]=",page);
+	  //console.log("///////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
+	  //console.log("///////////////////// current page ############ currentpage = res.data.pageable.pageNumber [from 0]=",res.data.pageable.pageNumber);
+	  //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
 	 	//res.data.forEach((image)=>{ // List로 받을때
 		res.data.content.forEach((image)=>{ // Page로 받을때
 			let storyItem = getStoryItem(image);
-			console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+			//console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
 			//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
 			console.log("----------------------- forEach -end- ----------------------------------");
 			$("#storyList").append(storyItem); // id=#storyList <div> 에 이어 붙이기
@@ -127,13 +127,13 @@ function storyLoad() {
 	  console.log("오류",error);
 	  console.log("오류 내용: ",error.responseJSON.message);
 	  // 비동기 방식이라서  ajax 안으로 구문 이동시켜야함.
-	  console.log("isNoData=",isNoData);
-	  console.log("DataFailed=",DataFailed);
+	  //console.log("isNoData=",isNoData);
+	  //console.log("DataFailed=",DataFailed);
 	  if(isNoData==1 && DataFailed==1){ // 데이터도 없고 데이타 로딩을 실패했을때
 		  let noImage = "<div  class=\"alert alert-warning\" role=\"alert\"><p> </p><p> </p><p> </p><span style=\"font-size: 16px; color: Dodgerblue;\">" +
 			  "아직 구독을 신청한 회원이 없습니다</span>"+
 			  "<p> </p>"+
-			  "<p>초기 화면의 이미지 목록에서</p>"+
+			  "<p>초기 화면의 미디어 목록에서</p>"+
 			  "<p>다른 회원 프로필을 선택하여</p>"+
 			  "<span style=\"font-size: 16px; color: Dodgerblue;\">"+
 			  "<p>\"구독하기\"를 신청하면</p>"+

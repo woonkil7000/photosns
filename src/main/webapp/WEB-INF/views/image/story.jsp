@@ -6,7 +6,7 @@
 	<section class="container">
 		<!--전체 리스트 시작-->
 		<article class="story-list" id="storyList">
-			<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-newspaper"></i> 구독회원 미디어</span></div>
+			<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-newspaper"></i> 구독회원의 미디어</span></div>
 
 			<!--전체 리스트 아이템-->
 

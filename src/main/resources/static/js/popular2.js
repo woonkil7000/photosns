@@ -190,7 +190,7 @@ $(window).scroll(() => {
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
 	// 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-	if ((checkNum < 50 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+	if ((checkNum < 100 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 		// Set Timer 걸기. 동시이벤트 걸러내기.
 		imageList();

@@ -68,7 +68,7 @@ function imageList() {
 		if(isNoData==1&&DataFailed==1){
 
 			let	noImage ="<div class='col'></div><div class='col'><span style='font-size: 16px; color: Dodgerblue;'>";
-			noImage +=" 아직 미디어 데이터가 없습니다</span></div><div class='col'></div>";
+			noImage +=" 등록된 미디어 데이터가 없습니다</span></div><div class='col'></div>";
 			//console.log("no image=",noImage);
 			$("#storyList").append(noImage); // id=#storyList <div> 에 이어 붙이기
 		}

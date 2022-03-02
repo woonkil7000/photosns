@@ -28,7 +28,7 @@ function storyLoad() {
 		datatype: "json",
 }).done((res)=>{
 			//console.log(res.data)
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ if OK @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ok page=",page);
 			isNoData=0; // noData: 0:false. is Be Data.
 			console.log("## res=",res); // ##### 사용하지 말것! 이렇게 ==> console.log("## res="+res);
 			//console.log("############### /api/image?page return responseEntity pages => "+JSON.stringify(res));
@@ -37,12 +37,12 @@ function storyLoad() {
 			currentPage = res.data.pageable.pageNumber; // 현재 페이지 0부터 시작:
 			totalElements=res.data.totalElements;
 			isLastPage=res.data.last;
-			console.log("######################################## PAGE ##########################################################");
-			console.log("######################################## PAGE ##########################################################");
-			console.log("/////////////////// page  ############ page++ [from 0]=",page);
-			console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentpage [from 0]=  pageNumber=",res.data.pageable.pageNumber);
-			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
+			//console.log("######################################## PAGE ##########################################################");
+			//console.log("######################################## PAGE ##########################################################");
+			//console.log("/////////////////// page  ############ page++ [from 0]=",page);
+			//console.log("/////////////////// totalPages ############ res.data.totalPages =",res.data.totalPages);
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ currentpage [from 0]=  pageNumber=",res.data.pageable.pageNumber);
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ isLastPage? @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",isLastPage);
 			//console.log("#### file = ",res.data.content)
 
 			//res.data.forEach((image)=>{ // List로 받을때
@@ -51,9 +51,9 @@ function storyLoad() {
 				////////// [프로필이미지] [작성자 이름] [이미지] [좋아요 카운트] [댓글]
 				/////////////// getStoryItem() 함수 호출
 
-				console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
+				//console.log("#### storyItem ####  = \"getStoryItem(image)\" ==> ",storyItem);
 				//console.log("#### res.data.content.forEach((image) storyItem = \"getStoryItem(image)\" storyItem => "+JSON.stringify(storyItem));
-				console.log("------------------------- forEach -end- --------------------------------");
+				//console.log("------------------------- forEach -end- --------------------------------");
 				$("#storyList").append(storyItem);
 			});
 			page=currentPage+1;
@@ -61,7 +61,7 @@ function storyLoad() {
 }).fail(error=>{
 
 		DataFailed=1; // 데이타 로딩 실패
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  if failed  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		console.log("오류",error);
 		console.log("오류 내용: ",error.responseJSON.message);
 		console.log("isNoData=",isNoData);
@@ -388,7 +388,6 @@ function toggleLike(imageId) {
 }
 
 // 댓글쓰기
-
 function addComment(imageId) {
 
 	let commentInput = $(`#storyCommentInput-${imageId}`);
@@ -399,16 +398,12 @@ function addComment(imageId) {
 		content: commentInput.val()
 	}
 	// 이미지번호와 코멘트 입력내용.
-
 	// alert(data.content);
 	// return;
-
-
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
-
 	// console.log(data);
 	// console.log(JSON.stringify(data));
 	// return;
@@ -547,6 +542,4 @@ function extractVideoID(url) {
 		player.stopVideo();
 	}
 }
-
-
 

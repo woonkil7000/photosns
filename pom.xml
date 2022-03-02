@@ -32,13 +32,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!--        embeded tomcat provided scope                  -->
-		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		-->
+
 		<!-- JSP 템플릿 엔진 -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -144,6 +143,21 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<url>http://woonkil.com:8080/manager/text</url>
+					<server>TomcatServer</server>
+					<path>/${project.build.finalName}</path>
+				</configuration>
+			</plugin>
+<!--
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

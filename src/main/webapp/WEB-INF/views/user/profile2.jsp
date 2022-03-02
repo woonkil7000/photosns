@@ -63,7 +63,7 @@
 		</div>
 		<%-- <div class="profileContainer"> --%>
 		<div class="profileContainer">
-			<span><i class="far fa-images"></i> 등록 사진수: ${dto.imageCount}
+			<span><i class="far fa-images"></i> 등록 미디어: ${dto.imageCount}
 			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i> 구독 정보: ${dto.subscribeCount} </span></a>
 		</div>
 		<%--
@@ -93,7 +93,7 @@
 				<c:when test="${dto.pageOwnerState}">
 					<%--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>--%>
 					<div class="alert alert-warning" role="alert">
-						<div style="font-size: 12px;">이미지를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</div>
+						<div style="font-size: 12px;">미디어를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</div>
 					</div>
 				</c:when>
 			</c:choose>
@@ -151,8 +151,8 @@
 <%-- 프로필 페이지: 업로드 이미지 삭제 모달--%>
 <div class="modal-imgdelete" style="display: none" onclick="modalDelete()">
 	<div class="modal2">
-		<p>이미지를 삭제하시겠습니까?</p>
-		<button onclick="deleteImage(${image.id},${principal.user.id})">선택한 이미지 삭제</button>
+		<p>미디어를 삭제하시겠습니까?</p>
+		<button onclick="deleteImage(${image.id},${principal.user.id})">선택한 미디어 삭제</button>
 		<button onclick="closePopup('.modal-imgdelete')">취소</button>
 	</div>
 </div>
@@ -210,18 +210,18 @@
 					<c:choose>
 						<c:when test="${dto.pageOwnerState}">
 					<div>
-						<button type="button" class="btn btn-primary" id="update-btn">이미지 설명 수정</button>
+						<button type="button" class="btn btn-primary" id="update-btn">미디어 설명 수정</button>
 					</div>
 					<div>
-						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">이미지 삭제</button>
+						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">미디어 삭제</button>
 					</div>
 						</c:when>
 						<c:otherwise>
 							<div style="display: none">
-								<button type="button" class="btn btn-primary" id="update-btn" disabled>이미지 설명 수정</button>
+								<button type="button" class="btn btn-primary" id="update-btn" disabled>미디어 설명 수정</button>
 							</div>
 							<div style="display: none" >
-								<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn" disabled>이미지 삭제</button>
+								<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn" disabled>미디어 삭제</button>
 							</div>
 						</c:otherwise>
 					</c:choose>

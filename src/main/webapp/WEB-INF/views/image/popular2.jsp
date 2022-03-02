@@ -38,7 +38,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
+				<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">미디어 확대</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 
@@ -54,7 +54,7 @@
 					<input type="hidden" id="user_id">
 					<input type="hidden" id="contenttag">
 					<hr>
-					<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
+					<label>미디어 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
 				</form>
 			</div>
 			<div class="modal-footer">

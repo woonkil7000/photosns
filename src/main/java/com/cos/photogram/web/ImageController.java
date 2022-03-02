@@ -34,6 +34,11 @@ public class ImageController {
 	private final LikesService likesService;
 	private final CommentService commentService;
 
+	@GetMapping("/image/visitor")
+	public String visit() {
+		return "image/visitor";
+	}
+
 	@GetMapping("/image/upload")
 	public String upload() {
 		return "image/upload";

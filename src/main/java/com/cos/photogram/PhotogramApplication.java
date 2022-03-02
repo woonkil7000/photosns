@@ -5,19 +5,40 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+import javax.servlet.Servlet;
+
 @SpringBootApplication
 public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
-		return application.sources(PhotogramApplication.class);
-	}
-
 	public static void main(String[] args){
-		SpringApplication app = new SpringApplication((PhotogramApplication.class));
+		SpringApplication app = new SpringApplication((com.cos.photogram.PhotogramApplication.class));
 		app.run(args);
 	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+		return application.sources(com.cos.photogram.PhotogramApplication.class);
+	}
+
+
+/*
+
+	@SpringBootApplication
+	public class PhotogramApplication extends SpringBootServletInitializer {
+
+		// WAR 배포를 위해 수정된 부분
+		@Override
+		protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+			return application.sources(com.cos.photogram.PhotogramApplication.class);
+		}
+
+		public static void main(String[] args){
+			SpringApplication app = new SpringApplication((com.cos.photogram.PhotogramApplication.class));
+			app.run(args);
+		}
+*/
+
 	/*
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled","false");

@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 <input type="hidden" id="userId" value="${dto.user.id}" />
+<input type="hidden" id="ip" value="" />
+<input type="hidden" id="pageUrl" value="" />
+
 <main class="main">
 	<section class="container">
 		<!--전체 리스트 시작-->
@@ -112,11 +115,11 @@
 			const userid = button.getAttribute("data-bs-userid");
 			const caption = button.getAttribute("data-bs-caption");
 			const contenttag = button.getAttribute("data-bs-contenttag");
-			console.log("imageid=",imageid);
-			console.log("imageurl=",imageurl);
-			console.log("userid=",userid);
-			console.log("caption=",caption);
-			console.log("contenttag=",contenttag);
+			//console.log("imageid=",imageid);
+			//console.log("imageurl=",imageurl);
+			//console.log("userid=",userid);
+			//console.log("caption=",caption);
+			//console.log("contenttag=",contenttag);
 
 			// 모달창에 데이타 반영
 			document.querySelector("#image_id").value=imageid;
@@ -144,6 +147,27 @@
 	});
 
 
+	{
+		const detectDeviceType = () =>
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+						navigator.userAgent
+				)
+						? "모바일"
+						: "데스크톱";
+		console.log("*********************************** ",detectDeviceType());
+	}
+
+	{
+		$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
+			//console.log("*********************************** ipify=",JSON.stringify(data, null, 2));
+		});
+	}
+	{
+		let apiKey = '25864308b6a77fd90f8bf04b3021a48c1f2fb302a676dd3809054bc1b07f5b42';
+		$.getJSON('https://api.ipinfodb.com/v3/ip-city/?format=json&key=' + apiKey, function(data) {
+			//console.log("*************************************** ipinfodb=",JSON.stringify(data, null, 2));
+		});
+	}
 </script>
 <script src="/js/storyall2.js"></script>
 </body>
