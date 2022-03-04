@@ -1,0 +1,35 @@
+$utilities: () !default;
+$utilities: map-merge(
+                (
+                  // Padding utilities
+                        "button-padding":
+                        (
+                                responsive: true,
+                                property: padding,
+                                class: bp,
+                                values: (
+                                        0: 0rem,
+                                        1: 0.2rem,
+                                        2: 0.4rem,
+                                        3: 0.6rem,
+                                        4: 0.8rem,
+                                        5: 1rem,
+                                ),
+                        ),
+                  // custom font size
+                        "custom-font-size":
+                        (
+                                property: font-size,
+                                class: cfs,
+                                values: (
+                                        0: 0.5rem,
+                                        1: 1rem,
+                                        2: 1.5rem,
+                                        3: 2rem,
+                                        4: 2.5rem,
+                                        5: 3rem,
+                                ),
+                        )
+                ),
+                $utilities
+);

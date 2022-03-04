@@ -42,8 +42,6 @@
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/fontawesome/css/all.min.css">
-	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
 	<title>Photo SNS</title>
 </head>
 
@@ -61,22 +59,36 @@
 	<input type="hidden" id="principalId" value="${principal.user.id}"/>
 	<input type="hidden" id="principalUsername" value="${principal.user.username}"/>
 
-	<header class="d-flex flex-column align-items-center flex-md-column pt-3 px-5 pb-1 bg-light">
-			<nav class="my-2 my-md-0 me-md-5 h1">
-					<a href="/image/storyall" alt="storyall">
+	<header class="header">
+		<div class="container">
+			<a href="/image/storyall" class="logo">
+				<img src="/images/logo2.png" alt="">
+			</a>
+			<nav class="navi">
+				<ul class="navi-list">
+					<li class="navi-item"><a href="/image/storyall" >
 						<i class="fas fa-images"></i>
-						</a>
-					<a href="/image/story" alt="subscribe">
+						</a></li>
+					<li class="navi-item"><a href="/image/story" alt="subscribe">
 						<i class="fas fa-newspaper"></i>
-					</a>
-				<a href="/image/popular2" alt="popular">
+					</a></li>
+					<li class="navi-item"><a href="/image/popular2" alt="popular">
 						<i class="fas fa-heart"></i>
-						</a>
-				<a href="/image/upload" alt="upload">
+						</a></li>
+					<li class="navi-item"><a href="/image/upload" alt="upload">
 						<i class="fas fa-file-upload"></i>
-					</a>
-				<a href="/user/${principal.user.id}" alt="profile">
+					</a></li>
+					<li class="navi-item"><a href="/user/${principal.user.id}" alt="profile">
+						<!--<span style="font-size: 40px; color: Dodgerblue; padding-right: 20px;">-->
 						<i class="fa fa-user"></i>
-						</a>
+						</a></li>
+                      <!-- <li class="navi-item"><i class="fas fa-user"></i></li> --> <!-- uses solid style -->
+                      <!-- <li class="navi-item"><i class="far fa-user"></i></li> --> <!-- uses regular style -->
+                      <!-- <li class="navi-item"><i class="fal fa-user"></i></li> --> <!-- uses light style -->
+
+                      <!-- <li class="navi-item"><i class="fab fa-github-square"></i></li> --> <!-- uses brands style -->
+
+				</ul>
 			</nav>
+		</div>
 	</header>

@@ -25,10 +25,11 @@ public class Visitor {
     private String ip;
     private String pageUrl;
     private String device;
-    @JsonIgnoreProperties("visitor")
+    private Integer userId;
+    /*@JsonIgnoreProperties("visitor")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
-    private User user;
+    private User user;*/
 
     @CreationTimestamp
     private LocalDateTime createDate;

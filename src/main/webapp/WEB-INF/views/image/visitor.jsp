@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../layout/header_.jsp"%>
 <main class="popular">
     <div class="exploreContainer">
         <div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 접속자 조회 <i class="fas fa-heart"></i></span></div>
@@ -82,7 +82,7 @@
         let result = `<div class="col"><p style='font-size: 16px; color: Dodgerblue; padding-right: 16px;'>`+
             order+` : ` +visitor.id+ ` : ` +visitor.createDate;
         result +=` : ` +visitor.ip+ ` : ` +visitor.pageUrl;
-        result +=` : ` +visitor.user.id+ `</p></div><hr>`;
+        result +=` : ` +visitor.userId+ `</p></div><hr>`; //visitor.user.id
         //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ result= @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",result);
         return result;
     }

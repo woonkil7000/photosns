@@ -8,17 +8,18 @@ import com.cos.photogram.web.dto.CMRespDto;
 import com.cos.photogram.web.dto.visitor.VisitorDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -42,6 +43,17 @@ public class VisitorApiController {
         } else {
             return new ResponseEntity<>(new CMRespDto<>(1, "List images 담기 성공", visitors), HttpStatus.OK);
         }
-    }
+    }//@GetMapping("/api/visitor")
+
+    //@Autowired VisitorRepository visitorRepository;
+    /*@RequestMapping("/list")
+    //public Page<Visitor> listAll(Model model, Pageable pageable){ // (sort=ename,asc&sort=sal,desc)
+    public Page<Visitor> listAll(Model model,@PathVariable Integer pNo){ // (sort=ename,asc&sort=sal,desc)
+        //model.addAttribute("list",visitorRepository.findAll(pageable));
+        // return "list";
+        PageRequest request= PageRequest(pNo-1,10,);
+        Page<Visitor> result=visitorRepository.findById
+        //return visitorRepository.findAll(request);
+    }*/
 
 }

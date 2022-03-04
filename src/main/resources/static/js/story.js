@@ -192,6 +192,9 @@ function getStoryItem(image) {
 	console.log("======================== image.contentType ={} =================================",);
 
 	<!-- Get Content Type -->
+	let caption = `${image.caption}`;
+	caption = replaceBrTag(caption);
+	//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption <br>",caption);
 	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
@@ -208,17 +211,17 @@ function getStoryItem(image) {
 		let contentTag;
 
 		if (contentType=='image'){ // image
-			contentTag="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<img width='340' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls loop preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<video width='340' playsinline controls loop preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe width='340' height='300' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe width='325' height='250' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
-			contentTag="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag="<img width='340' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			console.log("=============== etc => image ===================");
 		}
 		console.log("======================== contentTag ={} =================================",contentTag);
@@ -288,9 +291,8 @@ function getStoryItem(image) {
 
 	result += before_atag();
 
-	result += fnContentType(contentType,pathUrl)
+	result += fnContentType(contentType,pathUrl);
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
-
 	result += after_atag();
 
 	result +=`<!-- </a> -->
@@ -302,6 +304,9 @@ function getStoryItem(image) {
 `;
 
 	result +=`	
+			<div class="sl__item__contents__content">
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;">${caption}</span>
+		</div>
     </div>
     <!-- 게시물 이미지 영역 end -->
 
@@ -322,7 +327,7 @@ function getStoryItem(image) {
 
   result += `	
 		<!--좋아요-->
-		<span class="like">좋아요 <b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
+		<span class="like">좋아요<b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
 		<!--좋아요end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->
@@ -340,9 +345,11 @@ function getStoryItem(image) {
 		<!--태그박스end-->
 
 		<!--게시글내용-->
+		<!--
 		<div class="sl__item__contents__content">
-			<span style="font-size: 18px; color: Dodgerblue;">${image.caption}</span>
+			<span style="font-size: 18px; color: Dodgerblue;">{image.caption}</span>
 		</div>
+		-->
 		<!--게시글내용end-->
 		<hr>
 		<!-- 댓글 박스 시작 -->
@@ -504,7 +511,16 @@ function deleteComment(commentId) {
 	});
 }
 
-
+function replaceBrTag(str) {
+	if (str == undefined || str == null)
+	{
+		return "";
+	}
+	str = str.replace(/\r\n/ig, '<br>');
+	str = str.replace(/\\n/ig, '<br>');
+	str = str.replace(/\n/ig, '<br>');
+	return str;
+}
 
 
 

@@ -21,17 +21,18 @@ public class VisitorService {
 
     @Transactional
     public Visitor 방문기록(String ip,String pageUrl,String device,int userId){
-        User user = new User();
+        /*User user = new User();
         user.setId(userId);
         User userEntity=userRepository.findById(userId).orElseThrow(()->{
             throw new CustomApiException("유저를 찾을 수 없습니다");
-        });
+        });*/
 
         Visitor visitor = new Visitor();
         visitor.setIp(ip);
         visitor.setPageUrl(pageUrl);
         visitor.setDevice(device);
-        visitor.setUser(userEntity);
+        visitor.setUserId(userId);
+        //visitor.setUser(userEntity);
         return  visitorRepository.save(visitor);
     }
 
@@ -42,3 +43,18 @@ public class VisitorService {
         return visitors;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

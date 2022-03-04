@@ -31,9 +31,9 @@ button {
 .login {
   width: 100%;
   /*
-  max-width: 935px;
+  max-width: 350px;
   */
-  max-width: 300px;
+  max-width: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,7 @@ button {
 /*로그인폼과 가입하기를 감싸는 컨테이너*/
 .login__form__container {
   /* width: 350px; */
-  width: 300px;
+  width: 340px;
   height: 100%;
   display: flex;
   flex-direction: column;

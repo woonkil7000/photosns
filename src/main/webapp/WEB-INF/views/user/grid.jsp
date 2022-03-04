@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../layout/header_.jsp"%>
 					<%--------------------------- 이미지 리스트 루프 ------------------------------------------%>
 <c:forEach var="image" items="${dto.user.images}">  <%-- EL 표현식에서 변수명을 적으면 get함수가 자동으로 호출됨. --%>
 

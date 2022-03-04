@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../layout/header_.jsp"%>
 <input type="hidden" id="userId" value="${dto.user.id}" />
 <input type="hidden" id="ip" value="" />
 <input type="hidden" id="pageUrl" value="" />
@@ -31,7 +31,7 @@
 					<div class="sl__item__contents__icon">
 
 						<button>
-							<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onclick="toggleLike()"></i>
+							<i class="fas fa-heart active" id="storyLikeIcon-{image.id}" onclick="toggleLike()"></i>
 						</button>
 					</div>
 
@@ -169,6 +169,6 @@
 		});
 	}
 </script>
-<script src="/js/storyall2.js"></script>
+<script src="/js/storyall.js"></script>
 </body>
 </html>

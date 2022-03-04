@@ -76,8 +76,8 @@ public class ImageController {
 	// /image/storyall.jsp // 모든 사진 불러오는 페이지로 리턴됨
 	@GetMapping({"/","/image/storyall"})
 	public String feed2() {
-		return "/image/storyall";
-	}
+		return "/image/storyall2";
+	} // storyall2.jsp
 
 	@GetMapping("/fetchaxios")
 	public String fetchaxios() {

@@ -54,8 +54,8 @@
                             <input type="text" name="username" placeholder="유저네임">
                             <input type="password" name="password" placeholder="비밀번호">
                             -->
-                            <input type="text"  name="username" autocomplete="username" required="required">
-                            <input type="password"  name="password" autocomplete="current-password" required="required">
+                            <input type="text"  name="username" autocomplete="username" required="required" placeholder="아이디">
+                            <input type="password"  name="password" autocomplete="current-password" required="required" placeholder="패스워드">
 
                             <div  class="login__facebook"><p>Test Id = "test"</p><p> PW = "111"</p></div>
                             <button>로그인</button>

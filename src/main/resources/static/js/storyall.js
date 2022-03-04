@@ -160,21 +160,21 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지' />";
+			contentTag ="<img width='340' style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video  style='max-height:100%;max-width:100%' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
+			contentTag ="<video width='340' style='max-height:100%;max-width:100%' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe width='325' height='250' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img  style='max-height:100%;max-width:100%' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag ="<img width='340' style='max-height:100%;max-width:100%' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}
@@ -187,25 +187,25 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
   let result = `
 <!--전체 리스트 아이템-->
-<div class="col-12 col-md-4"> <!-- column 3-->
+<div class="story-list__item">
 	<!--리스트 아이템 헤더영역-->
-	<div class="card">
-		<div class="card-header">`;
+	<div class="sl__item__header">
+		<div class="profile-image">`;
 
   	//result += mediaTag + ` class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
 	// 사용자 프로필 이미지
-	result += `<div class="card-cover"><a  href="/user/${image.user.id}"><img width="23" height="23" class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
+	result += `<a  href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
-	result +=`
-		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}">${image.user.name}</a></span></div>
+	result +=`</a></div>
+		<div><span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}">${image.user.name}</a></span></div>
 	</div>
 	<!--헤더영역 end-->
 
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
-	<div class="card-body">
+	<div class="sl__item__img">
 		`;
 
 
@@ -269,13 +269,15 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
   result +=`		
     </div>
-    <div class="card-title pb-3 px-2 align-items-lg-start">
+    <div class="sl__item__contents__content">
 			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;">${caption}</span>
+		</div>
 	<!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
+	<div class="sl__item__contents">
 		<!-- 하트모양 버튼 박스 -->
-		<div class="likes-icon px-2"> `;
+		<div class="sl__item__contents__icon"> `;
 
   if (image.likeState) {
     result += `<button  onclick="toggleLike(${image.id})">
@@ -287,16 +289,15 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 						</button>`;
   }
 
-  result += `
-		<!--좋아요 카운트-->
+  result += `	
+		<!--좋아요-->
 		<span class="like">좋아요<b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
-		<!--좋아요 카운트 end-->
+		<!--좋아요end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->
-	</div> <!-- class card-title -->
-	
+
 		<!--태그박스-->
-		<div class="card-subtitle">
+		<div class="sl__item__contents__tags">
 			`;
 
   image.tags.forEach((tag) => {
@@ -312,48 +313,38 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			<span style="font-size: 18px; color: Dodgerblue;">{image.caption}</span>
 		</div>
 		-->
+		<hr>
 		<!--게시글내용end-->
 
 		<!-- 댓글 박스 시작 -->
-		<div class="card" style="overflow:scroll; height:100px;"><!-- comment card start -->
-		<div class="card-body align-items-left" id="storyCommentList-${image.id}"><!-- card body -->
-
-				<ul class="list-group list-group-flush">
+		<div id="storyCommentList-${image.id}">
 		`;
-
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
   image.comments.forEach((comment) => {
-
-    result += `	
-				<li>
-				<div class="list-group-item pt-sm-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
-				<a class="profile-image" href="/user/${comment.user.id}">
-				<img width="23" height="23" style="border-radius: 50%;" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
-				</a>${comment.content}				
+    result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
+				<div style="text-align:left;border-radius: 50%;"><a class="profile-image" href="/user/${comment.user.id}">
+				<img style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+				</a>${comment.content}
+				</div>
   				`;
 
-				if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
+    if (principalId == comment.user.id) {
+      result += `
+  				    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+  				`;
+    }
 
-				  result += `
-								<button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
-							`;
-				}//   유저의 댓글이면 삭제버튼 표시 end
-
-	result +=`
-			</div><!-- item list end -->
-			</li>`;
-  });// forEach end
+    result += `
+			  </div>`;
+  });
 
   result += `
-		</ul>
-		</div><!-- card body end -->
-		</div><!-- comment card end -->
+		</div>
 		<!-- 댓글 박스 끝 -->
 		<!--  ########################  댓글 목록 반복문 끝   ################################# -->
-		
 		<!--댓글입력박스-->
 		<!-- <div class="sl__item__input"> -->
-		<div class="card-footer">
+		<div class="sl__item__input">
 			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
 			<button type="button" onClick="addComment(${image.id})">쓰기</button>
 		</div>
@@ -439,14 +430,13 @@ function addComment(imageId) {
 
 		let comment = res.data;
 		let content = `
-				<li>
-			  <div class="list-group-item" id="storyCommentItem-${comment.id}"> 
-			      <a class="profile-image" href="/user/${comment.user.id}">
-				<img width="23" height="23" style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+			      <div style="text-align: left;"><a href="/user/${comment.user.id}">
+				<img  style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
+				</div>
 			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
 			  </div>
-			  </li>
 			  `;
 		// 코멘트 삭제를 위해 ${comment.id} 삽입
 		commentList.prepend(content); // 앞에 붙이기

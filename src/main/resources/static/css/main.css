@@ -1,0 +1,72 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+a {
+    color: Dodgerblue;
+}
+
+h4 {
+    color: Dodgerblue;
+}
+header {
+    color: Dodgerblue;
+}
+.card-header {
+    text-align: left;
+}
+.profile-image {
+    border-radius: 50%;
+}
+
+.likes-icon {
+    border: none;
+    height: 15px;
+    color: hotpink;
+    text-align: left;
+}
+
+.likes-icon
+button {
+    border: none;
+    background-color: transparent;
+    color: hotpink;
+    cursor: pointer;
+}
+.list-group-item {
+    text-align: left;
+}
+.list-group-item
+button {
+    background-color: transparent;
+    text-align: end;
+    padding: 1px;
+    border: none;
+}
+.card-footer button {
+    border: 10px;
+    padding: 5px;
+    border-radius: 20%;
+}
+.card-body {
+    padding-bottom: 0;
+    margin: 0;
+}
+.card .card-body .list-group .list-group-item {
+    border: none;
+}
+.card .card-body .list-group .list-group-item {
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+ul {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+li {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}

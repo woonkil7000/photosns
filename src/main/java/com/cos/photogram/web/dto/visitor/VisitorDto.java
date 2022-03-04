@@ -11,4 +11,5 @@ public class VisitorDto {
     private String ip;
     private String pageUrl;
     private String device;
+    private Integer userId;
 }

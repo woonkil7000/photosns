@@ -2,5 +2,8 @@
   "name": "jpa",
   "version": "1.0.0",
   "dependencies": {
+    "bootstrap": "^5.1.3",
+    "sass": "^1.49.9",
+    "winston": "^3.6.0"
   }
 }
