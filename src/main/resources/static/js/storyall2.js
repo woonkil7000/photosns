@@ -198,7 +198,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	result += `<div class="card-cover"><a  href="/user/${image.user.id}"><img width="23" height="23" class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
 	result +=`
-		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}">${image.user.name}</a></span></div>
+		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}"><b>${image.user.name}</b></a></span></div>
 	</div>
 	<!--헤더영역 end-->
 
@@ -270,7 +270,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   result +=`		
     </div>
     <div class="card-title pb-3 px-2 align-items-lg-start">
-			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;">${caption}</span>
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b>${caption}</b></span>
 	<!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
@@ -289,7 +289,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
   result += `
 		<!--좋아요 카운트-->
-		<span class="like">좋아요<b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
+		<span class="like" id="storyLikeCount-${image.id}">좋아요${image.likeCount}</span>
 		<!--좋아요 카운트 end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->
@@ -315,18 +315,15 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		<!--게시글내용end-->
 
 		<!-- 댓글 박스 시작 -->
-		<div class="card" style="overflow:scroll; height:100px;"><!-- comment card start -->
-		<div class="card-body align-items-left" id="storyCommentList-${image.id}"><!-- card body -->
-
-				<ul class="list-group list-group-flush">
+		<div class="commnet-card"><!-- comment card start -->
+		<div class="comment-card-body align-items-left p-0" id="storyCommentList-${image.id}"><!-- card body -->
 		`;
 
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
   image.comments.forEach((comment) => {
 
     result += `	
-				<li>
-				<div class="list-group-item pt-sm-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
+				<div class="list-group-item p-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
 				<a class="profile-image" href="/user/${comment.user.id}">
 				<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}				
@@ -335,17 +332,16 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 				if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
 
 				  result += `
-								<button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+								<button onClick="deleteComment(${comment.id})"> <i class="bi bi-trash"></i>(del)</button>
 							`;
 				}//   유저의 댓글이면 삭제버튼 표시 end
 
 	result +=`
 			</div><!-- item list end -->
-			</li>`;
+			`;
   });// forEach end
 
   result += `
-		</ul>
 		</div><!-- card body end -->
 		</div><!-- comment card end -->
 		<!-- 댓글 박스 끝 -->
@@ -444,7 +440,7 @@ function addComment(imageId) {
 			      <a class="profile-image" href="/user/${comment.user.id}">
 				<img width="23" height="23" style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
-			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+			    <button onClick="deleteComment(${comment.id})"> <i class="bi bi-plus-square"></i> <i class="bi bi-trash"></i>(del)</button>
 			  </div>
 			  </li>
 			  `;

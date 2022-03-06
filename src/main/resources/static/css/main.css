@@ -1,13 +1,23 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-
+.container {
+    padding: 0 15px;
+}
+.row {
+       margin: 0;
+   }
 a {
     color: Dodgerblue;
 }
-
 h4 {
     color: Dodgerblue;
 }
-
+body {
+    overflow-x: hidden;
+    padding-top: 80px;
+}
+.navbar-brand{
+    font-size: 35px;
+}
 .card-header {
     text-align: left;
 }
@@ -19,7 +29,7 @@ h4 {
 
 .likes-icon {
     border: none;
-    height: 15px;
+    height: 30px;
     color: hotpink;
     text-align: left;
 }
@@ -30,13 +40,22 @@ button {
     background-color: transparent;
     color: hotpink;
     cursor: pointer;
+    font-size: 20px;
+}
+.like{
+    border: none;
+    background-color: transparent;
+    color: hotpink;
+    cursor: pointer;
 }
 .list-group-item {
     text-align: left;
+    padding-bottom: 2px;
 }
 .list-group-item
 button {
     background-color: transparent;
+    align-items: end;
     text-align: end;
     padding: 1px;
     border: none;
@@ -44,7 +63,7 @@ button {
 .list-group-item .profile-image .profile-icon {
     width: 25px;
     height: 25px;
-    border-radius: 35%;
+    border-radius: 50%;
     /*width="25" height="25" style="border-radius: 40%;"*/
 }
 .card-footer button {
@@ -52,12 +71,55 @@ button {
     padding: 5px;
     border-radius: 20%;
 }
-.card-body {
-    padding-bottom: 0;
+.card {
+    padding: 0;
     margin: 0;
 }
-.card .card-body .list-group .list-group-item {
+.card-body {
+    padding: 0;
+    margin: 0;
+}
+.comment-card {
+    padding: 2px;
+    margin: 0;
+    border: 0px;
+}
+.comment-card-body {
+    padding: 2px;
+    margin: 0;
+    border: 0px;
+}
+.comment-card-footer button {
+    padding-right: 10px;
+    margin-right: 0px;
+    align-content: end;
+    align-items: end;
+    text-align: end;
+    border: 10px;
+    border-radius: 20%;
+}
+.list-group {
     border: none;
+    padding: 0px;
+    margin: 0px;
+}
+.list-group-item {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+.list-group-item a{
+    padding-left: 5px;
+    padding-bottom: 2px;
+    border: none;
+    margin: 0px;
+}
+.list-group-item
+button{
+    color: Dodgerblue;
+    text-align: end;
+    align-items: end;
+    border-radius: 50%;
 }
 .card .card-body .list-group .list-group-item {
     overflow-y: hidden; /* Hide vertical scrollbar */
@@ -65,7 +127,7 @@ button {
 }
 
 ::-webkit-scrollbar {
-    display: none;
+    /*display: none;*/
 }
 ul {
     border: none;

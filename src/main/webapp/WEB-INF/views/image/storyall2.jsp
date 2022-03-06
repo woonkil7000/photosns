@@ -5,11 +5,12 @@
 <input type="hidden" id="ip" value="" />
 <input type="hidden" id="pageUrl" value="" />
 
-	<section>
-		<div class="pt-sm-4 pb-sm-0 pb-md-0 pt-md-4 align-text-bottom">
-			<h4 class="cfs-2 pb-0 align-text-bottom"><i class="fas fa-images"></i> 전체 미디어</h4>
+<!--	<section> -->
+<div class="container  overflow-hidden">
+		<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
+			<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fas fa-images"></i> 전체 미디어</h4>
 		</div>
-		<div class="row g-3 mb-1 text-center my-2" id="storyList">
+		<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList">
 			<!-- item start -->
 <%--			<div class="col-12 col-md-4">
 				<div class="card">
@@ -35,7 +36,7 @@
 		</div>
 
 		<!--전체 리스트 시작-->
-
+</div>
 
 
 
@@ -75,7 +76,7 @@
 			</div>
 			<!-- 이미지 모달 end -->
 
-	</section>
+<!--	</section> -->
 
 <!-- 이미지 삭제 모달 이벤트 처리 -->
 <script>
