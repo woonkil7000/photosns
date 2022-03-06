@@ -1,4 +1,5 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 a {
     color: Dodgerblue;
 }
@@ -6,14 +7,14 @@ a {
 h4 {
     color: Dodgerblue;
 }
-header {
-    color: Dodgerblue;
-}
+
 .card-header {
     text-align: left;
 }
 .profile-image {
-    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border-radius: 45%;
 }
 
 .likes-icon {
@@ -39,6 +40,12 @@ button {
     text-align: end;
     padding: 1px;
     border: none;
+}
+.list-group-item .profile-image .profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 35%;
+    /*width="25" height="25" style="border-radius: 40%;"*/
 }
 .card-footer button {
     border: 10px;

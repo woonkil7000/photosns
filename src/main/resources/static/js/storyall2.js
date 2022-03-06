@@ -328,7 +328,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 				<li>
 				<div class="list-group-item pt-sm-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
 				<a class="profile-image" href="/user/${comment.user.id}">
-				<img width="23" height="23" style="border-radius: 50%;" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+				<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}				
   				`;
 

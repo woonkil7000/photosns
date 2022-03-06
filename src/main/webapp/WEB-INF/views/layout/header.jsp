@@ -19,31 +19,42 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Bootstrap CSS -->
+
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 	<!-- 제이쿼리 -->
+
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
 	<!-- Style -->
+
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/story.css">
 	<link rel="stylesheet" href="/css/popular.css">
 	<link rel="stylesheet" href="/css/profile.css">
 	<link rel="stylesheet" href="/css/upload.css">
 	<link rel="stylesheet" href="/css/update.css">
+	<!--
 	<link rel="shortcut icon" href="/images/insta.svg">
+	-->
 
 	<!-- Fontawesome -->
     <link href="/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> -->
 	<!-- Fonts -->
+
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
 	<link rel="stylesheet" href="/fontawesome/css/all.min.css">
-	<link rel="stylesheet" href="/css/main.css">
+
 	<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+	<link rel="stylesheet" href="/css/main.css">
+
 	<title>Photo SNS</title>
 </head>
 
@@ -51,19 +62,25 @@
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="/js/recIp.js"></script>
+
+
 <!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<!--
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 -->
+<!-- ip address -->
+<script src="/js/recIp.js"></script>
+
 	<input type="hidden" id="principalId" value="${principal.user.id}"/>
 	<input type="hidden" id="principalUsername" value="${principal.user.username}"/>
 
-	<header class="d-flex flex-column align-items-center flex-md-column pt-3 px-5 pb-1 bg-light">
+	<header class="navbar navbar-expand-md fixed-top navbar-primary bg-light d-flex flex-column align-items-center flex-md-column px-5 pt-1 pb-1 bg-light">
 			<nav class="my-2 my-md-0 me-md-5 h1">
-					<a href="/image/storyall" alt="storyall">
+				<a href="/image/storyall" alt="storyall">
 						<i class="fas fa-images"></i>
 						</a>
 					<a href="/image/story" alt="subscribe">

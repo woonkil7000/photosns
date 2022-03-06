@@ -10,14 +10,14 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cos</groupId>
-	<artifactId>photogram</artifactId>
+	<artifactId>photosns</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
-	<name>photogram</name>
+	<name>photosns</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>war</packaging>
 	<properties>
 		<java.version>11</java.version>
-		<start-class>com.cos.photogram.PhotogramApplication</start-class> <webapp.lib>${basedir}/src/lib</webapp.lib>
+		<start-class>com.cos.photogram.PhotographApplication</start-class> <webapp.lib>${basedir}/src/lib</webapp.lib>
 	</properties>
 	<!--			<exclusions>
                     <exclusion>

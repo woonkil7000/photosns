@@ -5,9 +5,9 @@
 <input type="hidden" id="ip" value="" />
 <input type="hidden" id="pageUrl" value="" />
 
-	<section class="container">
-		<div class="pb-sm-1 pt-sm-2 pb-sm-0 pb-md-1 pt-md-4 align-text-bottom">
-			<h4 class="cfs-2"><i class="fas fa-images"></i> 전체 미디어</h4>
+	<section>
+		<div class="pt-sm-4 pb-sm-0 pb-md-0 pt-md-4 align-text-bottom">
+			<h4 class="cfs-2 pb-0 align-text-bottom"><i class="fas fa-images"></i> 전체 미디어</h4>
 		</div>
 		<div class="row g-3 mb-1 text-center my-2" id="storyList">
 			<!-- item start -->
@@ -75,8 +75,8 @@
 			</div>
 			<!-- 이미지 모달 end -->
 
-
 	</section>
+
 <!-- 이미지 삭제 모달 이벤트 처리 -->
 <script>
 	{	// 모달 요소 선택
