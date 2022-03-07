@@ -66,6 +66,11 @@ public class Image {
 	@Transient // DB에 컬럼이 만들어지지않는다.
 	private boolean likeState;
 
+	@Transient // 칼럼이 만들어지지 않는다.
+	private int commentCount; // 댓글 수
+
+
+
 	// object를 콘솔에 출력할때 문제가 될수있어서 User부분을 출력되지않게 함.
 	@Override
 	public String toString() {
@@ -81,6 +86,7 @@ public class Image {
 				", createDate=" + createDate +
 				", likeCount=" + likeCount +
 				", likeState=" + likeState +
+				", commentCount=" + commentCount +
 				'}';
 	}
 }

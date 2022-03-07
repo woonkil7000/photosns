@@ -135,6 +135,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	console.log("======================== image.contentType ={} =================================",);
 
+	let commentCount=`${image.commentCount}`;
 	<!-- Get Content Type -->
 	let caption = `${image.caption}`;
 	caption = replaceBrTag(caption);
@@ -312,34 +313,58 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			<span style="font-size: 18px; color: Dodgerblue;">{image.caption}</span>
 		</div>
 		-->
-		<!--게시글내용end-->
+		<!--게시글 내용end--> 
+		`;
 
+  		if (commentCount>3){ // 댓글 수 4이상 부터 댓글 카운터 + 펼치기 버튼 노출
+			result +=`<div class="commentCount"><i class="bi bi-list"></i>${image.commentCount}
+					<button onclick="commentShowAll('image'+${image.id})"><i class="bi bi-arrows-expand"></i></button>
+					</div>`;
+		}
+
+		result +=`
 		<!-- 댓글 박스 시작 -->
-		<div class="commnet-card"><!-- comment card start -->
-		<div class="comment-card-body align-items-left p-0" id="storyCommentList-${image.id}"><!-- card body -->
+		<div class="comment-card"><!-- comment card start -->
+		<div class="comment-card-body p-0" id="storyCommentList-${image.id}"><!-- card body -->
 		`;
 
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
-  image.comments.forEach((comment) => {
 
-    result += `	
+	let i=0;
+	image.comments.forEach((comment) => {
+
+	if(i<3) { // 3ea show! , else display: none;
+    		result += `	
 				<div class="list-group-item p-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
-				<a class="profile-image" href="/user/${comment.user.id}">
-				<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
-				</a>${comment.content}				
+					<a class="profile-image" href="/user/${comment.user.id}">
+						<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+						</a>${i}${comment.content}				
   				`;
-
 				if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
+					result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i></button>
+					`; // 유저의 댓글이면 삭제버튼 표시 end
+				}
+			result += `</div>`; // item list
 
-				  result += `
-								<button onClick="deleteComment(${comment.id})"> <i class="bi bi-trash"></i>(del)</button>
-							`;
-				}//   유저의 댓글이면 삭제버튼 표시 end
+	}else {
 
-	result +=`
-			</div><!-- item list end -->
-			`;
+			result += `	
+				<span class="image${image.id}" style="display: none">
+				<div class="list-group-item p-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
+					<a class="profile-image" href="/user/${comment.user.id}">
+						<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+						</a>${i}${comment.content}				
+  				`;
+					if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
+						result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i></button>
+								`; // list-group-item -end-//   유저의 댓글이면 삭제버튼 표시 end
+					}
+			result +=`</div>
+					</span>`;
+		} // if() -end-
+	i++;
   });// forEach end
+
 
   result += `
 		</div><!-- card body end -->
@@ -566,4 +591,28 @@ function replaceBrTag(str) {
 	str = str.replace(/\\n/ig, '<br>');
 	str = str.replace(/\n/ig, '<br>');
 	return str;
+}
+function commentShowAll(imageId){
+	let imageid="."+imageId;
+	console.log("@@ imageid=",imageid);
+	//document.querySelector(".image147").style.display = "none";
+	const comments=document.querySelectorAll(imageid);
+	//document.querySelectorAll(imageid).style.display = "block";
+	console.log("@@ comments=",comments);
+
+	for(let i=0;i<comments.length;i++){
+		const item=comments.item(i);
+		const style=comments.item(i).style.display;
+		console.log("@@ style = comments.item(i).style.display=",style);
+
+		if(style=='none'){
+			item.style.display="block";
+		}else if(style=='block'){
+			item.style.display="none";
+		}else{
+			console.log("error: check style.display value~~");
+		}
+		console.log("@@ item.style.display=",item.style.display);
+		//item.style.border="1px solid #ff0000";
+	}
 }

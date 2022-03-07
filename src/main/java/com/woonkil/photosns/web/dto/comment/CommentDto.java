@@ -15,6 +15,7 @@ public class CommentDto {
     private String content;
     @NotNull // 자료형을 Integer 로 @NotNull 만 사용해야함. // @NotBlank:빈값,널,스페이스 @NotEmpty:빈값,널  사용 불가.
     private Integer imageId;
+    private Integer commentCount;
 
     //  toEntity가 필요없음.
 }

@@ -89,6 +89,14 @@ button {
     margin: 0;
     border: 0px;
 }
+.commentCount {
+    color: Dodgerblue;
+    font-size: 10px;
+}
+.commentCount button{
+    color: Dodgerblue;
+    font-size: 10px;
+}
 .comment-card-footer button {
     padding-right: 10px;
     margin-right: 0px;
@@ -107,25 +115,42 @@ button {
     border: none;
     padding: 0px;
     margin: 0px;
+    /*text-align: right;*/
 }
-.list-group-item a{
+.list-group-item
+a{
     padding-left: 5px;
     padding-bottom: 2px;
     border: none;
     margin: 0px;
 }
+.profile-image{
+    text-align: left;
+}
+.profile-icon{
+    text-align: left;
+}
 .list-group-item
 button{
     color: Dodgerblue;
     text-align: end;
-    align-items: end;
-    border-radius: 50%;
+}
+.del-btn {
+    text-align: right;
+    padding-right: 0px;
 }
 .card .card-body .list-group .list-group-item {
     overflow-y: hidden; /* Hide vertical scrollbar */
     overflow-x: hidden; /* Hide horizontal scrollbar */
 }
-
+.commentCount {
+    text-align: left;
+    color: Dodgerblue;
+    padding-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 17px;
+}
 ::-webkit-scrollbar {
     /*display: none;*/
 }

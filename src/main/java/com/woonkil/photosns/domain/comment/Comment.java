@@ -38,6 +38,9 @@ public class Comment {
 	@JoinColumn(name = "userId")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
+
+//	@Transient // 칼럼이 만들어지지 않는다.
+//	private int commentCount;
 	
 //	@CreationTimestamp
 //	private Timestamp createDate;

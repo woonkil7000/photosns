@@ -53,6 +53,7 @@ public class ImageService {
 			images.forEach((image -> {
 				// 좋아요 카운트 값 저장.
 				image.setLikeCount(image.getLikes().size());
+				image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 갯수
 
 				/*image.getLikes().forEach(likes -> {
 					if (likes.getUser().getId() == principalId) { //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
@@ -85,6 +86,7 @@ public class ImageService {
 
 				// 좋아요 카운트 추가하기
 				image.setLikeCount(image.getLikes().size());
+				image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 갯수
 
 				image.getLikes().forEach(likes -> {
 					if (likes.getUser().getId() == principalId) { //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
@@ -113,6 +115,7 @@ public class ImageService {
 
 			// 좋아요 카운트 추가하기
 			image.setLikeCount(image.getLikes().size());
+			image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 갯수
 
 			image.getLikes().forEach(likes -> {
 				if(likes.getUser().getId() == principalId){ //해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요한것인지 비교.
@@ -122,7 +125,8 @@ public class ImageService {
 		}));
 
 		System.out.println("######################################## End of Page[Image] images ###################################################");
-		log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> "+String.valueOf(images));
+		//log.info("imageRepository.mStory(principalId,pageable) String.valueOf( [images] ) =============>>>>>>>>>> "+String.valueOf(images));
+		//log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ imageRepository.mStory(principalId,pageable) returned [images]==",images);
 		log.info("###################  return [images] :: Page[Image] images=imageRepository.mStory(principalId,pageable)    ######################### ");
 		return images;
 	}
@@ -217,6 +221,7 @@ public class ImageService {
 
 			int likeCount = image.getLikes().size();
 			image.setLikeCount(likeCount); // set dto.image.likeCount = likeCount;
+			image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 사이즈
 
 			image.getLikes().forEach((like)->{
 				if(like.getUser().getId() == principalId) {
@@ -251,6 +256,8 @@ public class ImageService {
 
 			int likeCount = image.getLikes().size();
 			image.setLikeCount(likeCount);
+			image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 갯수
+
 
 			image.getLikes().forEach((like)->{
 				if(like.getUser().getId() == principalId) {
@@ -283,6 +290,7 @@ public class ImageService {
 			
 			int likeCount = image.getLikes().size();
 			image.setLikeCount(likeCount);
+			image.setCommentCount(image.getComments().size()); // 이미지 엔티티에 따라오는 리스트 코멘트의 갯수
 			
 			image.getLikes().forEach((like)->{
 				if(like.getUser().getId() == principalId) {
