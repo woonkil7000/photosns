@@ -316,7 +316,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		<!--게시글 내용end--> 
 		`;
 
-  		if (commentCount>3){ // 댓글 수 4이상 부터 댓글 카운터 + 펼치기 버튼 노출
+  		if (commentCount>3){ // 댓글 수 4이상 부터 댓글 아이콘 + 카운터 + 펼치기 버튼 노출
 			result +=`<div class="commentCount"><i class="bi bi-list"></i>${image.commentCount}
 					<button onclick="commentShowAll('image'+${image.id})"><i class="bi bi-arrows-expand"></i></button>
 					</div>`;
@@ -325,7 +325,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		result +=`
 		<!-- 댓글 박스 시작 -->
 		<div class="comment-card"><!-- comment card start -->
-		<div class="comment-card-body p-0" id="storyCommentList-${image.id}"><!-- card body -->
+		<div class="comment-card-body" id="storyCommentList-${image.id}"><!-- card body -->
 		`;
 
 		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
@@ -335,40 +335,40 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	if(i<3) { // 3ea show! , else display: none;
     		result += `	
-				<div class="list-group-item p-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
+				<div class="list-group-item" id="storyCommentItem-${comment.id}"> <!-- item list -->
 					<a class="profile-image" href="/user/${comment.user.id}">
-						<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
-						</a>${i}${comment.content}				
+					<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+						</a>${comment.content}				
   				`;
 				if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
-					result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i></button>
+					result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i>							
 					`; // 유저의 댓글이면 삭제버튼 표시 end
 				}
 			result += `</div>`; // item list
 
-	}else {
+	}else { // 댓글 4개 부터 class 이름 image+{image.id} 이름으로 묶어서 펼치기 / 접기 적용.
 
 			result += `	
-				<span class="image${image.id}" style="display: none">
-				<div class="list-group-item p-0" id="storyCommentItem-${comment.id}"> <!-- item list -->
+				<span  class="image${image.id}" style="display: none">
+				<div class="list-group-item" id="storyCommentItem-${comment.id}"> <!-- item list -->
 					<a class="profile-image" href="/user/${comment.user.id}">
 						<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
-						</a>${i}${comment.content}				
+						</a>${comment.content}
   				`;
 					if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
 						result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i></button>
 								`; // list-group-item -end-//   유저의 댓글이면 삭제버튼 표시 end
 					}
 			result +=`</div>
-					</span>`;
+				</span>	`;
 		} // if() -end-
 	i++;
   });// forEach end
 
 
   result += `
-		</div><!-- card body end -->
-		</div><!-- comment card end -->
+		</div><!-- comment card body #end -->
+		</div><!-- comment card #end -->
 		<!-- 댓글 박스 끝 -->
 		<!--  ########################  댓글 목록 반복문 끝   ################################# -->
 		

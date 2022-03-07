@@ -85,7 +85,14 @@ button {
     border: 0px;
 }
 .comment-card-body {
-    padding: 2px;
+    /*display: inline;*/
+    /*display: flex;*/
+    /*
+    justify-content:
+    space-between;
+    align-items: flex-start;
+     */
+    padding: 0px;
     margin: 0;
     border: 0px;
 }
