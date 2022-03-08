@@ -161,21 +161,21 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지' />";
+			contentTag ="<img  width='340' style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video  style='max-height:100%;max-width:100%' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
+			contentTag ="<video  width='340'  style='max-height:100%;max-width:100%' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe width='325'  style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img  style='max-height:100%;max-width:100%' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag ="<img width='340'   style='max-height:100%;max-width:100%' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}
@@ -465,7 +465,7 @@ function addComment(imageId) {
 			      <a class="profile-image" href="/user/${comment.user.id}">
 				<img width="23" height="23" style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
-			    <button onClick="deleteComment(${comment.id})"> <i class="bi bi-plus-square"></i> <i class="bi bi-trash"></i>(del)</button>
+			    <i class="bi bi-plus-square"></i> <button onClick="deleteComment(${comment.id})">  <i class="bi bi-trash"></i></button>
 			  </div>
 			  </li>
 			  `;

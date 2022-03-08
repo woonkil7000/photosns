@@ -2,16 +2,31 @@ package com.woonkil.photosns;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-//@SpringBootApplication
-@Configuration
+/*@SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
+@Configuration*/
+@SpringBootApplication
 public class PhotogramApplication extends SpringBootServletInitializer {
+
+	// WAR 배포를 위해 수정된 부분
+	public static void main(String[] args){
+		SpringApplication app = new SpringApplication((com.woonkil.photosns.PhotogramApplication.class));
+		app.run(args);
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+		return application.sources(com.woonkil.photosns.PhotogramApplication.class);
+	}
+}
+/*public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분
 	public static void main(String[] args){
@@ -23,7 +38,7 @@ public class PhotogramApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
 		return application.sources(PhotogramApplication.class);
 	}
-}
+}*/
 /* 2022.03.06
 
 public class PhotogramApplication extends SpringBootServletInitializer {

@@ -218,7 +218,7 @@ function getStoryItem(image) {
 			contentTag="<video width='340' playsinline controls loop preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe width='325' height='250' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe width='325' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
@@ -506,13 +506,14 @@ function addComment(imageId) {
 
 		let comment = res.data;
 		let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
-			      <div style="text-align: left;"><a href="/user/${comment.user.id}">
-				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
+			  <li>
+			  <div class="list-group-item" id="storyCommentItem-${comment.id}"> 
+			      <a class="profile-image" href="/user/${comment.user.id}">
+				<img width="23" height="23" style="border-radius: 50%;" height="23" width="23" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
 				</a>${comment.content}
-				</div>
-			    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+			     <i class="bi bi-plus-square"></i> <button onClick="deleteComment(${comment.id})"> <i class="bi bi-trash"></i></button>
 			  </div>
+			  </li>
 			  `;
 		// 코멘트 삭제를 위해 ${comment.id} 삽입
 		commentList.prepend(content); // 앞에 붙이기

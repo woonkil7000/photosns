@@ -6,7 +6,9 @@ server:
     encoding:
       charset: utf-8
       enabled: true
-
+      spring:
+        profiles:
+          include = oauth:
 spring:
   security:
     oauth2:
@@ -53,10 +55,16 @@ spring:
     user:
       name: test
       password: 1234
-#  security:
+
+
+  #  security:
 #    user:
 #      name: test
 #      password: 1234
+
+#  main:
+#    web-application-type: none
+# web security error 유발??
 
   mvc:
     view:

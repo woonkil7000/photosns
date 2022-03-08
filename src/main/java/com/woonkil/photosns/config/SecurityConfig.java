@@ -3,6 +3,7 @@ package com.woonkil.photosns.config;
 import com.woonkil.photosns.config.auth.handler.CustomAuthFailureHandler;
 import com.woonkil.photosns.config.auth.handler.CustomAuthSuccessHandler;
 import com.woonkil.photosns.config.auth.oauth.OAuth2DetailsService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+//@AllArgsConstructor
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
