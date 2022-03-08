@@ -1,67 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../layout/header_.jsp"%>
+<%@ include file="../layout/header.jsp"%>
+<input type="hidden" id="userId" value="${dto.user.id}" />
+<input type="hidden" id="ip" value="" />
+<input type="hidden" id="pageUrl" value="" />
 
-<main class="main">
-	<section class="container">
-		<!--전체 리스트 시작-->
-		<article class="story-list" id="storyList">
-			<div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-newspaper"></i> 구독회원의 미디어</span></div>
+<div class="container  overflow-hidden">
+	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
+		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fas fa-newspaper"></i> 구독회원의 미디어</h4>
+	</div>
+	<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList">
 
-			<!--전체 리스트 아이템-->
-
-			<!--
-			<div class="story-list__item">
-				<div class="sl__item__header">
-					<div>
-						<img class="profile-image" src="#"
-							onerror="this.src='/images/noimage.jpg'" />
-					</div>
-					<div>TherePrograming</div>
-				</div>
-
-				<div class="sl__item__img">
-					<img src="/images/home.jpg" />
-				</div>
-
-				<div class="sl__item__contents">
-					<div class="sl__item__contents__icon">
-
-						<button>
-							<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onclick="toggleLike()"></i>
-						</button>
-					</div>
-
-					<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>
-
-					<div class="sl__item__contents__content">
-						<p>등산하는 것이 너무 재밌네요</p>
-					</div>
-
-					<div id="storyCommentList-1">
-
-						<div class="sl__item__contents__comment" id="storyCommentItem-1"">
-							<p>
-								<b>Lovely :</b> 부럽습니다.
-							</p>
-
-							<button>
-								<i class="fas fa-times"></i>
-							</button>
-
-						</div>
-
-					</div>
-
-					<div class="sl__item__input">
-						<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />
-						<button type="button" onClick="addComment()">게시</button>
-					</div>
-
-				</div>
-			</div>
-			-->
-
+	</div>
+	<!--전체 리스트 시작-->
+</div>
 
 			<!-- 이미지 Modal -->
 			<div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,10 +49,6 @@
 			</div>
 			<!-- 이미지 모달 end -->
 
-
-		</article>
-	</section>
-</main>
 <!-- 이미지 삭제 모달 이벤트 처리 -->
 <script>
 	{	// 모달 요소 선택

@@ -191,6 +191,7 @@ function getStoryItem(image) {
 
 	console.log("======================== image.contentType ={} =================================",);
 
+	let commentCount=`${image.commentCount}`;
 	<!-- Get Content Type -->
 	let caption = `${image.caption}`;
 	caption = replaceBrTag(caption);
@@ -232,20 +233,23 @@ function getStoryItem(image) {
 
   let result = `
 <!--전체 리스트 아이템-->
-<div class="story-list__item">
+<div class="col-12 col-md-4"> <!-- column 3-->
 	<!--리스트 아이템 헤더영역-->
-	<div class="sl__item__header">
+<div class="card">
+<div class="card-header">`;
+
 		<!-- 사용자 프로필 이미지 -->
-		<div><a href="/user/${image.user.id}"><img class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/></a></div>
-		<div><span style="font-size: 18px; color: Dodgerblue;"><a href="/user/${image.user.id}">${image.user.name}</a></span></div>
+	result += `<div class="card-cover"><a  href="/user/${image.user.id}"><img width="23" height="23" class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
+
+	result +=`
+		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}"><b>${image.user.name}</b></a></span></div>
 	</div>
 	<!--헤더영역 end-->
 
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
-	<div >
-		<!-- <img src="/upload/${image.postImageUrl}" class="rounded mx-auto d-block"  class="img-fluid" alt="" /> -->
+	<div class="card-body">
 		`;
 
 	result +=`
@@ -304,16 +308,14 @@ function getStoryItem(image) {
 `;
 
 	result +=`	
-			<div class="sl__item__contents__content">
-			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;">${caption}</span>
-		</div>
-    </div>
+			</div>
+    <div class="card-title pb-3 px-2 align-items-lg-start">
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b>${caption}</b></span>
     <!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
-	<div class="sl__item__contents">
 		<!-- 하트모양 버튼 박스 -->
-		<div class="sl__item__contents__icon"> `;
+		<div class="likes-icon px-2"> `;
 
   if (image.likeState) {
     result += `<button onclick="toggleLike(${image.id})">
@@ -326,14 +328,15 @@ function getStoryItem(image) {
   }
 
   result += `	
-		<!--좋아요-->
-		<span class="like">좋아요<b id="storyLikeCount-${image.id}">${image.likeCount}</b></span>
-		<!--좋아요end-->
+		<!--좋아요 카운트-->
+		<span class="like" id="storyLikeCount-${image.id}">좋아요${image.likeCount}</span>
+		<!--좋아요 카운트 end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->
-
+	</div> <!-- class card-title -->
+	
 		<!--태그박스-->
-		<div class="sl__item__contents__tags">
+		<div class="card-subtitle">
 			`;
 
   image.tags.forEach((tag) => {
@@ -351,51 +354,77 @@ function getStoryItem(image) {
 		</div>
 		-->
 		<!--게시글내용end-->
-		<hr>
-		<!-- 댓글 박스 시작 -->
-		<div id="storyCommentList-${image.id}">
 		`;
 
-		<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
+		<!-- 댓글 박스 시작 -->
+	if (commentCount>3){ // 댓글 수 4이상 부터 댓글 아이콘 + 카운터 + 펼치기 버튼 노출
+		result +=`<div class="commentCount"><i class="bi bi-list"></i>${image.commentCount}
+					<button onclick="commentShowAll('image'+${image.id})"><i class="bi bi-arrows-expand"></i></button>
+					</div>`;
+	}
 
-  image.comments.forEach((comment) => {
-    result += `	<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-				<div style="text-align:left;"><a class="profile-image" href="/user/${comment.user.id}">
-				<img  style="border-radius: 50%;" height="22" width="22" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.png'"/>
-				</a>${comment.content}
-				</div>
+	result +=`
+		<!-- 댓글 박스 시작 -->
+		<div class="comment-card"><!-- comment card start -->
+		<div class="comment-card-body" id="storyCommentList-${image.id}"><!-- card body -->
+		`;
+
+	<!--  ####################### 댓글 목록 반복문  시작 ############################# -->
+
+	let i=0;
+	image.comments.forEach((comment) => {
+
+		if(i<3) { // 3ea show! , else display: none;
+			result += `	
+				<div class="list-group-item" id="storyCommentItem-${comment.id}"> <!-- item list -->
+					<a class="profile-image" href="/user/${comment.user.id}">
+					<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+						</a>${comment.content}				
   				`;
+			if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
+				result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i>							
+					`; // 유저의 댓글이면 삭제버튼 표시 end
+			}
+			result += `</div>`; // item list
 
-    if (principalId == comment.user.id) {
-      result += `
-  				    <button onClick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+		}else { // 댓글 4개 부터 class 이름 image+{image.id} 이름으로 묶어서 펼치기 / 접기 적용.
+
+			result += `	
+				<span  class="image${image.id}" style="display: none">
+				<div class="list-group-item" id="storyCommentItem-${comment.id}"> <!-- item list -->
+					<a class="profile-image" href="/user/${comment.user.id}">
+						<img class="profile-icon" src="/upload/${comment.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>
+						</a>${comment.content}
   				`;
-    }
+			if (principalId == comment.user.id) { // 유저의 댓글이면 삭제버튼 표시
+				result += `<button class="del-btn" onClick="deleteComment(${comment.id})"><i class="bi bi-trash"></i></button>
+								`; // list-group-item -end-//   유저의 댓글이면 삭제버튼 표시 end
+			}
+			result +=`</div>
+				</span>	`;
+		} // if() -end-
+		i++;
+	});// forEach end
 
-    result += `
-			  </div>`;
-  });
 
   result += `
-		</div>
+		</div><!-- comment card body #end -->
+		</div><!-- comment card #end -->
 		<!-- 댓글 박스 끝 -->
 		<!--  ########################  댓글 목록 반복문 끝   ################################# -->
-
-
+		
 		<!--댓글입력박스-->
 		<!-- <div class="sl__item__input"> -->
-		<div class="sl__item__input">
-			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
+		<div class="card-footer">
+			<input type="text" placeholder="댓글 달기" size="20" maxlength="20" id="storyCommentInput-${image.id}" />
 			<button type="button" onClick="addComment(${image.id})">쓰기</button>
 		</div>
-		<!--댓글달기박스end-->
-		
-		
+		<!--댓글달기박스end-->		
 	</div>
 </div>
 <!--전체 리스트 아이템end-->
 `;
-  return result;
+	return result;
 }
 
 function toggleLike(imageId) {
@@ -521,7 +550,28 @@ function replaceBrTag(str) {
 	str = str.replace(/\n/ig, '<br>');
 	return str;
 }
+function commentShowAll(imageId){
+	let imageid="."+imageId;
+	console.log("@@ imageid=",imageid);
+	//document.querySelector(".image147").style.display = "none";
+	const comments=document.querySelectorAll(imageid);
+	//document.querySelectorAll(imageid).style.display = "block";
+	console.log("@@ comments=",comments);
 
+	for(let i=0;i<comments.length;i++){
+		const item=comments.item(i);
+		const style=comments.item(i).style.display;
+		console.log("@@ style = comments.item(i).style.display=",style);
 
-
+		if(style=='none'){
+			item.style.display="block";
+		}else if(style=='block'){
+			item.style.display="none";
+		}else{
+			console.log("error: check style.display value~~");
+		}
+		console.log("@@ item.style.display=",item.style.display);
+		//item.style.border="1px solid #ff0000";
+	}
+}
 
