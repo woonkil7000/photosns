@@ -18,6 +18,10 @@ body {
 .navbar-brand{
     font-size: 35px;
 }
+.form-floating {
+    border: 1px;
+    /*border-radius: 20%;*/
+}
 .card-header {
     text-align: left;
 }

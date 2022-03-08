@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../layout/header_.jsp"%>
+<%@ include file="../layout/header.jsp"%>
 
 <input type="hidden" id="userId" value="${dto.user.id}" /> <%-- UserProfileDto returned --%>
 <input type="hidden" id="principalId" value="${principal.user.id}" />

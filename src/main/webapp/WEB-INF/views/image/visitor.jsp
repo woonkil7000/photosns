@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ include file="../layout/header_.jsp"%>
+<%@ include file="../layout/header.jsp"%>
 <main class="popular">
     <div class="exploreContainer">
         <div><span style="font-size: 18px; color: Dodgerblue; padding-right: 20px;"><i class="fas fa-heart"></i> 접속자 조회 <i class="fas fa-heart"></i></span></div>

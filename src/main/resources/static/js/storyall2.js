@@ -375,7 +375,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		<!--댓글입력박스-->
 		<!-- <div class="sl__item__input"> -->
 		<div class="card-footer">
-			<input type="text" placeholder="댓글 달기" size="20" maxlength="20" id="storyCommentInput-${image.id}" />
+			<input type="text" placeholder="댓글 달기" size="15" maxlength="20" id="storyCommentInput-${image.id}" />
 			<button type="button" onClick="addComment(${image.id})">쓰기</button>
 		</div>
 		<!--댓글달기박스end-->		

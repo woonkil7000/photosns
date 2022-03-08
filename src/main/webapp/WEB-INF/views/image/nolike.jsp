@@ -1,4 +1,4 @@
-<%@ include file="../layout/header_.jsp"%>
+<%@ include file="../layout/header.jsp"%>
 
 <!--인기 게시글-->
 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ include file="../layout/header_.jsp"%>
+<%@ include file="../layout/header.jsp"%>
 <!-- 시큐리티 테그 라이브러리 security tag library dependency -->
 <!-- 세션 principalDetails에 접근하는 방법 : 공식 property="principal" 상용구문 -->
 <sec:authorize access="isAuthenticated()">
