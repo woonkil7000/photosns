@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @ComponentScan
 @Configuration*/
-@SpringBootApplication
+
+/*@SpringBootApplication
 public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분
@@ -25,8 +26,12 @@ public class PhotogramApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
 		return application.sources(com.woonkil.photosns.PhotogramApplication.class);
 	}
-}
-/*public class PhotogramApplication extends SpringBootServletInitializer {
+}*/
+
+@EnableAutoConfiguration
+@ComponentScan
+@Configuration
+public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분
 	public static void main(String[] args){
@@ -38,9 +43,9 @@ public class PhotogramApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
 		return application.sources(PhotogramApplication.class);
 	}
-}*/
-/* 2022.03.06
+}
 
+/* 2022.03.06
 public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분

@@ -53,7 +53,8 @@ public class ImageController {
 		// 서비스 호출
 		imageService.사진업로드(imageReqDto, principalDetails);
 
-		return "redirect:/user/"+principalDetails.getUser().getId();
+		//return "redirect:/user/"+principalDetails.getUser().getId();
+		return "redirect:/";
 	}
 	// 유튜브 주소 전송폼
 	@PostMapping("/youtube") // upload.jsp 에서 post 로 받음.
@@ -62,7 +63,8 @@ public class ImageController {
 		// 서비스 호출
 		imageService.유튜브전송(imageReqDto, principalDetails);
 
-		return "redirect:/user/"+principalDetails.getUser().getId(); // 프로필 페이지
+		//return "redirect:/user/"+principalDetails.getUser().getId(); // 프로필 페이지
+		return "redirect:/"; // 프로필 페이지
 	}
 
 	// /image/story.jsp 구독중인 사진 리스트 페이지로 리텀됨

@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
     height: 100%;
 }
 
@@ -36,4 +35,9 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.form-floating .mt-2
+button{
+    padding: 0px;
+    margin: 0px;
 }

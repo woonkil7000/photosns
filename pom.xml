@@ -11,14 +11,28 @@
 	<groupId>com.woonkil</groupId>
 	<artifactId>photosns</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>photosns</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-		<!---->
+		<!--
+		Tomcat in it, hence fails with "SEVERE: ContainerBase.addChild: start: org.apache.catalina.LifecycleException".
+		-->
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- -->
+<!--		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
 			<version>2.3.0.1</version>
@@ -32,19 +46,19 @@
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.3.1</version>
-		</dependency>
+		</dependency>-->
 <!--  -->
-	<dependency>
+<!--	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
+	</dependency>-->
+<!-- -->
 	<!--        embeded tomcat provided scope                  -->
 <!--	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
 		<scope>provided</scope>
-	</dependency>
--->
+	</dependency>-->
 	<!-- JSP 템플릿 엔진 -->
 	<dependency>
 		<groupId>org.apache.tomcat</groupId>
@@ -155,6 +169,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>photosns</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

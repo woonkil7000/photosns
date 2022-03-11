@@ -24,12 +24,12 @@
 
 	<!-- Style -->
 
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/story.css">
-	<link rel="stylesheet" href="/css/popular.css">
-	<link rel="stylesheet" href="/css/profile.css">
-	<link rel="stylesheet" href="/css/upload.css">
-	<link rel="stylesheet" href="/css/update.css">
+	<link rel="stylesheet"  href="/css/style.css">
+	<link rel="stylesheet"  href="/css/story.css">
+	<link rel="stylesheet"  href="/css/popular.css">
+	<link rel="stylesheet"  href="/css/profile.css">
+	<link rel="stylesheet"  href="/css/upload.css">
+	<link rel="stylesheet"  href="/css/update.css">
 	<!--
 	<link rel="shortcut icon" href="/images/insta.svg">
 	-->
@@ -44,9 +44,12 @@
 
 	<link rel="stylesheet" href="/fontawesome/css/all.min.css">
 
-	<link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+	<link rel="stylesheet"  href="/node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
-	<link rel="stylesheet" href="/css/main.css">
+	<!-- non  rel="stylesheet" <link type="text/css"  href="/bootstrap/scss/bootstrap.scss"> -->
+	<link type="text/css"  href="/bootstrap/scss/bootstrap.scss">
+
+	<link rel="stylesheet"  href="/css/main.css">
 
 	<title>Photo SNS</title>
 </head>
@@ -69,7 +72,8 @@
 	<!--
 	<header class="navbar navbar-expand-md fixed-top navbar-primary d-flex flex-column align-items-center flex-md-column px-5 pt-1 pb-1 bg-light">
 	-->
-	<header class="navbar navbar-expand-md fixed-top navbar-primary d-flex text-center flex-md-column px-5 pt-0 pb-0 mb-0 mt-0 bg-light">
+<%--	<header class="navbar navbar-expand-md fixed-top navbar-primary d-flex text-center flex-md-column px-5 pt-0 pb-0 mb-0 mt-0 bg-light">--%>
+<header class="navbar navbar-expand-lg fixed-top navbar-primary d-flex text-center flex-lg-column px-5 pt-0 pb-0 mb-0 mt-0 bg-light">
 			<!--
 			<nav class="my-2 me-md-5 h1">
 			-->

@@ -94,7 +94,7 @@ $(window).scroll(() => {
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
   // 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-  if ((checkNum < 1000 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+  if ((checkNum < 300 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 	  // Set Timer 걸기. 동시이벤트 걸러내기.
 	  storyLoad();
@@ -108,7 +108,7 @@ $(window).scroll(() => {
 		  //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },1000)
+	  },2000)
 
 	  //window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
   }
@@ -161,11 +161,11 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img  width='340' style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지' />";
+			contentTag ="<img max-width='340' max-length='300' style='max-height:300px;max-width:300px' src='" +pathUrl+ "' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video  width='340'  style='max-height:100%;max-width:100%' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
+			contentTag ="<video  width='340' max-length='300' style='max-height:300px;max-width:300px' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
@@ -175,7 +175,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img width='340'   style='max-height:100%;max-width:100%' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag ="<img max-width='340' max-length='300' style='max-height:300px;max-width:300px' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}
@@ -290,7 +290,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
   result += `
 		<!--좋아요 카운트-->
-		<span class="like" id="storyLikeCount-${image.id}">좋아요${image.likeCount}</span>
+		좋아요<span class="like" id="storyLikeCount-${image.id}">${image.likeCount}</span>
 		<!--좋아요 카운트 end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->

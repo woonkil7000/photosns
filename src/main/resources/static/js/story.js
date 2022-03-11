@@ -163,7 +163,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if ((checkNum < 1000 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
+  if ((checkNum < 300 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
 	  storyLoadUnlock=false;
@@ -174,7 +174,7 @@ $(window).scroll(() => {
 		  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },1000)
+	  },2000)
 
   }
 	if (isLastPage==true&&appendFlag!=1){
@@ -329,7 +329,7 @@ function getStoryItem(image) {
 
   result += `	
 		<!--좋아요 카운트-->
-		<span class="like" id="storyLikeCount-${image.id}">좋아요${image.likeCount}</span>
+		좋아요<span class="like" id="storyLikeCount-${image.id}">${image.likeCount}</span>
 		<!--좋아요 카운트 end-->
 		</div>
 		<!-- 하트모양 버튼 박스 end -->

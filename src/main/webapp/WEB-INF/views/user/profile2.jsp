@@ -6,35 +6,75 @@
 <input type="hidden" id="principalId" value="${principal.user.id}" />
 <input type="hidden" id="principalUsername" value="${principal.user.username}" />
 
+<!-- 프로필 헤더 -->
+<div class="container  overflow-hidden">
+	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
+		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fa fa-user"></i> 프로필 & My 미디어</h4>
+	</div>
+
+	<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList">
+
+		<div class="col-12 col-md-4">
+			<p><h3><i class="fa fa-user"></i> ${dto.user.name}</h3>(${fn:substring(dto.user.username,0,15)})</p>
+		</div>
+		<div class="col-12 col-md-4">
+			<div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
+			<form id="userProfileImageForm">
+				<input type="file" name="profileImageFile" style="display: none;"
+					   id="userProfileImageInput" />
+			</form>
+			<img style="max-width: 200px;max-height: 200px;" src="/upload/${dto.user.profileImageUrl}"
+				 alt="" onerror="this.src='/images/noimage.png'"
+				 id="userProfileImage" />
+			<c:choose>
+				<c:when test="${dto.pageOwnerState}">
+					<p class="align-middle" style="font-size: 12px; color: Dodgerblue;"> 프로필 이미지 수정</p>
+				</c:when>
+			</c:choose>
+		</div>
+		</div>
+
+		<div class="col-12 col-md-4">
+			<c:choose>
+			<c:when test="${dto.pageOwnerState}">
+				<div><button class="btn btn-md btn-outline-dark" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i>정보수정 / 로그아웃</span></button>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${dto.subscribeState}">
+						<button class="cta blue" onclick="toggleSubscribe(${dto.user.id},this)">구독취소</button>
+					</c:when>
+					<c:otherwise>
+						<button class="cta" onclick="toggleSubscribe(${dto.user.id},this)">구독하기</button>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+		</div>
+
+	</div>
+	<!--전체 리스트 시작-->
+</div>
+<!---->
+
 <%--프로필 섹션 ---%>
 <section class="profile">
 	<%--유저정보 컨테이너--%>
 	<div class="profileContainer">
 		<%--유저이미지--%>
 		<div class="profile-left">
-			<div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
-				<form id="userProfileImageForm">
-					<input type="file" name="profileImageFile" style="display: none;"
-						   id="userProfileImageInput" />
-				</form>
-				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					 alt="" onerror="this.src='/images/noimage.png'"
-					 id="userProfileImage" />
-				<c:choose>
-					<c:when test="${dto.pageOwnerState}">
-						<p class="align-middle" style="font-size: 12px; color: Dodgerblue;"> 프로필 이미지 수정</p>
-					</c:when>
-				</c:choose>
-			</div>
+
 		</div>
 		<%-- user name --%>
 		<div   class="profile-right text-nowrap bd-highlight align-middle" style="color: Dodgerblue;">
 			<p> </p><p> </p><p> </p>
-			<p><h2><i class="fa fa-user"></i> ${dto.user.name}</h2>(${fn:substring(dto.user.username,0,15)})</p>
+
 		</div>
 		<%--유저이미지end--%>
 	</div>
 </section>
+
 
 <%--프로필 섹션 end--%>
 <section  class="profile">
@@ -43,22 +83,7 @@
 	<div class="profile-right">
 		<div class="name-group">
 
-			<c:choose>
-				<c:when test="${dto.pageOwnerState}">
-					<div><button class="modi" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i>정보수정 / 로그아웃</span></button>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${dto.subscribeState}">
-								<button class="cta blue" onclick="toggleSubscribe(${dto.user.id},this)">구독취소</button>
-						</c:when>
-						<c:otherwise>
-							<button class="cta" onclick="toggleSubscribe(${dto.user.id},this)">구독하기</button>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
+
 
 		</div>
 		<%-- <div class="profileContainer"> --%>

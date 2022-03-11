@@ -25,7 +25,7 @@ public class ImageApiController {
     // pageUserId 로 해당 유저의  Page<이미지> 리스트 가져오기(프로필 페이지에서 사용)
     @GetMapping("/api/image/{pageUserId}")
     public ResponseEntity<?> imageStory3(@PathVariable int pageUserId,@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                         @PageableDefault(size=6) Pageable pageable){
+                                         @PageableDefault(size=12) Pageable pageable){
         Page<Image> images = imageService.유저이미지스토리(pageUserId,principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image3\") :: Page[Image] images  = imageService.유저이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
         if (images.isEmpty()) { // ############### 유저가 등록한 이미지가 없는 경우 에러
@@ -66,7 +66,7 @@ public class ImageApiController {
     // 구독 이미지 조회
     @GetMapping("/api/image")
     public ResponseEntity<?> imageStory(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                        @PageableDefault(size=5) Pageable pageable){
+                                        @PageableDefault(size=12) Pageable pageable){
         Page<Image> images = imageService.이미지스토리(principalDetails.getUser().getId(),pageable);
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리(principalDetails.getUser().getId(),pageable) #######################");
         if (images.isEmpty()) { // ############### 구독자가 없는 경우 에러
@@ -77,7 +77,7 @@ public class ImageApiController {
     }
     // 전체 이미지 조회
     @GetMapping("/api/image2")
-    public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=5) Pageable pageable){
+    public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=12) Pageable pageable){
         Page<Image> images = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable);
         // 로그인 사용자 ID와  페이지 전달 // imageRepository 에서 인자로 사용.
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable) #######################");

@@ -1,4 +1,6 @@
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+/*@import "../node_modules/bootstrap/scss/bootstrap.scss";
+*/
+
 .container {
     padding: 0 15px;
 }
@@ -21,6 +23,11 @@ body {
 .form-floating {
     border: 1px;
     /*border-radius: 20%;*/
+}
+.rounded mx-auto d-block
+image {
+    max-height: 300px;
+    max-width: 300px;
 }
 .card-header {
     text-align: left;
