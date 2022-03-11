@@ -208,25 +208,42 @@ function getStoryItem(image) {
 	}
 	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
 
-	function fnContentType(contentType,pathUrl){
+	function fnContentType(widthType,contentType,pathUrl){
+		// @@@@@@@@@@@ getStoryItem [Row Data] 내부에서  content 유형에 따라 <div> 안에 들어갈 내용을 contentTag 로 반환하는 함수
+		// widthType 0: default, 1: wideFull
+
 		let contentTag;
+		let contentTag2;
 
 		if (contentType=='image'){ // image
-			contentTag="<img width='340' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<img src='" +pathUrl+ "' style='max-height:300px;max-width:100%' alt='이미지' />";
+			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%;' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video width='340' playsinline controls loop preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:100%;max-width:100%' alt='이미지' />";
+			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지' />";
+			contentTag2 ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe width='325' src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
+			contentTag2 ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" style='max-height:100%;max-width:100%' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
-			contentTag="<img width='340' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag="<img src='" +pathUrl+ "' style='max-height:300px;max-width:100%' alt='이미지'/>";
+			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
 			console.log("=============== etc => image ===================");
 		}
-		console.log("======================== contentTag ={} =================================",contentTag);
-		return contentTag;
+		console.log("======================== contentTag or contentTag2  ={} =================================",contentTag);
+		console.log("======================== contentTag or contentTag2  ={} =================================",contentTag2);
+		if (widthType == 0){
+			return contentTag;
+		}else if(widthType==1) {
+			return contentTag2;
+		}else{
+			return contentTag2
+		}
 	}
 	<!-- Get Content Type end  -->
 
@@ -256,7 +273,7 @@ function getStoryItem(image) {
 	<!-- ####################### 이미지 모달 링크 ###################### -->
 	`;
 
-	/////////////// contentType이 이미지인 경우만 <a tag 시작부 삽입 ////////////////////
+	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
 		if(contentType=='image'||contentType=='null' || contentType==''){
@@ -268,7 +285,7 @@ function getStoryItem(image) {
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
 			atag +=` data-bs-caption='${image.caption}' `;
 			atag +=` data-bs-userid='${image.user.id}' `;
-			atag +=` data-bs-contentTag="${fnContentType(contentType,pathUrl)}" `;
+			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0;'>`;
 		}else{
@@ -276,7 +293,7 @@ function getStoryItem(image) {
 		}
 		return atag;
 	}
-	//////////////// contentType이 이미지인 경우만 <a  tag 시작부 삽입 -END- ///////////////////
+	//////////////// contentType이 이미지인 경우만 <a  tag for modal 시작부 삽입 -END- ///////////////////
 
 	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
 	function after_atag(){
@@ -290,12 +307,13 @@ function getStoryItem(image) {
 	}
 	/////////////// contentType이 이미지인 경우만 </a tag 삽입종료부 -END- ////////////////////
 
-	// fnContentType(contentType,pathUrl);
-	// #### || 게시물 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
+	// fnContentType(widthType,contentType,pathUrl);
+	// #### || 게시물 컨텐츠 목록부분: 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
+	// widthType 0: default size, 1: wideFull
 
 	result += before_atag();
 
-	result += fnContentType(contentType,pathUrl);
+	result += fnContentType(0,contentType,pathUrl);
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 	result += after_atag();
 

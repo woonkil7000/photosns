@@ -153,34 +153,55 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
 
 	// ############# fnContentType(contentType,pathUrl) ###############
-	function fnContentType(contentType,pathUrl){
+	function fnContentType(widthType,contentType,pathUrl){
 		// @@@@@@@@@@@ getStoryItem [Row Data] 내부에서  content 유형에 따라 <div> 안에 들어갈 내용을 contentTag 로 반환하는 함수
+		// widthType 0: default, 1: wideFull
 
 		let contentTag;
+		let contentTag2;
 		if (contentType=='image'){ // image
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img max-width='340' max-length='300' style='max-height:300px;max-width:300px' src='" +pathUrl+ "' alt='이미지' />";
+			contentTag ="<img style='max-height:300px;max-width:100%;' src='" +pathUrl+ "' alt='이미지' />";
+			contentTag2 ="<img style='max-height:100%;max-width:100%;' src='" +pathUrl+ "' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video  width='340' max-length='300' style='max-height:300px;max-width:300px' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			contentTag ="<video class='noloop' id='content" +imageId+ "' style='max-height:300px;max-width:300px;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for=\"formGroupExampleInput\" class=\"form-label\">반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				// " <button id='btnControls" +imageId+"' onclick='toggleControls(" +imageId+ ")'>controls</button>"+
+				"</p>";
+			contentTag2 ="<video class='noloop' id='content" +imageId+ "' style='max-height:100%;max-width:100%;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for=\"formGroupExampleInput\" class=\"form-label\">반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				// " <button id='btnControls" +imageId+"' onclick='toggleControls(" +imageId+ ")'>controls</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
-			contentTag ="<iframe width='325'  style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+			contentTag ="<iframe class='noloop' style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
+				" alt='유튜브'></iframe>";
+			contentTag2 ="<iframe class='noloop' style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img max-width='340' max-length='300' style='max-height:300px;max-width:300px' src='" +pathUrl+ "' style='max-height:100%;max-width:100%' alt='이미지'/>";
+			contentTag ="<img style='max-height:300px;max-width:100%' src='" +pathUrl+ "' alt='이미지'/>";
+			contentTag2 ="<img style='max-height:100%;max-width:100%' src='" +pathUrl+ "' alt='이미지'/>";
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}
 		//console.log("======================== contentTag ={} =================================",contentTag);
-		return contentTag;
+		if (widthType == 0){
+			return contentTag;
+		}else if(widthType==1) {
+			return contentTag2;
+		}else{
+			return contentTag2
+		}
+
 	}
 	// ############# fnContentType(contentType,pathUrl) -END- ###############
 	<!-- Get Content Type end  -->
@@ -214,7 +235,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!-- ####################### 이미지 모달 링크 ###################### -->
 	`;
 
-  	/////////////// contentType이 이미지인 경우만 <a tag 시작부 삽입 ////////////////////
+  	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
 		if(contentType=='image'||contentType=='null' || contentType==''){
@@ -226,7 +247,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
 			atag +=` data-bs-caption='${image.caption}' `;
 			atag +=` data-bs-userid='${image.user.id}' `;
-			atag +=` data-bs-contentTag="${fnContentType(contentType,pathUrl)}" `;
+			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0;'>`;
 		}else{
@@ -234,7 +255,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		}
 		return atag;
 	}
-	//////////////// contentType이 이미지인 경우만 <a  tag 시작부 삽입 -END- ///////////////////
+	//////////////// contentType이 이미지인 경우만 <a  tag for modal 시작부 삽입 -END- ///////////////////
 
 	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
 	function after_atag(){
@@ -248,12 +269,12 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	}
 	/////////////// contentType이 이미지인 경우만 </a tag 삽입종료부 -END- ////////////////////
 
-  		// fnContentType(contentType,pathUrl);
-		// #### || 게시물 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
+  		// fnContentType(widthType,contentType,pathUrl);
+		// #### || 게시물 컨텐츠 목록 부분: 이미지/동영상/유튜브 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 
 	result += before_atag();
 
-  	result += fnContentType(contentType,pathUrl)
+  	result += fnContentType(0,contentType,pathUrl)
 		//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 
 	result += after_atag();
@@ -614,5 +635,36 @@ function commentShowAll(imageId){
 		}
 		console.log("@@ item.style.display=",item.style.display);
 		//item.style.border="1px solid #ff0000";
+	}
+}
+
+function toggleLoop(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnLoopId="#btnLoop"+imageid;
+	let txtBtn=$(btnLoopId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='once'){
+		document.getElementById(contentId).setAttribute('loop',''); // loop 속성 추가
+		$(btnLoopId).text("loop"); // loop 면 unloop
+		//$(contentId).attr("loop","");
+		//$(contentId).removeAttr("loop");
+	}else if(txtBtn==='loop'){
+		document.getElementById(contentId).removeAttribute('loop',''); // loop 속성 제거
+		$(btnLoopId).text("once"); // unloop 면 loop
+	}
+}
+function toggleControls(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnControlsId="#btnControls"+imageid;
+	let txtBtn=$(btnControlsId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='controls'){
+		document.getElementById(contentId).setAttribute('controls',''); // 속성 추가
+		$(btnControlsId).text("controls view"); // loop 면 unloop
+	}else if(txtBtn==='controls view'){
+		document.getElementById(contentId).removeAttribute('controls',''); //  속성 제거
+		$(btnControlsId).text("controls"); // unloop 면 loop
 	}
 }

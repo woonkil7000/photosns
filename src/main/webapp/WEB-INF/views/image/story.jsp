@@ -17,16 +17,16 @@
 
 			<!-- 이미지 Modal -->
 			<div class="modal fade text-center" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">이미지 확대</h5>
+							<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">컨텐츠 확대</h5>
 							<!-- ///////////// 모달 닫기 버튼  tag: data-bs-dismiss="modal"  /////////////-->
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 
 
-						<div class="modal-body">
+						<div class="modal-body mt-2 mb-4 pt-2 pb-4">
 							<!--<img  data-bs-dismiss="modal" class="img-box" src=""
 								  alt="" onerror="this.src='/images/noimage.jpg'"
 								  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  /> -->
@@ -37,8 +37,7 @@
 								<input type="hidden" id="image_url">
 								<input type="hidden" id="user_id">
 								<input type="hidden" id="contenttag">
-								<hr>
-								<label>사진 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
+								<label style="display: none;">사진 설명: </label> <span id="caption" style="display: none;font-size: 16px; color: Dodgerblue;"></span>
 							</form>
 						</div>
 						<div class="modal-footer">
