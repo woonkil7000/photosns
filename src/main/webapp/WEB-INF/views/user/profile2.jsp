@@ -9,7 +9,7 @@
 <!-- 프로필 헤더 -->
 <div class="container  overflow-hidden">
 	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
-		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fa fa-user"></i> 프로필 & My 미디어</h4>
+		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fa fa-user"></i> 프로필 & 미디어</h4>
 	</div>
 
 	<div class="row g-3 mb-1 text-center my-2"><!-- row1 -->
@@ -28,7 +28,7 @@
 				 id="userProfileImage" />
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
-					<p class="align-middle" style="font-size: 12px; color: Dodgerblue;"> 프로필 이미지 수정</p>
+					<p class="align-middle" style="font-size: 18px; color: Dodgerblue;"> 프로필 이미지 수정</p>
 				</c:when>
 			</c:choose>
 		</div>
@@ -54,10 +54,10 @@
 		</div>
 <!---->
 		<div class="col-12 col-md-4"><!-- col1 -->
-			<span><i class="far fa-images"></i> <span style="font-size: 18px; color: Dodgerblue;">등록한 미디어 수:  ${dto.imageCount}개</span>
+			<span style="font-size: 18px; color: Dodgerblue;"><i class="far fa-images"></i> 등록한 미디어 수:  ${dto.imageCount}개</span>
 		</div>
 		<div class="col-12 col-md-4"><!-- col2 -->
-			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i> 구독 정보: ${dto.subscribeCount} </span></a>
+			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});"  style="font-size: 18px; color: Dodgerblue;"><i class="fas fa-users"></i> 구독 정보: ${dto.subscribeCount} </span></a>
 		</div>
 		<div class="col-12 col-md-4"><!-- col3 -->
 			<p>.</p>
@@ -172,7 +172,7 @@
 			</div>
 			<div class="modal-body">
 					<%--<img  class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"/>--%>
-				<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
+				<div class="img-box text-center" alt="" id="lgimage" style="max-height:100%;max-width:100%;"></div>
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">

@@ -102,21 +102,21 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img  src='" +pathUrl+ "' style='max-height:100%;max-width:300px;' alt='이미지' />";
+			contentTag ="<img  src='" +pathUrl+ "' style='max-height:300px;max-width: 300px;' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:300px;' alt='영상'>" +
+			contentTag ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:300px;max-width: 300px;' alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' volumn='3' controls='1' frameborder='1' allowfullscreen " +
-				" style='max-height:100%;max-width:300px;' alt='유튜브'></iframe>";
+				" style='max-height:300px;max-width: 300px;' alt='유튜브'></iframe>";
 			console.log("=============== YouTube ===================");
 		}else{ // 현재 DB 에 contentType 값이 없는 기존 image Data 가 있어서.
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
-			contentTag ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:300px;' alt='이미지'/>";
+			contentTag ="<img src='" +pathUrl+ "' style='max-height:300px;max-width: 300px;' alt='이미지'/>";
 			//contentTag +="</a>";
 			console.log("=============== etc => image ===================");
 		}

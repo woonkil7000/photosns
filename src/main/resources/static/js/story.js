@@ -287,7 +287,7 @@ function getStoryItem(image) {
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` href='#' `;
-			atag +=` role='button' style='outline: none;border: 0;'>`;
+			atag +=` role='button' style='outline: none;border: 0px;'>`;
 		}else{
 			atag = "";
 		}
