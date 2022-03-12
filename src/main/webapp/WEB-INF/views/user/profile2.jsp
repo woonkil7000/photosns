@@ -12,12 +12,12 @@
 		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fa fa-user"></i> 프로필 & My 미디어</h4>
 	</div>
 
-	<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList">
+	<div class="row g-3 mb-1 text-center my-2"><!-- row1 -->
 
-		<div class="col-12 col-md-4">
-			<p><h3><i class="fa fa-user"></i> ${dto.user.name}</h3>(${fn:substring(dto.user.username,0,15)})</p>
+		<div class="col-12 col-md-4"><!-- col1 -->
+			<span style="color: Dodgerblue;"><h3>이름: ${dto.user.name}</h3>( ID: ${fn:substring(dto.user.username,0,15)} )</span>
 		</div>
-		<div class="col-12 col-md-4">
+		<div class="col-12 col-md-4"><!-- col2 -->
 			<div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
 			<form id="userProfileImageForm">
 				<input type="file" name="profileImageFile" style="display: none;"
@@ -34,7 +34,7 @@
 		</div>
 		</div>
 
-		<div class="col-12 col-md-4">
+		<div class="col-12 col-md-4"><!-- col3 -->
 			<c:choose>
 			<c:when test="${dto.pageOwnerState}">
 				<div><button class="btn btn-md btn-outline-dark" onclick="popup('.modal-info')"><span style="font-size: 16px; color: Dodgerblue;"><i class="fas fa-user-cog"></i>정보수정 / 로그아웃</span></button>
@@ -52,101 +52,58 @@
 			</c:otherwise>
 		</c:choose>
 		</div>
-
-	</div>
-	<!--전체 리스트 시작-->
-</div>
 <!---->
-
-<%--프로필 섹션 ---%>
-<section class="profile">
-	<%--유저정보 컨테이너--%>
-	<div class="profileContainer">
-		<%--유저이미지--%>
-		<div class="profile-left">
-
+		<div class="col-12 col-md-4"><!-- col1 -->
+			<span><i class="far fa-images"></i> <span style="font-size: 18px; color: Dodgerblue;">등록한 미디어 수:  ${dto.imageCount}개</span>
 		</div>
-		<%-- user name --%>
-		<div   class="profile-right text-nowrap bd-highlight align-middle" style="color: Dodgerblue;">
-			<p> </p><p> </p><p> </p>
-
-		</div>
-		<%--유저이미지end--%>
-	</div>
-</section>
-
-
-<%--프로필 섹션 end--%>
-<section  class="profile">
-	<div class="profileContainer">
-	<%--유저정보 및 사진등록 구독하기--%>
-	<div class="profile-right">
-		<div class="name-group">
-
-
-
-		</div>
-		<%-- <div class="profileContainer"> --%>
-		<div class="profileContainer">
-			<span><i class="far fa-images"></i> 등록 미디어: ${dto.imageCount}
+		<div class="col-12 col-md-4"><!-- col2 -->
 			<a href="javascript:subscribeInfoModalOpen(${dto.user.id});" ><i class="fas fa-users"></i> 구독 정보: ${dto.subscribeCount} </span></a>
 		</div>
-		<%--
-		<div class="state">
-			<ul>
-				<li><i class="fas fa-info-circle"></i><span>info${dto.user.bio}</span></li>
-				<li><i class="fas fa-home"></i><span>home${dto.user.website}</span></li>
-			</ul>
+		<div class="col-12 col-md-4"><!-- col3 -->
+			<p>.</p>
 		</div>
-		--%>
-	</div>
-	<%--유저정보 및 사진등록 구독하기--%>
-	</div>
-</section>
 
-<%-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이하 게시물 리스트 섹션 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ --%>
-
-<%--게시물컨섹션--%>
-<section id="tab-content"><%--게시물컨컨테이너--%>
-
-	<div class="profileContainer"><%--그냥 감싸는 div (지우면이미지커짐)--%>
-		<div id="tab-1-content" class="tab-content-item show">
-
-
-<%-- 프로필 페이지 주인에게만 이미지 삭제 가능 알림 --%>
+<!---->
+		<div class="col-12 col-md-12"><!-- col 1-3 -->
+			<%-- 프로필 페이지 주인에게만 이미지 삭제 가능 알림 --%>
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
 					<%--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>--%>
-					<div class="alert alert-warning" role="alert">
-						<div style="font-size: 12px;">미디어를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</div>
-					</div>
+					<span style="font-size: 18px; color: Dodgerblue;">미디어를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</span>
 				</c:when>
 			</c:choose>
-<%-- 이미지 삭제 가능 알림 end --%>
+			<%-- 이미지 삭제 가능 알림 end --%>
+		</div>
+<!---->
+		<div class="col-12 col-md-12"><!-- col 1-3 -->
+			<span style="font-size: 18px; color: Dodgerblue;">유튜브는 영상의 바깥 하단부를 클릭해야 개별창을 열 수 있습니다</span>
+		</div>
 
-	<div class="alert alert-warning" role="alert">
-		<div style="font-size: 12px;">유튜브는 영상의 바깥 하단부를 클릭해야 개별창을 열 수 있습니다</div>
+	</div><!-- row1 end  -->
+
+
+	<!---->
+	<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList"><!-- row2 -->
+		<!----> <%-- @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ --%>
 	</div>
 
-<%-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  게시물 그리드  영역 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ --%>
 
-			<%--게시물 그리드배열--%>
-			<div class="tab-1-content-inner">
+</div> <!-- class container -end- -->
 
-			</div> <%-- class="tab-1-content-inner" --%>
-	<%-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  게시물 그리드  영역 END  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ --%>
-		</div> <%--그냥 감싸는 div (지우면이미지커짐)--%>
-	</div> <%-- tab-1-content 게시물 컨테이너 --%>
-</section>
+<!--전체 리스트 시작-->
 
 
-				<%-- @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ --%>
+<!---->
+
+
+
+<%-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이하 게시물 리스트 섹션 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ --%>
+
+
 
 <!-- 페이지 주인일 때 -->
 <%-- 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! --%>
-<div class="container">
-	<div class="row row-cols-3" id="storyList"></div>
-</div>
+
 <!-- 페이지 주인일때 end -->
 
 				<%-- @@@@@@@@@@@@@ 아이템들 end @@@@@@@@@@@@@@ --%>
