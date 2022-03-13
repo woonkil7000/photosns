@@ -5,33 +5,29 @@
 <input type="hidden" id="principalId" value="${principal.user.id}" />
 <input type="hidden" id="principalUsername" value="${principal.user.username}" />
 <!--인기 게시글-->
-<%--<main class="popular">
+<main class="popular">
 	<div class="exploreContainer">
 		<div><h4><i class="fas fa-heart"></i> 좋아요 랭킹 </h4></div>
 		<p></p>
+		<!--
+		<div class="alert alert-warning" role="alert">
+			<div  style="font-size: 12px;">유튜브의 경우 영상 바깥 하단 부분을 클릭해야 개별창을 열 수 있습니다.</div>
+		</div>
+		-->
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery">
 		</div>
 		<!--인기게시글 갤러리(GRID배치) end -->
 	</div>
 </main>
-&lt;%&ndash; @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ &ndash;%&gt;
 
-&lt;%&ndash; 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! &ndash;%&gt;
+<%-- @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ --%>
+
+<%-- 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! --%>
 <div class="container">
 	<div class="row row-cols-3" id="storyList"></div>
 	<div class="col"></div>
-</div>--%>
-<div class="container  overflow-hidden">
-	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
-		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fas fa-heart"></i> 좋아요 랭킹 </h4>
-	</div>
-	<div class="row g-3 mb-1 text-center my-2 align-content-center" id="storyList">
-
-	</div>
-	<!--전체 리스트 시작-->
 </div>
-
 <!-- 페이지 주인일때 end -->
 
 <%-- @@@@@@@@@@@@@ 아이템들 end @@@@@@@@@@@@@@ --%>

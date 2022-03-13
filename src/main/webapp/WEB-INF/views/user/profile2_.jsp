@@ -23,7 +23,7 @@
 				<input type="file" name="profileImageFile" style="display: none;"
 					   id="userProfileImageInput" />
 			</form>
-			<img style="max-width: 120px;max-height: 120px;border-radius: 50%;" src="/upload/${dto.user.profileImageUrl}"
+			<img style="max-width: 200px;max-height: 200px;" src="/upload/${dto.user.profileImageUrl}"
 				 alt="" onerror="this.src='/images/noimage.png'"
 				 id="userProfileImage" />
 			<c:choose>
@@ -31,7 +31,7 @@
 					<p class="align-middle" style="font-size: 18px; color: Dodgerblue;"> 프로필 이미지 수정</p>
 				</c:when>
 			</c:choose>
-			</div>
+		</div>
 		</div>
 
 		<div class="col-12 col-md-4"><!-- col3 -->
@@ -43,10 +43,10 @@
 			<c:otherwise>
 				<c:choose>
 					<c:when test="${dto.subscribeState}">
-						<span style="font-size: 18px; color: Dodgerblue;">이 회원의 미디어 <button class="cta blue" onclick="toggleSubscribe(${dto.user.id},this)">구독취소</button></span>
+						<button class="cta blue" onclick="toggleSubscribe(${dto.user.id},this)">구독취소</button>
 					</c:when>
 					<c:otherwise>
-						<span style="font-size: 18px; color: Dodgerblue;">이 회원의 미디어 <button class="cta" onclick="toggleSubscribe(${dto.user.id},this)">구독하기</button></span>
+						<button class="cta" onclick="toggleSubscribe(${dto.user.id},this)">구독하기</button>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
@@ -121,8 +121,7 @@
 <%--로그아웃, 회원정보변경 모달 end--%>
 
 <%--프로필사진 바꾸기 모달--%>
-<%--<div  class="modal-image" onclick="modalImage()">--%>
-<div  class="modal-image modal text-center" onclick="modalImage()">
+<div  class="modal-image" onclick="modalImage()">
 	<div class="modal">
 		<p>프로필 사진 바꾸기</p>
 		<button onclick="profileImageUpload(${dto.user.id},${principal.user.id})">프로필 사진 등록/수정 업로드</button>
@@ -165,7 +164,7 @@
 
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
@@ -193,7 +192,7 @@
 					<c:choose>
 						<c:when test="${dto.pageOwnerState}">
 					<div>
-						<button type="button" class="btn btn-primary" id="update-btn">제목 수정 전송</button>
+						<button type="button" class="btn btn-primary" id="update-btn">미디어 설명 수정</button>
 					</div>
 					<div>
 						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">미디어 삭제</button>
