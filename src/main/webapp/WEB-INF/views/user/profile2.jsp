@@ -174,38 +174,37 @@
 			<div class="modal-body">
 					<%--<img  class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"/>--%>
 				<div class="img-box text-center" alt="" id="lgimage" style="max-height:100%;max-width:100%;"></div>
+			</div>
+			<div class="modal-second">
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
 					<input type="hidden" id="contenttag">
-
-					<hr>
+					<%--<hr>--%>
 					<%--<label>사진 설명</label><input type="text" id="caption" size="45">--%>
-					<textarea class="form-control"  placeholder="사진/영상 제목" name="caption" id="caption"></textarea>
+					<textarea class="form-control" placeholder="사진/영상 제목" name="caption" id="caption"></textarea>
 				</form>
 			</div>
-			<div class="modal-footer">
-					<div>
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
-					</div>
 					<%-- 프로필 페이지 주인에게만 이미지 삭제 버튼 보임 --%>
 					<c:choose>
 						<c:when test="${dto.pageOwnerState}">
-					<div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
 						<button type="button" class="btn btn-primary" id="update-btn">제목 수정 전송</button>
-					</div>
-					<div>
 						<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn">미디어 삭제</button>
-					</div>
+			</div>
 						</c:when>
-						<c:otherwise>
-							<div style="display: none">
+						<c:otherwise><!-- 페이지 주인 아니면 버튼 X -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
+							<div style="display: none"><!-- 버튼 display: none -->
 								<button type="button" class="btn btn-primary" id="update-btn" disabled>미디어 설명 수정</button>
 							</div>
 							<div style="display: none" >
 								<button type="button" class="btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end" id="delete-btn" disabled>미디어 삭제</button>
 							</div>
+			</div>
 						</c:otherwise>
 					</c:choose>
 			</div>

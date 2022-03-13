@@ -204,7 +204,7 @@ function getStoryItem(image) {
 	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='null' || contentType==''){
+		if(contentType=='image'||contentType=='video' || contentType=='youtu'||contentType=='null' || contentType==''){
 
 			atag =` <a   class='btn btn-outline-primary btn-sm' `;
 			atag +=` data-bs-toggle='modal' `;
@@ -226,7 +226,7 @@ function getStoryItem(image) {
 	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
 	function after_atag(){
 		let atag;
-		if(contentType=='image' || contentType=='null'||contentType=='') {
+		if(contentType=='image' || contentType=='video' || contentType=='youtu' || contentType=='null'||contentType=='') {
 			atag = "</a>";
 		}else{
 			atag = "";

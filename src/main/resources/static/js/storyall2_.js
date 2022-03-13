@@ -18,12 +18,7 @@ let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 let totalElements;
 
 let principalId = $("#principalId").val(); // input hidden value
-//console.log("principalId="+principalId);
 let principalUsername = $("#principalUsername").val();
-let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
-//console.log("dto.user.id => userId="+userId);
-//let pageOwnerState = $("#pageOwnerState").val();
-//console.log("pageOwnderStat="+pageOwnerState);
 
 function storyLoad() {
 	// ajax로 Page<Image> 가져올 예정 (3개)
@@ -174,13 +169,15 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
 			contentTag ="<video class='noloop' id='content" +imageId+ "' style='max-height:300px;max-width:300px;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
-				/*"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
-				"</p>";*/
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for=\"formGroupExampleInput\" class=\"form-label\">반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				// " <button id='btnControls" +imageId+"' onclick='toggleControls(" +imageId+ ")'>controls</button>"+
+				"</p>";
 			contentTag2 ="<video class='noloop' id='content" +imageId+ "' style='max-height:100%;max-width:100%;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
-				/*"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
-				"</p>";*/
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for=\"formGroupExampleInput\" class=\"form-label\">반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				// " <button id='btnControls" +imageId+"' onclick='toggleControls(" +imageId+ ")'>controls</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe class='noloop' style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
@@ -234,27 +231,6 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		`;
 
 
-/*	function fnBtnTag(){
-		let btnTag;
-		let imageUserId=`${image.user.id}`;
-		if(imageUserId==principalId){
-			btnTag="<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫 기</button>"+
-				"<button type='button' class='btn btn-primary' id='update-btn'>제목 수정 전송</button>" +
-				"<button type='button' class='btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end' id='delete-btn'>미디어 삭제</button>";
-		}else{
-			btnTag="<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫 기</button>"+
-				"<div style='display: none'>" +
-				"<button type='button' class='btn btn-primary' id='update-btn' disabled>미디어 설명 수정</button>" +
-				"</div>" +
-				"<div style='display: none'>" +
-				"<button type='button' class='btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end' id='delete-btn' disabled>미디어 삭제</button>" +
-				"</div>";
-		}
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ btnTag="+btnTag);
-		return btnTag;
-	} //fnBtnTag -end-*/
-
-
   	result +=`
 	<!-- ####################### 이미지 모달 링크 ###################### -->
 	`;
@@ -262,7 +238,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='video'||contentType=='youtu'||contentType=='null' || contentType==''){
+		if(contentType=='image'||contentType=='null' || contentType==''){
 
 			atag =` <a   class='btn btn-outline-primary btn-sm' `;
 			atag +=` data-bs-toggle='modal' `;
@@ -272,7 +248,6 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			atag +=` data-bs-caption='${image.caption}' `;
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
-			atag +=` data-bs-principalid='${principalId}' `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0;'>`;
 		}else{
@@ -285,7 +260,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
 	function after_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='video'||contentType=='youtu' || contentType=='null'||contentType=='') {
+		if(contentType=='image' || contentType=='null'||contentType=='') {
 			atag = "</a>";
 		}else{
 			atag = "";

@@ -211,7 +211,7 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	function before_atag(){
 		let atag;
 		//if(contentType=='image'||contentType=='null' || contentType==''){
-		if(contentType=='image' || contentType=='null'||contentType==''||contentType=='video' || contentType=='youtu'){
+		if(contentType=='image'||contentType=='video' || contentType=='youtu' || contentType=='null'||contentType==''){
 
 			atag =` <a   class='btn btn-outline-primary btn-sm' `;
 			atag +=` data-bs-toggle='modal' `;

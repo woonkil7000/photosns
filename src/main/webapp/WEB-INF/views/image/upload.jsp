@@ -13,7 +13,7 @@
         <!-- 업로드 선택 탭 -->
         <ul class="nav nav-pills" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">사진영상 파일</button>
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">사진/영상 파일</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">유튜브 공유</button>
@@ -47,9 +47,14 @@
                         <label class="form-label my-0 py-0" for="inputTags">#태그(선택사항)</label>
                         <input class="form-control" type="text" id="inputTags" name="tags">
                     </div>
-                    <div class="alert alert-primary btn-sm my-1 py-0" role="alert">
+                    <%--<div class="alert alert-primary btn-sm my-1 py-0" role="alert">
                         <p><b>아래 [전송 시작] 버튼을 눌러주세요</b></p>
                         <b>전송이 완료되면 [화면 자동 전환]됩니다</b>
+                        <p>용량이 큰 파일은 잠시 기다려주세요</p>
+                    </div>--%>
+                    <div class="badge text-primary fs-6 fw-light text-wrap pb-1 mb-1" style="width: 18rem;">
+                        <p>아래 [전송 시작] 버튼을 눌러주세요</p>
+                        <p>전송이 완료되면 [화면 자동 전환]됩니다</p>
                         <p>용량이 큰 파일은 잠시 기다려주세요</p>
                     </div>
                         <button class="btn btn-primary btn-lg">파일 전송 시작</button>
