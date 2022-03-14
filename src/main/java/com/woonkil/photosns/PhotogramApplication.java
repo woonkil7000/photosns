@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /*@SpringBootApplication
 @EnableAutoConfiguration
@@ -28,9 +29,11 @@ public class PhotogramApplication extends SpringBootServletInitializer {
 	}
 }*/
 
+//@PropertySource(value = "classpath:/application.yml", encoding="UTF-8")
 @EnableAutoConfiguration
 @ComponentScan
 @Configuration
+@PropertySource(value = "classpath:/application.yml", encoding="UTF-8")
 public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분

@@ -19,7 +19,7 @@
 		</div>
 		<div class="col-12 col-md-4"><!-- col2 -->
 			<div class="profile-img-wrap story-border" onclick="popup('.modal-image')">
-			<form id="userProfileImageForm">
+			<form accept-charset="utf-8" id="userProfileImageForm">
 				<input type="file" name="profileImageFile" style="display: none;"
 					   id="userProfileImageInput" />
 			</form>
@@ -165,7 +165,7 @@
 
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
@@ -181,6 +181,7 @@
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
 					<input type="hidden" id="contenttag">
+					<input type="hidden" id="principalid">
 					<%--<hr>--%>
 					<%--<label>사진 설명</label><input type="text" id="caption" size="45">--%>
 					<textarea class="form-control" placeholder="사진/영상 제목" name="caption" id="caption"></textarea>
@@ -228,11 +229,13 @@
 		const userid = button.getAttribute("data-bs-userid");
 		const caption = button.getAttribute("data-bs-caption");
 		const contenttag = button.getAttribute("data-bs-contenttag");
+		const principalid = button.getAttribute("data-bs-principalid");
 		console.log("imageid=",imageid);
 		console.log("imageurl=",imageurl);
 		console.log("userid=",userid);
 		console.log("caption=",caption);
 		console.log("contenttag=",contenttag);
+		console.log("principalid=",principalid);
 
 		// 모달창에 데이타 반영
 		document.querySelector("#image_id").value=imageid;
@@ -242,6 +245,9 @@
 		//document.querySelector("#delimage").src="/upload/"+imageurl;
 		document.querySelector("#lgimage").innerHTML=contenttag; // 이미지 삽입부분
 		document.querySelector("#contenttag").value=contenttag;
+		//document.querySelector("#modal-footer").innerHTML=btntag; // 모달 풋터 수정, 삭제 버튼 innerHTML
+		document.querySelector("#principalid").value=principalid;
+
 		// If necessary, you could initiate an AJAX request here
 		// and then do the updating in a callback.
 		// Update the modal's content.
@@ -434,6 +440,27 @@
 		function stopVideo() {
 			player.stopVideo();
 		}
+	}
+
+	{
+		/*function hideEditButton(){*/
+		var myModal = document.getElementById('image-modal')
+		myModal.addEventListener('show.bs.modal', function (event) {
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@ myModal @@@@@@@@@@@@@@@@@@@@@@@");
+			//document.querySelector(".btn").style.display="none";
+			let user_id = document.querySelector("#user_id").value;
+			let principalid = document.querySelector("#principalid").value;
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ user_id="+user_id+",principalid ="+principalid);
+
+			if (user_id == principalid){ // 컨텐츠 주인이 아니면 수정,삭제 버튼 숨김
+				document.querySelector("#update-btn").style.display="block";
+				document.querySelector("#delete-btn").style.display="block";
+			}else{
+				document.querySelector("#update-btn").style.display="none";
+				document.querySelector("#delete-btn").style.display="none";
+			}
+		})
+		/*}*/
 	}
 
 </script>

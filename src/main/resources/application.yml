@@ -6,9 +6,12 @@ server:
     encoding:
       charset: utf-8
       enabled: true
+      force: true
+      force-request: true
+      force-response: true
       spring:
         profiles:
-          include = oauth:
+#          include = oauth:
 spring:
   security:
     oauth2:
@@ -126,8 +129,8 @@ logging:
 
 
 file:
-#   path: D:/src/springbootwork-sts/upload/
-   path: /home/user/uploadImages/
+   path: D:/src/springbootwork-sts/upload/
+#   path: /home/user/uploadImages/
 
 # 프로필 이미지 noimage.png upload 폴더에 저장해 놓을것.(/images/ 폴더에 있는 noimage.png 파일)
 # // noimage.png: DB profileImageUrl 기본설정된 값임.

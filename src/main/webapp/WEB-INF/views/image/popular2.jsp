@@ -4,24 +4,12 @@
 <input type="hidden" id="userId" value="${dto.user.id}" /> <%-- UserProfileDto returned --%>
 <input type="hidden" id="principalId" value="${principal.user.id}" />
 <input type="hidden" id="principalUsername" value="${principal.user.username}" />
-<!--인기 게시글-->
-<%--<main class="popular">
-	<div class="exploreContainer">
-		<div><h4><i class="fas fa-heart"></i> 좋아요 랭킹 </h4></div>
-		<p></p>
-		<!--인기게시글 갤러리(GRID배치)-->
-		<div class="popular-gallery">
-		</div>
-		<!--인기게시글 갤러리(GRID배치) end -->
-	</div>
-</main>
-&lt;%&ndash; @@@@@@@@@@@@@@ 아이템들 @@@@@@@@@@@@@@ &ndash;%&gt;
 
-&lt;%&ndash; 앵커에 연결되는 모달 페이지 기능 [버튼] 노출 여부만 다름 !! &ndash;%&gt;
-<div class="container">
-	<div class="row row-cols-3" id="storyList"></div>
-	<div class="col"></div>
-</div>--%>
+<input type="hidden" id="ip" value="" />
+<input type="hidden" id="pageUrl" value="" />
+
+<input type="hidden" id="pageOwnerState" value="${dto.pageOwnerState}" />
+
 <div class="container  overflow-hidden">
 	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
 		<h4 class="cfs-2 pb-0 align-text-bottom px-2"><i class="fas fa-heart"></i> 좋아요 랭킹 </h4>
@@ -39,31 +27,33 @@
 
 <!-- 이미지 Modal -->
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel" style="color: Dodgerblue;">미디어 확대</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-
-
-			<div class="modal-body">
+			<div class="modal-body m-0 p-0">
 				<!--<img  data-bs-dismiss="modal" class="img-box" src=""
 					  alt="" onerror="this.src='/images/noimage.jpg'"
 					  id="lgimage" style="max-width: 380px;max-height: 520px;max-height: 100%; max-width: 100%;"  />-->
-				<div class="img-box" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
+				<div class="img-box text-center" alt="" id="lgimage" style="max-width:380px;max-height:420px;max-height:100%;max-width:100%;"></div>
 				<form>
 					<input type="hidden" id="image_id">
 					<input type="hidden" id="image_url">
 					<input type="hidden" id="user_id">
 					<input type="hidden" id="contenttag">
-					<hr>
-					<label>미디어 설명: </label> <span id="caption" style="font-size: 16px; color: Dodgerblue;"></span>
+					<input type="hidden" id="principalid">
+					<label class="form-control" for="caption">제목</label>
+					<textarea class="form-control" name="caption" id="caption"></textarea>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			</div>
+			<%-- 컨텐츠의 주인에게만 이미지 삭제 버튼 보임 --%>
+			<div class="modal-footer text-center" id="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫 기</button>
+				<button type="button" class="btn btn-primary" id="update-btn" style="display: none">제목 수정</button>
+				<button type="button" class="btn btn-danger" id="delete-btn" style="display: none">미디어 삭제</button>
+			</div><!-- modal footer -end-  -->
 		</div>
 	</div>
 </div>
@@ -73,32 +63,38 @@
 <!-- 이미지 삭제 모달 이벤트 처리 -->
 <script>
 	{	// 모달 요소 선택
-		//const delete_modal = document.getElementById('#delete-modal'); // 모달 id
 		const delete_modal = document.querySelector('#image-modal'); // 모달 id
 		// 모달 이벤트 감지
 		delete_modal.addEventListener('show.bs.modal', function (event) {
-			// 트리거 버트 선택
-			const button = event.relatedTarget;
-			// 전달할 데이타 가져오기
-			const imageid = button.getAttribute("data-bs-imageid");
-			const imageurl = button.getAttribute("data-bs-imageurl");
-			const userid = button.getAttribute("data-bs-userid");
-			const caption = button.getAttribute("data-bs-caption");
-			const contenttag = button.getAttribute("data-bs-contenttag");
-			console.log("imageid=",imageid);
-			console.log("imageurl=",imageurl);
-			console.log("userid=",userid);
-			console.log("caption=",caption);
-			console.log("contenttag=",contenttag);
+		// 트리거 버트 선택
+		const button = event.relatedTarget;
+		// 전달할 데이타 가져오기
+		const imageid = button.getAttribute("data-bs-imageid");
+		const imageurl = button.getAttribute("data-bs-imageurl");
+		const userid = button.getAttribute("data-bs-userid");
+		const caption = button.getAttribute(`data-bs-caption`);
+		const contenttag = button.getAttribute("data-bs-contenttag");
+		const principalid = button.getAttribute("data-bs-principalid");
+		//const btntag = button.getAttribute("data-bs-btntag");
+		console.log("imageid=",imageid);
+		console.log("imageurl=",imageurl);
+		console.log("userid=",userid);
+		console.log("caption=",caption);
+		console.log("contenttag=",contenttag);
+		//console.log("btntag=",btntag);
+		console.log("principalid=",principalid);
 
-			// 모달창에 데이타 반영
-			document.querySelector("#image_id").value=imageid;
-			document.querySelector("#caption").innerHTML=caption;
-			document.querySelector("#user_id").value=userid;
-			//document.querySelector("#image_url").value="/upload/"+imageurl;
-			//document.querySelector("#lgimage").src="/upload/"+imageurl;
-			document.querySelector("#lgimage").innerHTML=contenttag; //이미지 삽입부분
-			document.querySelector("#contenttag").value=contenttag;
+		// 모달창에 데이타 반영
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption='"+replaceBrTag(caption)+"'");
+		document.querySelector("#image_id").value=imageid;
+		document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
+		document.querySelector("#user_id").value=userid;
+		document.querySelector("#image_url").value="/upload/"+imageurl;
+		//document.querySelector("#delimage").src="/upload/"+imageurl;
+		document.querySelector("#lgimage").innerHTML=contenttag; // 이미지 삽입부분  innerHTML
+		document.querySelector("#contenttag").value=contenttag;
+		//document.querySelector("#modal-footer").innerHTML=btntag; // 모달 풋터 수정, 삭제 버튼 innerHTML
+		document.querySelector("#principalid").value=principalid;
 
 			// If necessary, you could initiate an AJAX request here
 			// and then do the updating in a callback.
@@ -110,54 +106,120 @@
 		})
 	}
 
-// for YouTube
-{
-<%-- 1. The <iframe> (and video player) will replace this <div> tag. --%>
-//<div id="player"></div>
+	{
+		// 삭제 완료 버튼
+		const delete_button=document.querySelector("#delete-btn");
+		// 클릭 이벤트 감지
+		delete_button.addEventListener('click',function (event) {
 
-// 2. This code loads the IFrame Player API code asynchronously.
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-	player = new YT.Player('player', {
-	height: '280',
-	width: '325',
-	videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
-	playerVars: {
-	'playsinline': 0,
-	'volumn': 40,
-	'controls': 1
-	},
-	events: {
-	'onReady': onPlayerReady,
-	'onStateChange': onPlayerStateChange
-	}
-	});
+
+			if(!myCheck("이미지 삭제")) {return;} // 취소 선택시 삭제 중단.
+
+			// 삭제 이미지 객채 생성
+			const image = {
+				id: document.querySelector("#image_id").value,
+				caption: document.querySelector("#caption").value,
+				userid: document.querySelector("#user_id").value,
+				url: document.querySelector("#image_url").value
+			};
+			console.log("image object =", image);
+
+			// 삭제 REST API 호출 - fetch()
+			const url = "/api/image/" + image.id + "/delete";
+			console.log("fetch url=", url);
+
+			// fetch(url,{})
+			fetch(url, {
+				method: "DELETE", // method = 삭제요청
+				body: JSON.stringify(image), // 객체를 JSON 으로 전달
+				headers: {
+					"Content-Type": "application/json"
+				}
+
+				// }).then(function (response) {}) --%>> response => {}
+			}).then(response => {
+				// http 응답 코드에 따른 메시지 출력
+				const msg = (response.ok) ? "이미지 삭제 완료~" : "이미지 삭제 실패!!";
+				console.log(msg);
+				//alert(msg);
+				// 현재 페이지를 새로 고침
+				window.location.reload();
+			})
+		});
+
 	}
 
-	// 4. The API will call this function when the video player is ready.
-	function onPlayerReady(event) {
-	//event.target.playVideo();
+	{
+		// Caption 수정 완료 버튼
+		const update_button=document.querySelector("#update-btn");
+		// 클릭 이벤트 감지
+		update_button.addEventListener('click',function (event) {
+
+			// 수정 이미지 객채 생성
+			const image = {
+				id: document.querySelector("#image_id").value,
+				caption: document.querySelector("#caption").value,
+				userid: document.querySelector("#user_id").value,
+				url: document.querySelector("#image_url").value
+			};
+			console.log("image object =", image);
+
+			// 삭제 REST API 호출 - fetch()
+			const url="/api/image/"+image.id+"/update";
+			console.log("fetch url=",url);
+
+			// fetch(url,{})
+			fetch(url,{
+				method: "PATCH", // method = 수정 요청
+				body: JSON.stringify(image), // 객체를 JSON 으로 전달
+				headers: {
+					"Content-Type": "application/json"
+				}
+
+				// }).then(function (response) {}) --%>> response => {}
+			}).then(response => {
+				// http 응답 코드에 따른 메시지 출력
+				const msg = (response.ok) ? "이미지 update 완료~" : "이미지 update 실패!!";
+				console.log(msg);
+				//alert(msg);
+				// 현재 페이지를 새로 고침
+				window.location.reload();
+			})
+
+		});
+
 	}
 
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	var done = false;
-	function onPlayerStateChange(event) {
-	if (event.data == YT.PlayerState.PLAYING && !done) {
-	//setTimeout(stopVideo, 10000);
-	done = true;
+
+	// 유튜브 아이디 추출
+	function youtubeId(url) {
+		var tag = "";
+		if(url)  {
+			var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			var matchs = url.match(regExp);
+			if (matchs) {
+				//tag += "유튜브 아이디 : "+matchs[7];
+				tag += matchs[7];
+			}
+			return tag;
+		}
 	}
-	}
-	function stopVideo() {
-	player.stopVideo();
-	}
+	/*
+        var s1 = "https://www.youtube.com/watch?v=Vrwyo1A8XNg";
+        var s2 = "http://youtu.be/Vrwyo1A8XNg";
+        document.write(youtubeId(s1));
+        document.write("<br />");
+        document.write(youtubeId(s2));
+    */
+	// utube Id extract
+	function extractVideoID(url) {
+		var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+		var match = url.match(regExp);
+		if (match && match[7].length == 11) {
+			return match[7];
+		} else {
+			alert("Could not extract video ID.");
+		}
 	}
 
 	<%-- 모달 닫힐때 영상 포즈 --%>
@@ -169,6 +231,113 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	});
 
 
+	// for YouTube
+	{
+		<%-- 1. The <iframe> (and video player) will replace this <div> tag. --%>
+		//<div id="player"></div>
+
+		// 2. This code loads the IFrame Player API code asynchronously.
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		// 3. This function creates an <iframe> (and YouTube player)
+		//    after the API code downloads.
+		var player;
+		function onYouTubeIframeAPIReady() {
+			player = new YT.Player('player', {
+				height: '280',
+				width: '325',
+				videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
+				playerVars: {
+					'playsinline': 1,
+					'volumn': 40,
+					'controls': 1
+				},
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+				}
+			});
+		}
+
+		// 4. The API will call this function when the video player is ready.
+		function onPlayerReady(event) {
+			//event.target.playVideo();
+		}
+
+		// 5. The API calls this function when the player's state changes.
+		//    The function indicates that when playing a video (state=1),
+		//    the player should play for six seconds and then stop.
+		var done = false;
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING && !done) {
+				//setTimeout(stopVideo, 10000);
+				done = true;
+			}
+		}
+		function stopVideo() {
+			player.stopVideo();
+		}
+	}
+
+	{
+		const detectDeviceType = () =>
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+						navigator.userAgent
+				)
+						? "모바일"
+						: "데스크톱";
+		console.log("*********************************** ",detectDeviceType());
+	}
+
+	{
+		$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
+			//console.log("*********************************** ipify=",JSON.stringify(data, null, 2));
+		});
+	}
+	{
+		let apiKey = '25864308b6a77fd90f8bf04b3021a48c1f2fb302a676dd3809054bc1b07f5b42';
+		$.getJSON('https://api.ipinfodb.com/v3/ip-city/?format=json&key=' + apiKey, function(data) {
+			//console.log("*************************************** ipinfodb=",JSON.stringify(data, null, 2));
+		});
+	}
+
+	function myCheck(test) {
+		let result;
+		let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+		if (confirm(text) == true) {
+			//text = "You pressed OK!";
+			result = true;
+		} else {
+			//text = "You canceled!";
+			result=false;
+		}
+		//document.getElementById("demo").innerHTML = text;
+		return result;
+	} //myCheck();
+
+
+	{
+		/*function hideEditButton(){*/
+		var myModal = document.getElementById('image-modal')
+		myModal.addEventListener('show.bs.modal', function (event) {
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@ myModal @@@@@@@@@@@@@@@@@@@@@@@");
+			//document.querySelector(".btn").style.display="none";
+			let user_id = document.querySelector("#user_id").value;
+			let principalid = document.querySelector("#principalid").value;
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ user_id="+user_id+",principalid ="+principalid);
+
+			if (user_id == principalid){ // 컨텐츠 주인이 아니면 수정,삭제 버튼 숨김
+				document.querySelector("#update-btn").style.display="block";
+				document.querySelector("#delete-btn").style.display="block";
+			}else{
+				document.querySelector("#update-btn").style.display="none";
+				document.querySelector("#delete-btn").style.display="none";
+			}
+		})
+		/*}*/
+	}
 	</script>
 <script src="/js/popular2.js"></script>
 <%@ include file="../layout/footer.jsp"%>

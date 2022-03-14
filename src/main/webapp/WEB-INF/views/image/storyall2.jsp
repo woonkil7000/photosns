@@ -7,7 +7,6 @@
 
 <input type="hidden" id="ip" value="" />
 <input type="hidden" id="pageUrl" value="" />
-
 <input type="hidden" id="pageOwnerState" value="${dto.pageOwnerState}" />
 
 <!--	<section> -->
@@ -23,23 +22,17 @@
 		<!--전체 리스트 시작-->
 </div>
 
-
-
-
-
-
-
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body m-0 p-0">
 				<%--<img  class="img-box" src="" alt="" onerror="this.src='/images/noimage.jpg'" id="delimage" style="max-width:250px;height:300px;max-height: 100%; max-width: 100%;"/>--%>
-				<div class="img-box text-center" alt="" id="lgimage" style="max-height:100%;max-width:100%;"></div>
+				<div class="img-box text-center" alt="컨텐츠" id="lgimage" style="max-height:100%;max-width:100%;"></div>
 			</div>
 			<div class="modal-second">
 				<form>
@@ -78,7 +71,7 @@
 			const imageid = button.getAttribute("data-bs-imageid");
 			const imageurl = button.getAttribute("data-bs-imageurl");
 			const userid = button.getAttribute("data-bs-userid");
-			const caption = button.getAttribute("data-bs-caption");
+			const caption = button.getAttribute(`data-bs-caption`);
 			const contenttag = button.getAttribute("data-bs-contenttag");
 			const principalid = button.getAttribute("data-bs-principalid");
 			//const btntag = button.getAttribute("data-bs-btntag");
@@ -91,8 +84,11 @@
 			console.log("principalid=",principalid);
 
 			// 모달창에 데이타 반영
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption='"+replaceBrTag(caption)+"'");
 			document.querySelector("#image_id").value=imageid;
-			document.querySelector("#caption").innerHTML=caption; // innerHTML
+			document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
+			//document.querySelector("#caption").innerHTML=caption; // innerHTML
+			//document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
 			//document.querySelector("#delimage").src="/upload/"+imageurl;
@@ -197,6 +193,29 @@
 	}
 
 
+	function myCheck(test) {
+		let result;
+		let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+		if (confirm(text) == true) {
+			//text = "You pressed OK!";
+			result = true;
+		} else {
+			//text = "You canceled!";
+			result=false;
+		}
+		//document.getElementById("demo").innerHTML = text;
+		return result;
+	}
+
+	//myCheck();
+	<%-- 모달 닫힐때 영상 포즈 --%>
+	// modal <div id='image-modal' ....> <iframe src='youtube address'> youtube player
+	// modal <div id='image-modal' ....> <video src='......'> video player
+	$('#image-modal').on('hidden.bs.modal', function () {
+		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
+		$("#image-modal video").attr("src", $("#image-modal video").attr("src"));
+	});
+
 	// 유튜브 아이디 추출
 	function youtubeId(url) {
 		var tag = "";
@@ -235,14 +254,6 @@
 		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
 		$("#image-modal video").attr("src", $("#image-modal video").attr("src"));
 	});
-	// when <video>
-	/*$(function(){
-		$('#image-modal').modal({
-			show: false
-		}).on('hidden.bs.modal', function(){
-			$(this).find('video')[0].pause();
-		});
-	});*/
 
 
 	// for YouTube
@@ -316,20 +327,6 @@
 			//console.log("*************************************** ipinfodb=",JSON.stringify(data, null, 2));
 		});
 	}
-
-	function myCheck(test) {
-		let result;
-		let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
-		if (confirm(text) == true) {
-			//text = "You pressed OK!";
-			result = true;
-		} else {
-			//text = "You canceled!";
-			result=false;
-		}
-		//document.getElementById("demo").innerHTML = text;
-		return result;
-	} //myCheck();
 
 
 	{

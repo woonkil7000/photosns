@@ -200,6 +200,11 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
+	<div class="col align-self-end mx-1 my-0">`;
+	result += before_atag();
+	result +=`<i class="bi bi-tv"></i>`;
+	result += after_atag();
+	result +=`</div>
 	<div class="card-body">
 		`;
 
@@ -210,6 +215,7 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
+		let caption = `${image.caption}`;
 		//if(contentType=='image'||contentType=='null' || contentType==''){
 		if(contentType=='image'||contentType=='video' || contentType=='youtu' || contentType=='null'||contentType==''){
 
@@ -218,9 +224,12 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 			atag +=` data-bs-target='#image-modal' `;
 			atag +=` data-bs-imageid='${image.id}' `;
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			atag +=` data-bs-caption='${image.caption}' `;
+			atag +=` data-bs-caption="`;
+			atag += replaceBrTag(caption);
+			atag += `"`;
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
+			atag +=` data-bs-principalid="${principalId}" `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0px;'>`;
 		}else{
@@ -247,11 +256,11 @@ function getImageItem(image){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	// #### || 게시물 컨텐츠 목록부분: 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 	// widthType 0: default size, 1: wideFull
 
-	result += before_atag();
+	/*result += before_atag();*/
 
 	result += fnContentType(0,contentType,pathUrl);
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
-	result += after_atag();
+	/*result += after_atag();*/
 
 	result +=`<!-- </a> -->
 		<!-- /////////////// contentType이 이미지인 경우만 <a> tag 삽입 //////////////////// -->`;
@@ -748,6 +757,44 @@ function replaceBrTag(str) {
 	str = str.replace(/\r\n/ig, '<br>');
 	str = str.replace(/\\n/ig, '<br>');
 	str = str.replace(/\n/ig, '<br>');
+	return str;
+}
+function commentShowAll(imageId){
+	let imageid="."+imageId;
+	console.log("@@ imageid=",imageid);
+	//document.querySelector(".image147").style.display = "none";
+	const comments=document.querySelectorAll(imageid);
+	//document.querySelectorAll(imageid).style.display = "block";
+	console.log("@@ comments=",comments);
+
+	for(let i=0;i<comments.length;i++){
+		const item=comments.item(i);
+		const style=comments.item(i).style.display;
+		console.log("@@ style = comments.item(i).style.display=",style);
+
+		if(style=='none'){
+			item.style.display="block";
+		}else if(style=='block'){
+			item.style.display="none";
+		}else{
+			console.log("error: check style.display value~~");
+		}
+		console.log("@@ item.style.display=",item.style.display);
+		//item.style.border="1px solid #ff0000";
+	}
+}
+
+function replaceBrTag(str) {
+	if (str == undefined || str == null)
+	{
+		return "";
+	}
+	str = str.replace(/\r\n/ig, '<br>');
+	str = str.replace(/\\n/ig, '<br>');
+	str = str.replace(/\n/ig, '<br>');
+	str = str.replace(/'/g, "&apos;");
+	str = str.replace(/"/g, "&quot;");
+	str = str.replace(/ /g, '&nbsp;');
 	return str;
 }
 function commentShowAll(imageId){

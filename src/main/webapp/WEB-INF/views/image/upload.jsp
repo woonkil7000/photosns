@@ -33,7 +33,7 @@
                 </div>--%>
                 <button  type="button" class="btn btn-outline-primary btn-md py-1 my-1">사진/영상 파일 올리기</button>
                 <!--사진업로드 Form-->
-                <form class="upload-form py-1 my-1" method="POST" enctype="multipart/form-data" action="/image">
+                <form  accept-charset="utf-8" class="upload-form py-1 my-1" method="POST" enctype="multipart/form-data" action="/image">
                     <div class="input-group">
                         <input class="form-control py-1 my-1" type="file" name="file" id="fileId" onchange="imageChoose(this)"/>
                     </div>
@@ -74,7 +74,7 @@
 --%>
                 <button  type="button" class="btn btn-outline-primary btn-md py-1 my-1">YouTube 공유 링크 올리기</button>
                 <!-- 유튜브 업로드 Form-->
-                <form class="upload-form py-1 my-1" method="POST" action="/youtube" onsubmit="jbSubmit();">
+                <form accept-charset="utf-8" class="upload-form py-1 my-1" method="POST" action="/youtube" onsubmit="jbSubmit();">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon3">공유 링크:</span>
                         <input type="hidden" name="uAddress" id="uAddress" value="">

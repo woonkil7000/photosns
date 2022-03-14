@@ -18,7 +18,6 @@ let storyLoadUnlock=true; // storyLoad() 초기값 허용.
 let totalElements;
 
 let principalId = $("#principalId").val(); // input hidden value
-//console.log("principalId="+principalId);
 let principalUsername = $("#principalUsername").val();
 let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
 //console.log("dto.user.id => userId="+userId);
@@ -164,7 +163,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 		let contentTag;
 		let contentTag2;
-		if (contentType=='image'){ // image
+		if (contentType==='image'){ // image
 			////////////////////  이미지에만 팝업될 수 있게 <a> Tag 처리 ////////////////////////////
 			//onclick="window.open('" +pathUrl+ "','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');"
 			//contentTag =`<a onclick="window.open('` +pathUrl+ `','window_name','width=380,height=500,location=no,status=no,scrollbars=yes');">`;
@@ -172,17 +171,17 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			contentTag2 ="<img style='max-height:100%;max-width:100%;' src='" +pathUrl+ "' alt='이미지' />";
 			//contentTag +="</a>";
 			console.log("=============== image ===================");
-		}else if(contentType=='video'){ // video
+		}else if(contentType==='video'){ // video
 			contentTag ="<video class='noloop' id='content" +imageId+ "' style='max-height:300px;max-width:300px;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
-				/*"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
-				"</p>";*/
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				"</p>";
 			contentTag2 ="<video class='noloop' id='content" +imageId+ "' style='max-height:100%;max-width:100%;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
-				/*"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
-				"</p>";*/
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				"</p>";
 			console.log("=============== video ===================");
-		}else if(contentType=='youtu'){ // youtube
+		}else if(contentType==='youtu'){ // youtube
 			contentTag ="<iframe class='noloop' style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
 				" alt='유튜브'></iframe>";
 			contentTag2 ="<iframe class='noloop' style='max-height:100%;max-width:100%'  src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
@@ -230,30 +229,13 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
+	<div class="col align-self-end mx-1 my-0">`;
+	result += before_atag();
+	result +=`<i class="bi bi-tv"></i>`;
+	result += after_atag();
+	result +=`</div>
 	<div class="card-body">
 		`;
-
-
-/*	function fnBtnTag(){
-		let btnTag;
-		let imageUserId=`${image.user.id}`;
-		if(imageUserId==principalId){
-			btnTag="<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫 기</button>"+
-				"<button type='button' class='btn btn-primary' id='update-btn'>제목 수정 전송</button>" +
-				"<button type='button' class='btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end' id='delete-btn'>미디어 삭제</button>";
-		}else{
-			btnTag="<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫 기</button>"+
-				"<div style='display: none'>" +
-				"<button type='button' class='btn btn-primary' id='update-btn' disabled>미디어 설명 수정</button>" +
-				"</div>" +
-				"<div style='display: none'>" +
-				"<button type='button' class='btn btn-danger d-grid gap-2 d-md-flex justify-content-md-end' id='delete-btn' disabled>미디어 삭제</button>" +
-				"</div>";
-		}
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ btnTag="+btnTag);
-		return btnTag;
-	} //fnBtnTag -end-*/
-
 
   	result +=`
 	<!-- ####################### 이미지 모달 링크 ###################### -->
@@ -262,19 +244,23 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='video'||contentType=='youtu'||contentType=='null' || contentType==''){
+		let caption = `${image.caption}`;
+		if(contentType=='image' || contentType=='video' || contentType=='youtu'||contentType=='null' || contentType==''){
 
-			atag =` <a   class='btn btn-outline-primary btn-sm' `;
-			atag +=` data-bs-toggle='modal' `;
-			atag +=` data-bs-target='#image-modal' `;
-			atag +=` data-bs-imageid='${image.id}' `;
-			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			atag +=` data-bs-caption='${image.caption}' `;
-			atag +=` data-bs-userid='${image.user.id}' `;
+			atag =` <a   class="btn btn-outline-primary btn-sm" `;
+			atag +=` data-bs-toggle="modal" `;
+			atag +=` data-bs-target="#image-modal" `;
+			atag +=` data-bs-imageid="${image.id}" `;
+			atag +=` data-bs-imageurl="${image.postImageUrl}" `;
+			// atag +=` data-bs-caption="${image.caption}" `;
+			atag +=` data-bs-caption="`;
+			atag += replaceBrTag(caption);
+			atag += `"`;
+			atag +=` data-bs-userid="${image.user.id}" `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
-			atag +=` data-bs-principalid='${principalId}' `;
-			atag +=` href='#' `;
-			atag +=` role='button' style='outline: none;border: 0;'>`;
+			atag +=` data-bs-principalid="${principalId}" `;
+			atag +=` href="#" `;
+			atag +=` role="button" style="outline: none;border: 0;">`;
 		}else{
 			atag = "";
 		}
@@ -285,7 +271,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	/////////////// contentType이 이미지인 경우만 </a tag 종료부 삽입 ////////////////////
 	function after_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='video'||contentType=='youtu' || contentType=='null'||contentType=='') {
+		if(contentType=='image' || contentType=='video' || contentType=='youtu'||contentType=='null'||contentType=='') {
 			atag = "</a>";
 		}else{
 			atag = "";
@@ -297,12 +283,12 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   		// fnContentType(widthType,contentType,pathUrl);
 		// #### || 게시물 컨텐츠 목록 부분: 이미지/동영상/유튜브 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 
-	result += before_atag();
+	/*result += before_atag();*/
 
   	result += fnContentType(0,contentType,pathUrl)
 		//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 
-	result += after_atag();
+	/*result += after_atag();*/
 
 	result +=`<!-- </a> -->
 		<!-- /////////////// contentType이 이미지인 경우만 <a> tag 삽입 //////////////////// -->`;
@@ -432,6 +418,8 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   return result;
 }
 
+
+// 좋아요 토글 버튼
 function toggleLike(imageId) {
 	let likeIcon = $("#storyLikeIcon-" + imageId);
 	if (likeIcon.hasClass("far")) {
@@ -449,8 +437,6 @@ function toggleLike(imageId) {
 			likeIcon.addClass("active");
 			likeIcon.removeClass("far");
 		});
-
-
 
 	} else {
 		$.ajax({
@@ -547,6 +533,7 @@ function imgError(image) {
 	return true;
 }
 
+
 // 유튜브 아이디 추출
 function youtubeId(url) {
 	var tag = "";
@@ -627,7 +614,16 @@ function extractVideoID(url) {
 		player.stopVideo();
 	}
 }
-
+function replaceBrTag1(str) {
+	if (str == undefined || str == null)
+	{
+		return "";
+	}
+	str = str.replace(/\r\n/ig, '<br>');
+	str = str.replace(/\\n/ig, '<br>');
+	str = str.replace(/\n/ig, '<br>');
+	return str;
+}
 function replaceBrTag(str) {
 	if (str == undefined || str == null)
 	{
@@ -636,6 +632,9 @@ function replaceBrTag(str) {
 	str = str.replace(/\r\n/ig, '<br>');
 	str = str.replace(/\\n/ig, '<br>');
 	str = str.replace(/\n/ig, '<br>');
+	str = str.replace(/'/g, "&apos;");
+	str = str.replace(/"/g, "&quot;");
+	str = str.replace(/ /g, '&nbsp;');
 	return str;
 }
 function commentShowAll(imageId){
@@ -693,3 +692,17 @@ function toggleControls(imageid) {
 		$(btnControlsId).text("controls"); // unloop 면 loop
 	}
 }
+
+function myCheck(test) {
+	let result;
+	let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+	if (confirm(text) == true) {
+		//text = "You pressed OK!";
+		result = true;
+	} else {
+		//text = "You canceled!";
+		result=false;
+	}
+	//document.getElementById("demo").innerHTML = text;
+	return result;
+} //myCheck();

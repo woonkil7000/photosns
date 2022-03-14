@@ -1,5 +1,8 @@
 package com.woonkil.photosns.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.util.UriUtils;
 
 
 @Slf4j
@@ -36,6 +40,10 @@ public class ImageService {
 	private final CommentRepository commentRepository;
 	private final LikesRepository likesRepository;
 	private final TagRepository tagRepository;
+
+	private String encodeUrl(String value) throws UnsupportedEncodingException {
+		return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+	}
 
 	@Transactional(readOnly = true) // 영속성 컨텍스트 변경감지. 더티체킹.flush(반영) 안하게함. 세션 유지.
 	public Page<Image> 유저이미지스토리(int pageUserId, int principalId, Pageable pageable){
@@ -153,8 +161,10 @@ public class ImageService {
 		Path imageFilePath = Paths.get(uploadFolder+imageFileName);
 		System.out.println("이미지 파일 패스 : "+imageFilePath);
 
+
 		// 통신. IO -> 항상 예외가 발생할 수 있다.... 꼭 예외 처리할 것.
 		try {
+			//imageFilePath = Path.of(URLEncoder.encode(String.valueOf(imageFilePath), "UTF-8"));
 			Files.write(imageFilePath, imageReDto.getFile().getBytes());
 			// 파일 쓰기(경로포함 파일이름, 파일크기 정보)
 			System.out.println("------------------------  :: 파일쓰기 :: ------------------------");
