@@ -217,10 +217,10 @@ function getStoryItem(image) {
 			atag +=` data-bs-target='#image-modal' `;
 			atag +=` data-bs-imageid='${image.id}' `;
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			//atag +=` data-bs-caption="${image.caption}" `;
-			atag +=` data-bs-caption="`;
+			atag +=` data-bs-caption="${image.caption}" `;
+			/*atag +=` data-bs-caption="`;
 			atag += replaceBrTag(caption);
-			atag += `"`;
+			atag += `"`;*/
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` data-bs-principalid="${principalId}" `;
@@ -266,7 +266,7 @@ function getStoryItem(image) {
 	result +=`	
 			</div>
     <div class="card-title pb-3 px-2 align-items-lg-start">
-			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b>${caption}</b></span>
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b id="id_caption">${caption}</b></span>
     <!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->

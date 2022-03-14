@@ -43,8 +43,8 @@
 					<input type="hidden" id="principalid">
 					<%--<hr>--%>
 					<%--<label>사진 설명</label><input type="text" id="caption" size="45">--%>
-					<label class="form-control" for="caption">제목</label>
-					<textarea class="form-control" name="caption" id="caption"></textarea>
+					<label class="form-control" for="id_textcaption">제목</label>
+					<textarea class="form-control" name="caption" id="id_textcaption"></textarea>
 				</form>
 			</div>
 			<%-- 컨텐츠의 주인에게만 이미지 삭제 버튼 보임 --%>
@@ -61,7 +61,7 @@
 <%-- 이미지 수정, 삭제 모달 이벤트 처리 --%>
 <script>
 	{	// 모달 요소 선택
-		//const delete_modal = document.getElementById('#delete-modal'); // 모달 id
+		//let delete_modal = document.getElementById('#delete-modal'); // 모달 id
 		const delete_modal = document.querySelector('#image-modal'); // 모달 id
 		// 모달 이벤트 감지
 		delete_modal.addEventListener('show.bs.modal', function (event) {
@@ -86,9 +86,9 @@
 			// 모달창에 데이타 반영
 			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption='"+replaceBrTag(caption)+"'");
 			document.querySelector("#image_id").value=imageid;
-			document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
-			//document.querySelector("#caption").innerHTML=caption; // innerHTML
 			//document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
+			//document.querySelector("#caption").innerHTML=caption; // innerHTML
+			document.querySelector("#id_textcaption").innerHTML=caption; // innerHTML
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
 			//document.querySelector("#delimage").src="/upload/"+imageurl;
@@ -117,10 +117,10 @@
 
 			if(!myCheck("이미지 삭제")) {return;} // 취소 선택시 삭제 중단.
 
-			// 삭제 이미지 객채 생성
+			// 삭제할 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};
@@ -157,10 +157,10 @@
 		// 클릭 이벤트 감지
 		update_button.addEventListener('click',function (event) {
 
-			// 수정 이미지 객채 생성
+			// 수정할 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};
@@ -306,7 +306,7 @@
 		}
 	}
 
-	{
+	{ // Device Type
 		const detectDeviceType = () =>
 				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 						navigator.userAgent
@@ -316,12 +316,12 @@
 		console.log("*********************************** ",detectDeviceType());
 	}
 
-	{
+	{ // IP
 		$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
 			//console.log("*********************************** ipify=",JSON.stringify(data, null, 2));
 		});
 	}
-	{
+	{ // IP
 		let apiKey = '25864308b6a77fd90f8bf04b3021a48c1f2fb302a676dd3809054bc1b07f5b42';
 		$.getJSON('https://api.ipinfodb.com/v3/ip-city/?format=json&key=' + apiKey, function(data) {
 			//console.log("*************************************** ipinfodb=",JSON.stringify(data, null, 2));
@@ -330,7 +330,7 @@
 
 
 	{
-	/*function hideEditButton(){*/
+	/* 모달 창 열릴 때 이벤트 function hideEditButton(){*/
 		var myModal = document.getElementById('image-modal')
 		myModal.addEventListener('show.bs.modal', function (event) {
 			console.log("@@@@@@@@@@@@@@@@@@@@@@@ myModal @@@@@@@@@@@@@@@@@@@@@@@");
@@ -348,6 +348,51 @@
 			}
 		})
 	/*}*/
+	}
+
+{
+	// 모달 창 show 될 때 이벤트 실행
+	//let delete_modal = document.getElementById('#delete-modal'); // 모달 id
+	const delete_modal = document.querySelector('#image-modal'); // 모달 id
+	// 모달 이벤트 감지
+	delete_modal.addEventListener('show.bs.modal', function (event) {
+		const str=$("#id_textcaption").html();
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ $('#id_textcaption').html() str="+str);
+		const str2 = str.toString().replace("&lt;br;&gt;","\n",);
+		const str3 = str2.toString().replace("<br>","\n",);
+		//const str2 = br2nl(str,true);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ str2.toString().replace str3="+str3);
+		//document.querySelector("#id_textcaption").innerHTML="test!!";
+		document.querySelector("#id_textcaption").innerHTML=str3;
+	});
+}
+
+	// nl2br
+	/**
+	 * This function is same as PHP's nl2br() with default parameters.
+	 *
+	 * @param {string} str Input text
+	 * @param {boolean} replaceMode Use replace instead of insert
+	 * @param {boolean} isXhtml Use XHTML
+	 * @return {string} Filtered text
+	 */
+	function nl2br (str, replaceMode, isXhtml) {
+		var breakTag = (isXhtml) ? '<br />' : '<br>';
+		var replaceStr = (replaceMode) ? '$1'+ breakTag : '$1'+ breakTag +'$2';
+		return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
+	}
+	// br2nl
+	/**
+	 * This function inverses text from PHP's nl2br() with default parameters.
+	 *
+	 * @param {string} str Input text
+	 * @param {boolean} replaceMode Use replace instead of insert
+	 * @return {string} Filtered text
+	 */
+	function br2nl (str, replaceMode) {
+		var replaceStr = (replaceMode) ? "\n" : '';
+		// Includes <br>, <BR>, <br />, </br>
+		return str.toString().replace(/<\s*\/?br\s*[\/]?>/gi, replaceStr);
 	}
 
 </script>

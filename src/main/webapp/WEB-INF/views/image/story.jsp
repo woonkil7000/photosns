@@ -40,8 +40,8 @@
 					<input type="hidden" id="principalid">
 					<%--<hr>--%>
 					<%--<label>사진 설명</label><input type="text" id="caption" size="45">--%>
-					<label class="form-control" for="caption">제목</label>
-					<textarea class="form-control" name="caption" id="caption"></textarea>
+					<label class="form-control" for="id_textcaption">제목</label>
+					<textarea class="form-control" name="caption" id="id_textcaption"></textarea>
 				</form>
 			</div>
 			<%-- 컨텐츠의 주인에게만 이미지 삭제 버튼 보임 --%>
@@ -84,9 +84,9 @@
 			// 모달창에 데이타 반영
 			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption='"+replaceBrTag(caption)+"'");
 			document.querySelector("#image_id").value=imageid;
-			document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
-			//document.querySelector("#caption").innerHTML=caption; // innerHTML
 			//document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
+			//document.querySelector("#caption").innerHTML=caption; // innerHTML
+			document.querySelector("#id_textcaption").innerHTML=caption; // innerHTML
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
 			//document.querySelector("#delimage").src="/upload/"+imageurl;
@@ -107,7 +107,7 @@
 
 
 	{
-		// 삭제 완료 버튼
+		// 삭제 완료 버튼 #id_textcaption
 		const delete_button=document.querySelector("#delete-btn");
 		// 클릭 이벤트 감지
 		delete_button.addEventListener('click',function (event) {
@@ -118,7 +118,7 @@
 			// 삭제 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};
@@ -150,7 +150,7 @@
 	}
 
 	{
-		// Caption 수정 완료 버튼
+		// Caption 수정 완료 버튼 #id_textcaption
 		const update_button=document.querySelector("#update-btn");
 		// 클릭 이벤트 감지
 		update_button.addEventListener('click',function (event) {
@@ -158,7 +158,7 @@
 			// 수정 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};

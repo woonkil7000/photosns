@@ -303,7 +303,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
   result +=`		
     </div>
     <div class="card-title pb-3 px-2 align-items-lg-start">
-			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b>${caption}</b></span>
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b id="id_caption">${caption}</b></span>
 	<!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
@@ -706,3 +706,26 @@ function myCheck(test) {
 	//document.getElementById("demo").innerHTML = text;
 	return result;
 } //myCheck();
+/*
+{
+	const str=$("#id_caption").html();
+	let str1 = str.toString().replace(/(?:\r\n|\r|\n)/g, '<br>');
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ str1="+str1);
+}
+{
+	let strCaption = $("#id_caption").html();
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ strCaption="+strCaption);
+	function nl2br(str){
+		let str1=document.querySelector("#id_caption").innerHTML;
+		str1 = str1.toString().replace(/(\n)+/g, '<br>');
+		return str1;
+		//return str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	}
+	$("#id_caption").html=nl2br(strCaption);
+}
+*/
+
+//const stringWithNewLines = `Well this is a very broken	sentance`;
+//let stringWithBrs = nl2br(stringWithNewLines);
+//stringWithBrs= "Well this is a<br>a very <br>broken<br>sentance";
+
