@@ -15,13 +15,14 @@
 	<name>photosns</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><!-- UTF-8 설정 -->
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<!--
 		Tomcat in it, hence fails with "SEVERE: ContainerBase.addChild: start: org.apache.catalina.LifecycleException".
 		-->
-		<dependency>
+<!--		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
@@ -30,7 +31,7 @@
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 		<!-- -->
 <!--		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
@@ -48,10 +49,10 @@
 			<version>2.3.1</version>
 		</dependency>-->
 <!--  -->
-<!--	<dependency>
+	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>-->
+	</dependency>
 <!-- -->
 	<!--        embeded tomcat provided scope                  -->
 <!--	<dependency>
@@ -132,19 +133,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
@@ -175,6 +166,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<executable>true</executable>
+					<jvmArguments>-Dfile.encoding=UTF8 -Dspring.profiles.active="production"</jvmArguments>
+					<!-- UTF-8 설정 -->
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

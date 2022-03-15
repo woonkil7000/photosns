@@ -23,7 +23,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@PropertySource(value="classpath:/application.yml", encoding="UTF-8")
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	//	@Autowired

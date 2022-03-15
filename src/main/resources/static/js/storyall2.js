@@ -28,6 +28,7 @@ function storyLoad() {
 	// ajax로 Page<Image> 가져올 예정 (3개)
 	$.ajax({
 	type:"get",
+		contentType: "charset=utf-8",
 		url:`/api/image2?page=${page}`,
 		datatype: "json",
 }).done((res)=>{
@@ -140,9 +141,10 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	console.log("======================== image.contentType ={} =================================",);
 
 	let commentCount=`${image.commentCount}`;
+	let postImageUrl=`${image.postImageUrl}`;
 	<!-- Get Content Type -->
 	let caption = `${image.caption}`;
-	caption = replaceBrTag(caption);
+	caption = replaceBrTag(caption); // id_caption 부분에 줄봐뀜 부분에 <br> 테그 처리
 	//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption <br>",caption);
 	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
@@ -153,6 +155,14 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		pathUrl=`${image.postImageUrl}`;
 	}else{
 		pathUrl="/upload/"+`${image.postImageUrl}`;
+	}
+	pathUrl = encodeURIComponent(pathUrl); // @@@@@@@@@@@@@@@@@@@@@@@ URI encoding 한글파일명 깨짐 @@@@@@@@@@@@@@@@@@@@@@@@@@
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@ encodeURIComponent(pathUrl) ="+pathUrl);
+	try{
+		pathUrl=decodeURIComponent(pathUrl);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ decodedURIComponent(pathUrl)="+pathUrl);
+	} catch (e) {
+		console.error(e);
 	}
 	console.log("/////////////////////////// pathUrl='" +pathUrl+ "'//////////////////////////////////////");
 
@@ -174,11 +184,11 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		}else if(contentType==='video'){ // video
 			contentTag ="<video class='noloop' id='content" +imageId+ "' style='max-height:300px;max-width:300px;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
-				"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				"<p onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
 				"</p>";
 			contentTag2 ="<video class='noloop' id='content" +imageId+ "' style='max-height:100%;max-width:100%;' playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01'  alt='영상'>" +
 				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
-				"<p><label for='formGroupExampleInput' class='form-label'>반복 설정</label> <button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-secondary btn-sm'>once</button>"+
+				"<p  style='display: none' onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
 				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType==='youtu'){ // youtube
@@ -222,7 +232,8 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	result += `<div class="card-cover"><a  href="/user/${image.user.id}"><img width="23" height="23" class="profile-image" src="/upload/${image.user.profileImageUrl}" alt=""  onerror="imgError(this);"/>`;
 
 	result +=`
-		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}"><b>${image.user.name}</b></a></span></div>
+		<span style="font-size: 18px; color: Dodgerblue;"><a class="profile-image" href="/user/${image.user.id}"><b>${image.user.name}</b></a></span>
+		</div>
 	</div>
 	<!--헤더영역 end-->
 
@@ -252,10 +263,10 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 			atag +=` data-bs-target="#image-modal" `;
 			atag +=` data-bs-imageid="${image.id}" `;
 			atag +=` data-bs-imageurl="${image.postImageUrl}" `;
-			// atag +=` data-bs-caption="${image.caption}" `;
-			atag +=` data-bs-caption="`;
+			atag +=` data-bs-caption="${image.caption}" `;
+			/*atag +=` data-bs-caption="`;
 			atag += replaceBrTag(caption);
-			atag += `"`;
+			atag += `"`;*/
 			atag +=` data-bs-userid="${image.user.id}" `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` data-bs-principalid="${principalId}" `;

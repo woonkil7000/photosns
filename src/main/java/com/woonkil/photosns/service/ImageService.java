@@ -1,6 +1,7 @@
 package com.woonkil.photosns.service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -150,6 +151,7 @@ public class ImageService {
 
 		UUID uuid = UUID.randomUUID();
 		String imageFileName = uuid+"_"+imageReDto.getFile().getOriginalFilename(); // xxxxxx_1.jpg
+		imageFileName = imageFileName.replaceAll("[ㄱ-힣]",""); // 한글 제거
 		String fileContentType = imageReDto.getFile().getContentType();
 		// 추후 View 에서 사용하기 위해 file 정보에서 contentType 추출해서 DB에 저장.
 		System.out.println("이미지 파일명 : "+imageFileName);

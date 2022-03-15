@@ -21,7 +21,7 @@
 
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
@@ -348,6 +348,7 @@
 		/*}*/
 	}
 </script>
-<script src="/js/story.js"></script>
+<script language="JavaScript" javascript src="/js/story.js" charset='UTF-8'></script>
+<%@ include file="../layout/footer.jsp"%>
 </body>
 </html>

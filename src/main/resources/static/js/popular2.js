@@ -156,9 +156,14 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%;' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지' />";
-			contentTag2 ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			contentTag="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지'>"+
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
+			contentTag2 ="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p  style='display: none' onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
@@ -225,9 +230,10 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 			atag +=` data-bs-target='#image-modal' `;
 			atag +=` data-bs-imageid='${image.id}' `;
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			atag +=` data-bs-caption="`;
+			atag +=` data-bs-caption="${image.caption}" `;
+			/*atag +=` data-bs-caption="`;
 			atag += replaceBrTag(caption);
-			atag += `"`;
+			atag += `"`;*/
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
 			atag +=` data-bs-principalid="${principalId}" `;
@@ -244,7 +250,7 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	function after_atag(){
 		let atag;
 		//if(contentType=='image' || contentType=='null'||contentType=='') {
-		if(contentType=='image' || contentType=='null'||contentType==''||contentType=='video'||contentType=='youtu') {
+		if(contentType=='image'||contentType=='video'||contentType=='youtu' || contentType=='null'||contentType=='') {
 			atag = "</a>";
 		}else{
 			atag = "";

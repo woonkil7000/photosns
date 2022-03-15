@@ -24,7 +24,7 @@
 
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
@@ -349,24 +349,25 @@
 		})
 	/*}*/
 	}
-
+/*
 {
 	// 모달 창 show 될 때 이벤트 실행
 	//let delete_modal = document.getElementById('#delete-modal'); // 모달 id
 	const delete_modal = document.querySelector('#image-modal'); // 모달 id
 	// 모달 이벤트 감지
 	delete_modal.addEventListener('show.bs.modal', function (event) {
-		const str=$("#id_textcaption").html();
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ $('#id_textcaption').html() str="+str);
-		const str2 = str.toString().replace("&lt;br;&gt;","\n",);
-		const str3 = str2.toString().replace("<br>","\n",);
+		const str=$("#id_caption").html();
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ $('#id_caption').html() str="+str);
+		const str2 = str.toString().replace(/&lt;/g, '<').replace(/&gt;/g,'>'); //문자열에서 html태그 제거)
+		//const str3 = str2.toString().replace(/\r/g, "");
 		//const str2 = br2nl(str,true);
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ str2.toString().replace str3="+str3);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ str2.toString().replace str2="+str2);
+		//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ str3.toString().replace str3="+str3);
 		//document.querySelector("#id_textcaption").innerHTML="test!!";
-		document.querySelector("#id_textcaption").innerHTML=str3;
+		document.querySelector("#id_textcaption").innerHTML=str2;
 	});
 }
-
+*/
 	// nl2br
 	/**
 	 * This function is same as PHP's nl2br() with default parameters.
@@ -395,7 +396,12 @@
 		return str.toString().replace(/<\s*\/?br\s*[\/]?>/gi, replaceStr);
 	}
 
+	// Popover execute
+	$(function () {
+		$('[data-toggle="popover"]').popover()
+	})
 </script>
-<script src="/js/storyall2.js"></script>
+<script language=JavaScript src="/js/storyall2.js" charset='UTF-8'></script>
+<%@ include file="../layout/footer.jsp"%>
 </body>
 </html>

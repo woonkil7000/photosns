@@ -155,5 +155,5 @@
         }
     }
 </script>
-<script src="/js/upload.js" ></script>
+<script language="JavaScript" src="/js/upload.js" charset='UTF-8'></script>
 <%@ include file="../layout/footer.jsp" %>

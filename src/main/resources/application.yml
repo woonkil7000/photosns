@@ -5,12 +5,12 @@ server:
     context-path: /
     encoding:
       charset: utf-8
-      enabled: true
-      force: true
-      force-request: true
-      force-response: true
-      spring:
-        profiles:
+#      enabled: true
+#      force: true
+#      force-request: true
+#      force-response: true
+#      spring:
+#        profiles:
 #          include = oauth:
 spring:
   security:
@@ -126,7 +126,11 @@ logging:
     org.hibernate.SQL: debug    # Logger
     org.hibernate.type: trace   # Show Query Parameter
     org.hibernate.type.descriptor.sql: trace
-
+#    org:
+#      springframework: debug
+#        web: debug
+#  logging.level.org.springframework=debug
+#  logging.level.org.springframework.web=debug
 
 file:
    path: D:/src/springbootwork-sts/upload/

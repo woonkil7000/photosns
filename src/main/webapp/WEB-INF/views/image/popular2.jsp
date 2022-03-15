@@ -2,7 +2,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <input type="hidden" id="userId" value="${dto.user.id}" /> <%-- UserProfileDto returned --%>
-<input type="hidden" id="principalId" value="${principal.user.id}" />
+<input type="hidden" id="principaluserid" value="${principal.user.id}" />
 <input type="hidden" id="principalUsername" value="${principal.user.username}" />
 
 <input type="hidden" id="ip" value="" />
@@ -339,6 +339,6 @@
 		/*}*/
 	}
 	</script>
-<script src="/js/popular2.js"></script>
+<script language="JavaScript" src="/js/popular2.js"  charset='UTF-8'></script>
 <%@ include file="../layout/footer.jsp"%>
 

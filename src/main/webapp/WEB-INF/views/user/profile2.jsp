@@ -465,5 +465,5 @@
 
 </script>
 <%-- --%>
-<script src="/js/profile2.js"></script>
+<script language="JavaScript" src="/js/profile2.js" charset='UTF-8'></script>
 <%@ include file="../layout/footer.jsp"%>

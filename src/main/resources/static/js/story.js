@@ -24,7 +24,8 @@ function storyLoad() {
   // ajax로 Page<Image> 가져올 예정 (3개)
   $.ajax({
     type: "get",
-    url: `/api/image?page=${page}`,
+	  contentType: "charset=utf-8",
+	  url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
 
@@ -149,9 +150,14 @@ function getStoryItem(image) {
 			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%;' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지' />";
-			contentTag2 ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			contentTag="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
+			contentTag2 ="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p  style='display: none' onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
