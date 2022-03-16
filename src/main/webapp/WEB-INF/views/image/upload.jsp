@@ -53,9 +53,9 @@
                         <b>전송이 완료되면 [화면 자동 전환]됩니다</b>
                         <p>용량이 큰 파일은 잠시 기다려주세요</p>
                     </div>--%>
-                    <div class="output" id="idOutput" style="display: block"></div>
-                    <div class="btn btn-warning btn-sm" id="idCaution" style="display: none"></div>
-                    <div class="btn btn-warning btn-sm" id="idCaution2" style="display: none"></div>
+                    <div class="output" id="idOutput" style="display: none"></div><!-- file path and extensions -->
+                    <div class="btn btn-warning btn-sm" id="idCaution" style="display: none"></div><!-- warning only images comment -->
+                    <div class="btn btn-warning btn-sm" id="idCaution2" style="display: none"></div><!-- warning oersize file comment -->
                     <div class="badge text-primary fs-6 fw-light text-wrap pb-1 mb-1" style="width: 18rem;" id="idComment">
                         <p>아래 [전송 시작] 버튼을 눌러주세요</p>
                         <p>전송이 완료되면 [화면 자동 전환]됩니다</p>
