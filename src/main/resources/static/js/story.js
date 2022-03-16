@@ -93,7 +93,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if ((checkNum < 300 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
+  if ((checkNum < 500 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
 	  storyLoadUnlock=false;
@@ -104,7 +104,7 @@ $(window).scroll(() => {
 		  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },2000)
+	  },3000)
 
   }
 	if (isLastPage==true&&appendFlag!=1){
@@ -203,7 +203,7 @@ function getStoryItem(image) {
 	<!-- <div class="col-md-5 px-0"> -->
 	<div class="col align-self-end mx-1 my-0">`;
 	result += before_atag();
-	result +=`<i class="bi bi-tv"></i>`;
+	result +=`<i class="bi bi-fullscreen"></i>`;
 	result += after_atag();
 	result +=`</div>
 	<div class="card-body">
@@ -257,7 +257,13 @@ function getStoryItem(image) {
 
 	/*result += before_atag();*/
 
-	result += fnContentType(0,contentType,pathUrl);
+	if (contentType==='image'){ // 이미지 일때 이미지에 a tag 걸기
+		result += before_atag();
+		result += fnContentType(0,contentType,pathUrl);
+		result += after_atag();
+	}else{
+		result += fnContentType(0,contentType,pathUrl);
+	}
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 	/*result += after_atag();*/
 

@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import com.woonkil.photosns.domain.comment.CommentRepository;
 import com.woonkil.photosns.domain.comment.handler.ex.CustomApiException;
+import com.woonkil.photosns.domain.comment.handler.ex.CustomException;
 import com.woonkil.photosns.domain.likes.LikesRepository;
 import com.woonkil.photosns.domain.user.User;
 import com.woonkil.photosns.config.auth.PrincipalDetails;
@@ -172,6 +173,7 @@ public class ImageService {
 			System.out.println("------------------------  :: 파일쓰기 :: ------------------------");
 		} catch (Exception e) {
 			e.printStackTrace(); // 예외상황 기록하기.
+			throw new CustomException("파일 전송에 실패했습니다"); // 2022.03.16
 		}
 
 		// 참고 :  Image 엔티티에 Tag는 주인이 아니다. Image 엔티티로 통해서 Tag를 save할 수 없다.

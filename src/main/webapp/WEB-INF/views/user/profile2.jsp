@@ -69,16 +69,17 @@
 			<c:choose>
 				<c:when test="${dto.pageOwnerState}">
 					<%--<button class="cta" onclick="location.href='/image/upload'">포토앨범<i class="far fa-image"></i><i class="fas fa-cloud-upload-alt"></i></button>--%>
-					<button type="button" class="btn btn-primary">미디어를 선택하면 설명(caption)을 수정하거나 파일을 삭제할 수 있습니다</button>
+					<button type="button" class="btn btn-primary"><i class="bi bi-fullscreen fs-3"></i> 아이콘을 선택하면 제목을 수정하거나 파일을 삭제할 수 있습니다</button>
 				</c:when>
 			</c:choose>
 			<%-- 이미지 삭제 가능 알림 end --%>
 		</div>
 <!---->
+<%--
 		<div class="col-12 col-md-12"><!-- col 1-3 -->
 			<button type="button" class="btn btn-primary">유튜브는 영상의 바깥 하단부를 클릭해야 개별창을 열 수 있습니다</button>
 		</div>
-
+--%>
 	</div><!-- row1 end  -->
 
 

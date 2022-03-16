@@ -107,7 +107,7 @@ $(window).scroll(() => {
 			//console.log("================================== timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 			// console.timeEnd("X");
 			// console.timeStamp("종료 시간");
-		},1000)
+		},3000)
 
 		//window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
 	}
@@ -135,6 +135,7 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ contentType",contentType);
 	let pathUrl;
 	console.log("/////////////////////////// contentType='" +contentType+ "'//////////////////////////////////////");
 	if(contentType=='youtu'){ // when youtube
@@ -209,7 +210,7 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!-- <div class="col-md-5 px-0"> -->
 	<div class="col align-self-end mx-1 my-0">`;
 	result += before_atag();
-	result +=`<i class="bi bi-tv"></i>`;
+	result +=`<i class="bi bi-fullscreen"></i>`;
 	result += after_atag();
 	result +=`</div>
 	<div class="card-body">
@@ -265,7 +266,13 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 
 	/*result += before_atag();*/
 
-	result += fnContentType(0,contentType,pathUrl);
+	if (contentType==='image'){ // 이미지 일때 이미지에 a tag 걸기
+		result += before_atag();
+		result += fnContentType(0,contentType,pathUrl);
+		result += after_atag();
+	}else{
+		result += fnContentType(0,contentType,pathUrl);
+	}
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
 	/*result += after_atag();*/
 

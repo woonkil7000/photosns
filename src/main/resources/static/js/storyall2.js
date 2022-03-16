@@ -99,7 +99,7 @@ $(window).scroll(() => {
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
   // 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-  if ((checkNum < 300 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+  if ((checkNum < 500 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 	  // Set Timer 걸기. 동시이벤트 걸러내기.
 	  storyLoad();
@@ -113,7 +113,7 @@ $(window).scroll(() => {
 		  //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },2000)
+	  },3000)
 
 	  //window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
   }
@@ -242,7 +242,7 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!-- <div class="col-md-5 px-0"> -->
 	<div class="col align-self-end mx-1 my-0">`;
 	result += before_atag();
-	result +=`<i class="bi bi-tv"></i>`;
+	result +=`<i class="bi bi-fullscreen"></i>`;
 	result += after_atag();
 	result +=`</div>
 	<div class="card-body">
@@ -295,10 +295,15 @@ function getStoryItem(image) { // @@@@@@@@@@@@@ <div> Get Row Data Function
 		// #### || 게시물 컨텐츠 목록 부분: 이미지/동영상/유튜브 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 
 	/*result += before_atag();*/
+	if (contentType==='image'){ // 이미지 일때 이미지에 a tag 걸기
+		result += before_atag();
+		result += fnContentType(0,contentType,pathUrl);
+		result += after_atag();
+	}else{
+		result += fnContentType(0,contentType,pathUrl);
+	}
 
-  	result += fnContentType(0,contentType,pathUrl)
 		//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
-
 	/*result += after_atag();*/
 
 	result +=`<!-- </a> -->
