@@ -107,7 +107,7 @@ $(window).scroll(() => {
 			//console.log("================================== timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 			// console.timeEnd("X");
 			// console.timeStamp("종료 시간");
-		},1000)
+		},3000)
 
 		//window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
 	}
@@ -135,6 +135,7 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	let imageId=`${image.id}`;
 	let contentType=`${image.contentType}`;
 	contentType=contentType.substring(0,5)
+	console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ contentType",contentType);
 	let pathUrl;
 	console.log("/////////////////////////// contentType='" +contentType+ "'//////////////////////////////////////");
 	if(contentType=='youtu'){ // when youtube
@@ -156,9 +157,14 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%;' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지' />";
-			contentTag2 ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			contentTag="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지'>"+
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
+			contentTag2 ="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p  style='display: none' onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
@@ -202,6 +208,11 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
+	<div class="col align-self-end mx-1 my-0">`;
+	result += before_atag();
+	result +=`<i class="bi bi-fullscreen"></i>`;
+	result += after_atag();
+	result +=`</div>
 	<div class="card-body">
 		`;
 
@@ -213,16 +224,20 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	function before_atag(){
 		let atag;
 		//if(contentType=='image'||contentType=='null' || contentType==''){
-		if(contentType=='image' || contentType=='null'||contentType==''||contentType=='video' || contentType=='youtu'){
+		if(contentType=='image'||contentType=='video' || contentType=='youtu' || contentType=='null'||contentType==''){
 
 			atag =` <a   class='btn btn-outline-primary btn-sm' `;
 			atag +=` data-bs-toggle='modal' `;
 			atag +=` data-bs-target='#image-modal' `;
 			atag +=` data-bs-imageid='${image.id}' `;
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			atag +=` data-bs-caption='${image.caption}' `;
+			atag +=` data-bs-caption="${image.caption}" `;
+			/*atag +=` data-bs-caption="`;
+			atag += replaceBrTag(caption);
+			atag += `"`;*/
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
+			atag +=` data-bs-principalid="${principalId}" `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0px;'>`;
 		}else{
@@ -236,7 +251,7 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	function after_atag(){
 		let atag;
 		//if(contentType=='image' || contentType=='null'||contentType=='') {
-		if(contentType=='image' || contentType=='null'||contentType==''||contentType=='video'||contentType=='youtu') {
+		if(contentType=='image'||contentType=='video'||contentType=='youtu' || contentType=='null'||contentType=='') {
 			atag = "</a>";
 		}else{
 			atag = "";
@@ -249,11 +264,17 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 	// #### || 게시물 컨텐츠 목록부분: 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 	// widthType 0: default size, 1: wideFull
 
-	result += before_atag();
+	/*result += before_atag();*/
 
-	result += fnContentType(0,contentType,pathUrl);
+	if (contentType==='image'){ // 이미지 일때 이미지에 a tag 걸기
+		result += before_atag();
+		result += fnContentType(0,contentType,pathUrl);
+		result += after_atag();
+	}else{
+		result += fnContentType(0,contentType,pathUrl);
+	}
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
-	result += after_atag();
+	/*result += after_atag();*/
 
 	result +=`<!-- </a> -->
 		<!-- /////////////// contentType이 이미지인 경우만 <a> tag 삽입 //////////////////// -->`;
@@ -381,252 +402,10 @@ function getImageItem(image,order){ // @@@@@@@@@@@@@ <div> Get Row Data Function
 <!--전체 리스트 아이템end-->
 `;
 	return result;
-} // getImageItem -end-
-
-
-
-
-// (1) 유저 프로파일 페이지 구독하기, 구독취소
-function toggleSubscribe(userId, obj) {
-
-	if ($(obj).text() === "구독취소") {
-		$.ajax({
-			type: "DELETE",
-			url: "/api/subscribe/" + userId,
-			dataType: "json",
-		}).done((res) => {
-			$(obj).text("구독하기");
-			$(obj).toggleClass("blue");
-		}).fail(error=>{
-           console.log("구독취소 실패...error");
-   		});
-	} else {
-		$.ajax({
-			type: "POST",
-			url: "/api/subscribe/" + userId,
-			dataType: "json",
-		}).done((res) => {
-			$(obj).text("구독취소");
-			$(obj).toggleClass("blue");
-		}).fail(error=>{
-   		    console.log("구독 실패...error");
-   		});
-	}
 }
-
-// (2) 구독자 정보  모달 보기
-function subscribeInfoModalOpen(pageUserId) {
-	// alert(pageUserId);
-	// return;
-	$(".modal-subscribe").css("display", "flex");
-
-	//let userId = $("#userId").val(); // pageUserId 해당 페이지의 주인 id
-
-	$.ajax({
-		url: `/api/user/${pageUserId}/subscribe`,
-		dataType:"json"
-	}).done((res) => {
-
-		console.log(res);
-		//return;
-
-		$("#subscribeModalList").empty();
-
-		res.data.forEach((u) => {
-			let item = getSubscribeModalItem(u); // return html tag applied subscriber list and 구독하기 / 구독취소 버튼 표시 toggle button
-			$("#subscribeModalList").append(item);
-		});
-	}).fail((error) => {
-
-		console.log("구독자 리스트 불러오기 오류 : ",error);
-		return;
-		});
-}
-
-function getSubscribeModalItem(u) {
-	let item = `<div class="subscribe__item" id="subscribeModalItem-${u.userId}">`;
-	item += `<div class="subscribe__img">`;
-	item += `<img src="/upload/${u.profileImageUrl}" alt=""  onerror="this.src='/images/noimage.jpg'"/>`;
-	item += `</div>`;
-	item += `<div class="subscribe__text">`;
-	item += `<h2>${u.name.substring(0,10)}(${u.username.substring(0,10)}...)</h2>`;
-	item += `</div>`;
-	item += `<div class="subscribe__btn">`;
-	if (!u.equalUserState) { // 동일 유저가 아닐때 버튼이 만들어져야함. 자기자신 제외.
-		if (u.subscribeState) { // 구독한 상태
-			item += `<button class="cta blue" onclick="toggleSubscribeModal(${u.userId}, this)">구독취소</button>`;
-		} else { // 구독안한 상태
-			item += `<button class="cta" onclick="toggleSubscribeModal(${u.userId}, this)">구독하기</button>`;
-		}
-	}
-	item += `</div>`;
-	item += `</div>`;
-
-	return item;
-}
+// getImageItem -end-
 
 
-// (3) 구독자 정보 모달에서 구독하기, 구독취소
-function toggleSubscribeModal(toUserId, obj) {
-
-	if ($(obj).text() === "구독취소") {
-		$.ajax({
-			type: "DELETE",
-			url: "/api/subscribe/" + toUserId,
-			dataType: "json",
-		}).done((res) => {
-			$(obj).text("구독하기");
-			$(obj).toggleClass("blue");
-		}).fail(error=>{
-		    console.log("구독취소 실패...error");
-		});
-	} else {
-		$.ajax({
-			type: "POST",
-			url: "/api/subscribe/" + toUserId,
-			dataType: "json",
-		}).done((res) => {
-			$(obj).text("구독취소");
-			$(obj).toggleClass("blue");
-		}).fail(error=>{
-		    console.log("구독하기 실패...error");
-		});
-	}
-}
-
-// (4) 유저 프로파일 사진 변경 (완)
-function profileImageUpload(pageUserId,principalId) {
-	//let principalId = $("#principalId").val();
-	 console.log("pageUserId => ",pageUserId);
-	 console.log("principalId => ",principalId);
-
-	if(pageUserId != principalId){
-		alert("현재 유저의 프로필이 아닙니다");
-		return;
-	}
-
-	$("#userProfileImageInput").click();
-
-	$("#userProfileImageInput").on("change", (e) => {
-		let f = e.target.files[0];
-
-		if (!f.type.match("image.*")) {
-			alert("이미지를 등록해야 합니다.");
-			return;
-		}
-
-		// 서버에 이미지 전송. 통신 시작
-		let profileImageForm = $("#userProfileImageForm")[0];
-		//let profileImageForm = $('form')[0];
-		console.log("profileImageForm => ",profileImageForm);
-		//return;
-
-		//let formData = new FormData(profileImageForm); // form data 전송시 FormData(): key:value 쌍으로 formData 에 담을 수 있다.
-		//let formData = new FormData(profileImageForm);
-		let formData = new FormData(profileImageForm);
-		//formData.append('tax_file', $('input[type=file]')[0].files[0]);
-		console.log("formData => ",formData);
-		//return;
-		// FormData객체로 보내야함. key/value formData에 값들만 담김.
-		// Form태그 데이터 전송 타입을 multipart/form-data 로 만들어줌.
-
-		$.ajax({
-			type: "POST", // ######################## PUT 안됨 ################################
-			url: `/api/user/${principalId}/profileImageUrl`,
-			data: formData,
-			//data: JSON.stringify(formData),
-			//contentType: false, //필수  x-www-form-urlencoded로 파싱됨.
-			//contentType: 'application/json; charset=utf-8',
-			contentType: false,
-			processData: false, //필수 : contentType을 false로 줬을 때 쿼리 스트링으로 자동 설정됨. 그거 해제 하는 법
-			enctype: "multipart/form-data", // 필수 아님 x-www-form-urlencoded로 파싱되는것 방지.
-			dataType: 'json'
-			//async: true
-		}).done(res=>{
-			console.log("#### .done res=> 진행 ####");
-			console.log("res =>",res);
-			//let f = document.querySelector('input[type=file]').files[0];
-			let reader = new FileReader();
-			reader.onload=(e)=>{
-				$("#userProfileImage").attr("scr",e.target.result);
-			}
-			reader.readAsDataURL(f); // 이코드 실행시 reader.onload 실행됨.
-			location.href = `/user/${principalId}`;
-		}).fail(error=>{
-			console.log("폼 ajax 전송 오류",error);
-		});
-
-
-
-	});
-}
-
-// 이미지 삭제
-function deleteImage(imageId,principalId) {
-
-		//let pid = ${u.userId}
-		$.ajax({
-			type: "DELETE",
-			url: `/api/image/${imageId}/delete`,
-			dataType: "json"
-		}).done(res => {
-			console.log("delete imageId=", imageId);
-			console.log("principalId=",principalId);
-			//alert(" 선택한 이미지가 삭제되었습니다. \n\n deleted imageId= "+imageId+", principalId="+principalId);
-			location.href = `/user/${principalId}`;
-		}).fail(error=>{
-			console.log("오류",error);
-			//console.log("오류 내용: ",error.responseJSON.data.content);
-			console.log("오류 내용: ",error.responseJSON.message);
-			//alert("오류 발생"+error);
-		});
-}
-
-// (5) 사용자 정보 메뉴 열기 닫기
-function popup(obj) {
-	$(obj).css("display", "flex");
-}
-
-function closePopup(obj) {
-	$(obj).css("display", "none");
-}
-
-
-// (6) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
-function modalInfo() {
-	$(".modal-info").css("display", "none");
-}
-
-// (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달
-function modalImage() {
-	$(".modal-image").css("display", "none");
-}
-
-// (8) 구독자 정보 모달 닫기
-function modalClose() {
-	$(".modal-subscribe").css("display", "none");
-	location.reload();
-}
-
-// 본인의 이미지 삭제(사진 삭제, 취소) 모달
-function modalDelete() {
-	$(".modal-imgdelete").css("display", "none");
-}
-
-
-function myCheck(test) {
-	let result;
-	let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
-	if (confirm(text) == true) {
-	//text = "You pressed OK!";
-		result = true;
-} else {
-	//text = "You canceled!";
-		result=false;
-}
-	//document.getElementById("demo").innerHTML = text;
-	return result;
-} //myCheck();
 
 function toggleLike(imageId) {
 	let likeIcon = $("#storyLikeIcon-" + imageId);
@@ -750,6 +529,9 @@ function replaceBrTag(str) {
 	str = str.replace(/\r\n/ig, '<br>');
 	str = str.replace(/\\n/ig, '<br>');
 	str = str.replace(/\n/ig, '<br>');
+	str = str.replace(/'/g, "&apos;");
+	str = str.replace(/"/g, "&quot;");
+	str = str.replace(/ /g, '&nbsp;');
 	return str;
 }
 function commentShowAll(imageId){
@@ -776,3 +558,70 @@ function commentShowAll(imageId){
 		//item.style.border="1px solid #ff0000";
 	}
 }
+
+function toggleLoop(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnLoopId="#btnLoop"+imageid;
+	let txtBtn=$(btnLoopId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='once'){
+		document.getElementById(contentId).setAttribute('loop',''); // loop 속성 추가
+		$(btnLoopId).text("loop"); // loop 면 unloop
+		//$(contentId).attr("loop","");
+		//$(contentId).removeAttr("loop");
+	}else if(txtBtn==='loop'){
+		document.getElementById(contentId).removeAttribute('loop',''); // loop 속성 제거
+		$(btnLoopId).text("once"); // unloop 면 loop
+	}
+}
+function toggleControls(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnControlsId="#btnControls"+imageid;
+	let txtBtn=$(btnControlsId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='controls'){
+		document.getElementById(contentId).setAttribute('controls',''); // 속성 추가
+		$(btnControlsId).text("controls view"); // loop 면 unloop
+	}else if(txtBtn==='controls view'){
+		document.getElementById(contentId).removeAttribute('controls',''); //  속성 제거
+		$(btnControlsId).text("controls"); // unloop 면 loop
+	}
+}
+
+// 이미지 삭제
+function deleteImage(imageId,principalId) {
+
+	//let pid = ${u.userId}
+	$.ajax({
+		type: "DELETE",
+		url: `/api/image/${imageId}/delete`,
+		dataType: "json"
+	}).done(res => {
+		console.log("delete imageId=", imageId);
+		console.log("principalId=",principalId);
+		//alert(" 선택한 이미지가 삭제되었습니다. \n\n deleted imageId= "+imageId+", principalId="+principalId);
+		location.href = `/user/${principalId}`;
+	}).fail(error=>{
+		console.log("오류",error);
+		//console.log("오류 내용: ",error.responseJSON.data.content);
+		console.log("오류 내용: ",error.responseJSON.message);
+		//alert("오류 발생"+error);
+	});
+}
+
+
+function myCheck(test) {
+	let result;
+	let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+	if (confirm(text) == true) {
+		//text = "You pressed OK!";
+		result = true;
+	} else {
+		//text = "You canceled!";
+		result=false;
+	}
+	//document.getElementById("demo").innerHTML = text;
+	return result;
+} //myCheck();

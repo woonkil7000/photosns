@@ -95,6 +95,6 @@
             </section>
         </main>
 
-        <script src="/js/update.js"></script>
+        <script language="JavaScript" src="/js/update.js" charset='UTF-8'></script>
 
         <%@ include file="../layout/footer.jsp" %>

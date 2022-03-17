@@ -80,6 +80,7 @@ public class ImageApiController {
     public ResponseEntity<?> imageStoryAll(@AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size=12) Pageable pageable){
         Page<Image> images = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable);
         // 로그인 사용자 ID와  페이지 전달 // imageRepository 에서 인자로 사용.
+
         System.out.println("######################### @GetMapping(\"/api/image\") :: Page[Image] images  = imageService.이미지스토리올(principalDetails.getUser().getId(),pageable) #######################");
         return  new ResponseEntity<>(new CMRespDto<>(1,"List images 담기 성공",images), HttpStatus.OK);
     }

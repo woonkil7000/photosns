@@ -94,7 +94,7 @@ $(window).scroll(() => {
 
 	//console.log("@@@@ before storyLoad() 혀용 storyLoadUnlock=",storyLoadUnlock);
   // 근사치 계산: checkNum=0일때 이벤트 발생함 // currentPage = 0부터 시작
-  if ((checkNum < 300 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
+  if ((checkNum < 500 && checkNum > -1) && storyLoadUnlock && (page <= (totalPage-1))) {
 
 	  // Set Timer 걸기. 동시이벤트 걸러내기.
 	  storyLoad();
@@ -108,7 +108,7 @@ $(window).scroll(() => {
 		  //console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },2000)
+	  },3000)
 
 	  //window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
   }
