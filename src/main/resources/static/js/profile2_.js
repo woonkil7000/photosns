@@ -203,7 +203,7 @@ $(window).scroll(() => {
             //console.log("================================== timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
             // console.timeEnd("X");
             // console.timeStamp("종료 시간");
-        },1000)
+        },3000)
 
         //window.scrollTo(0, $(window).scrollTop()+$(document).height()+300);
     }

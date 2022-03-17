@@ -96,7 +96,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if (checkNum < 100 && checkNum > -1 && (page <= totalPage-1)) {
+  if (checkNum < 500 && checkNum > -1 && (page <= totalPage-1)) {
     storyLoad();
 	  //page++;
   }

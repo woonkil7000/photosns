@@ -33,12 +33,13 @@
                 </div>--%>
                 <button  type="button" class="btn btn-outline-primary btn-md py-1 my-1">사진/영상 파일 올리기</button>
                 <!--사진업로드 Form-->
-                <form class="upload-form py-1 my-1" method="POST" enctype="multipart/form-data" action="/image">
+                <form  accept-charset="utf-8" class="upload-form py-1 my-1" method="POST" enctype="multipart/form-data" action="/image">
                     <div class="input-group">
                         <input class="form-control py-1 my-1" type="file" name="file" id="fileId" onchange="imageChoose(this)"/>
                     </div>
                     <div class="input-group py-0 my-0">
                         <img style="max-height: 100px;max-width: 150px;padding: 0px;border: 0px;" src="/images/noimage.jpg" alt="uplaod file" id="imageUploadPreview" />
+                        <div class="col-lg-1 px-1"><span id="file_num"></span><br><span id="file_type"></span><br><span id="file_size"></span></div>
                     </div>
                     <!--사진설명 + 업로드버튼-->
                     <div class="mb-4">
@@ -52,12 +53,15 @@
                         <b>전송이 완료되면 [화면 자동 전환]됩니다</b>
                         <p>용량이 큰 파일은 잠시 기다려주세요</p>
                     </div>--%>
-                    <div class="badge text-primary fs-6 fw-light text-wrap pb-1 mb-1" style="width: 18rem;">
+                    <div class="output" id="idOutput" style="display: none"></div><!-- file path and extensions -->
+                    <div class="btn btn-warning btn-sm" id="idCaution" style="display: none"></div><!-- warning only images comment -->
+                    <div class="btn btn-warning btn-sm" id="idCaution2" style="display: none"></div><!-- warning oersize file comment -->
+                    <div class="badge text-primary fs-6 fw-light text-wrap pb-1 mb-1" style="width: 18rem;" id="idComment">
                         <p>아래 [전송 시작] 버튼을 눌러주세요</p>
                         <p>전송이 완료되면 [화면 자동 전환]됩니다</p>
                         <p>용량이 큰 파일은 잠시 기다려주세요</p>
                     </div>
-                        <button class="btn btn-primary btn-lg">파일 전송 시작</button>
+                        <button class="btn btn-primary btn-lg" id="btnSubmit">파일 전송 시작</button>
 
                     <!--사진설명end-->
                 </form>
@@ -74,7 +78,7 @@
 --%>
                 <button  type="button" class="btn btn-outline-primary btn-md py-1 my-1">YouTube 공유 링크 올리기</button>
                 <!-- 유튜브 업로드 Form-->
-                <form class="upload-form py-1 my-1" method="POST" action="/youtube" onsubmit="jbSubmit();">
+                <form accept-charset="utf-8" class="upload-form py-1 my-1" method="POST" action="/youtube" onsubmit="jbSubmit();">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon3">공유 링크:</span>
                         <input type="hidden" name="uAddress" id="uAddress" value="">
@@ -90,7 +94,7 @@
                         <label for="inputText2">#태그(선택사항)</label>
                         <input class="form-control" type="text" name="tags" id="inputText2">
                     </div>
-                        <button class="btn btn-primary btn-lg">YouTube 공유 링크 전송</button>
+                        <button class="btn btn-primary btn-lg" id="btnSubmit2">YouTube 공유 링크 전송</button>
                     <!--유튜브 설명end-->
                 </form>
                 <!--유튜브 업로드 Form-->
@@ -154,6 +158,9 @@
             alert("Could not extract video ID.");
         }
     }
+
+
 </script>
-<script src="/js/upload.js" ></script>
+
+<script language="JavaScript" src="/js/upload.js" charset='UTF-8'></script>
 <%@ include file="../layout/footer.jsp" %>

@@ -3,10 +3,12 @@ package com.woonkil.photosns;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /*@SpringBootApplication
 @EnableAutoConfiguration
@@ -28,9 +30,12 @@ public class PhotogramApplication extends SpringBootServletInitializer {
 	}
 }*/
 
-@EnableAutoConfiguration
-@ComponentScan
-@Configuration
+//@PropertySource(value = "classpath:/application.yml", encoding="UTF-8")
+//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+//@ComponentScan
+//@Configuration
+//@EnableAutoConfiguration
+@SpringBootApplication
 public class PhotogramApplication extends SpringBootServletInitializer {
 
 	// WAR 배포를 위해 수정된 부분

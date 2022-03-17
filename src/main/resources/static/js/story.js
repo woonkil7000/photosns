@@ -18,12 +18,14 @@ let totalElements;
 
 let principalId = $("#principalId").val(); // jquery grammar: querySelection? input hidden value
 let principalUsername = $("#principalUsername").val();
+let userId = $("#userId").val(); // jquery grammar: querySelection? input hidden value
 
 function storyLoad() {
   // ajax로 Page<Image> 가져올 예정 (3개)
   $.ajax({
     type: "get",
-    url: `/api/image?page=${page}`,
+	  contentType: "charset=utf-8",
+	  url: `/api/image?page=${page}`,
     dataType: "json",
   }).done((res) => {
 
@@ -91,7 +93,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if ((checkNum < 300 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
+  if ((checkNum < 500 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
 	  storyLoadUnlock=false;
@@ -102,7 +104,7 @@ $(window).scroll(() => {
 		  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },2000)
+	  },3000)
 
   }
 	if (isLastPage==true&&appendFlag!=1){
@@ -148,9 +150,14 @@ function getStoryItem(image) {
 			contentTag2 ="<img src='" +pathUrl+ "' style='max-height:100%;max-width:100%;' alt='이미지' />";
 			console.log("=============== image ===================");
 		}else if(contentType=='video'){ // video
-			contentTag="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='이미지' />";
-			contentTag2 ="<video playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
-				"이 브라우저는 비디오를 지원하지 않습니다</video>";
+			contentTag="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.1' style='max-height:300px;max-width:100%' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
+			contentTag2 ="<video class='noloop' id='content" +imageId+ "'  playsinline controls preload='auto' src='" +pathUrl+ "#t=0.01' style='max-height:100%;max-width:100%;' alt='영상'>" +
+				"이 브라우저는 비디오를 지원하지 않습니다</video>"+
+				"<p  style='display: none' onclick='toggleLoop(" +imageId+ ")'><button type='button' class='btn btn-outline-primary btn-sm'>반복 설정</button><button type='button' id='btnLoop" +imageId+"' onclick='toggleLoop(" +imageId+ ")' class='btn btn-outline-primary btn-sm'>once</button>"+
+				"</p>";
 			console.log("=============== video ===================");
 		}else if(contentType=='youtu'){ // youtube
 			contentTag ="<iframe src='https://youtube.com/embed/"+pathUrl+"' frameborder='0' allowfullscreen " +
@@ -194,6 +201,11 @@ function getStoryItem(image) {
 	<!--게시물이미지 영역-->
 	<!-- <div class="sl__item__img"> -->
 	<!-- <div class="col-md-5 px-0"> -->
+	<div class="col align-self-end mx-1 my-0">`;
+	result += before_atag();
+	result +=`<i class="bi bi-fullscreen"></i>`;
+	result += after_atag();
+	result +=`</div>
 	<div class="card-body">
 		`;
 
@@ -204,16 +216,20 @@ function getStoryItem(image) {
 	/////////////// contentType이 이미지인 경우만 <a tag for modal 시작부 삽입 ////////////////////
 	function before_atag(){
 		let atag;
-		if(contentType=='image'||contentType=='video' || contentType=='youtu'||contentType=='null' || contentType==''){
+		if(contentType=='image' || contentType=='video' || contentType=='youtu'||contentType=='null' || contentType==''){
 
 			atag =` <a   class='btn btn-outline-primary btn-sm' `;
 			atag +=` data-bs-toggle='modal' `;
 			atag +=` data-bs-target='#image-modal' `;
 			atag +=` data-bs-imageid='${image.id}' `;
 			atag +=` data-bs-imageurl='${image.postImageUrl}' `;
-			atag +=` data-bs-caption='${image.caption}' `;
+			atag +=` data-bs-caption="${image.caption}" `;
+			/*atag +=` data-bs-caption="`;
+			atag += replaceBrTag(caption);
+			atag += `"`;*/
 			atag +=` data-bs-userid='${image.user.id}' `;
 			atag +=` data-bs-contentTag="${fnContentType(1,contentType,pathUrl)}" `;
+			atag +=` data-bs-principalid="${principalId}" `;
 			atag +=` href='#' `;
 			atag +=` role='button' style='outline: none;border: 0px;'>`;
 		}else{
@@ -239,11 +255,17 @@ function getStoryItem(image) {
 	// #### || 게시물 컨텐츠 목록부분: 이미지/동영상 테크 위치  ||  #### <img src=''> or <video> #### contentTag ####
 	// widthType 0: default size, 1: wideFull
 
-	result += before_atag();
+	/*result += before_atag();*/
 
-	result += fnContentType(0,contentType,pathUrl);
+	if (contentType==='image'){ // 이미지 일때 이미지에 a tag 걸기
+		result += before_atag();
+		result += fnContentType(0,contentType,pathUrl);
+		result += after_atag();
+	}else{
+		result += fnContentType(0,contentType,pathUrl);
+	}
 	//<img src="/upload/${image.postImageUrl}" style="max-height: 100%; max-width: 100%" alt="이미지"/>
-	result += after_atag();
+	/*result += after_atag();*/
 
 	result +=`<!-- </a> -->
 		<!-- /////////////// contentType이 이미지인 경우만 <a> tag 삽입 //////////////////// -->`;
@@ -256,7 +278,7 @@ function getStoryItem(image) {
 	result +=`	
 			</div>
     <div class="card-title pb-3 px-2 align-items-lg-start">
-			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b>${caption}</b></span>
+			<span style="font-size: 17px; color: Dodgerblue;padding-left: 5px;"><b id="id_caption">${caption}</b></span>
     <!-- 게시물 이미지 영역 end -->
 
 	<!--게시물 내용 + 댓글 영역-->
@@ -487,6 +509,122 @@ function deleteComment(commentId) {
 	});
 }
 
+
+function commentShowAll(imageId){
+	let imageid="."+imageId;
+	console.log("@@ imageid=",imageid);
+	//document.querySelector(".image147").style.display = "none";
+	const comments=document.querySelectorAll(imageid);
+	//document.querySelectorAll(imageid).style.display = "block";
+	console.log("@@ comments=",comments);
+
+	for(let i=0;i<comments.length;i++){
+		const item=comments.item(i);
+		const style=comments.item(i).style.display;
+		console.log("@@ style = comments.item(i).style.display=",style);
+
+		if(style=='none'){
+			item.style.display="block";
+		}else if(style=='block'){
+			item.style.display="none";
+		}else{
+			console.log("error: check style.display value~~");
+		}
+		console.log("@@ item.style.display=",item.style.display);
+		//item.style.border="1px solid #ff0000";
+	}
+}
+
+// 유튜브 아이디 추출
+function youtubeId(url) {
+	var tag = "";
+	if(url)  {
+		var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+		var matchs = url.match(regExp);
+		if (matchs) {
+			//tag += "유튜브 아이디 : "+matchs[7];
+			tag += matchs[7];
+		}
+		return tag;
+	}
+}
+/*
+	var s1 = "https://www.youtube.com/watch?v=Vrwyo1A8XNg";
+	var s2 = "http://youtu.be/Vrwyo1A8XNg";
+	document.write(youtubeId(s1));
+	document.write("<br />");
+	document.write(youtubeId(s2));
+*/
+// utube Id extract
+function extractVideoID(url) {
+	var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+	var match = url.match(regExp);
+	if (match && match[7].length == 11) {
+		return match[7];
+	} else {
+		alert("Could not extract video ID.");
+	}
+}
+
+// for YouTube
+{
+	<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+	//<div id="player"></div>
+
+	// 2. This code loads the IFrame Player API code asynchronously.
+	var tag = document.createElement('script');
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height: '280',
+			width: '325',
+			videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
+			playerVars: {
+				'playsinline': 1,
+				'volumn': 40,
+				'controls': 1,
+			},
+			events: {
+				'onReady': onPlayerReady,
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+		//event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && !done) {
+			//setTimeout(stopVideo, 10000);
+			done = true;
+		}
+	}
+	function stopVideo() {
+		player.stopVideo();
+	}
+}
+function replaceBrTag1(str) {
+	if (str == undefined || str == null)
+	{
+		return "";
+	}
+	str = str.replace(/\r\n/ig, '<br>');
+	str = str.replace(/\\n/ig, '<br>');
+	str = str.replace(/\n/ig, '<br>');
+	return str;
+}
 function replaceBrTag(str) {
 	if (str == undefined || str == null)
 	{
@@ -495,6 +633,9 @@ function replaceBrTag(str) {
 	str = str.replace(/\r\n/ig, '<br>');
 	str = str.replace(/\\n/ig, '<br>');
 	str = str.replace(/\n/ig, '<br>');
+	str = str.replace(/'/g, "&apos;");
+	str = str.replace(/"/g, "&quot;");
+	str = str.replace(/ /g, '&nbsp;');
 	return str;
 }
 function commentShowAll(imageId){
@@ -522,3 +663,47 @@ function commentShowAll(imageId){
 	}
 }
 
+function toggleLoop(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnLoopId="#btnLoop"+imageid;
+	let txtBtn=$(btnLoopId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='once'){
+		document.getElementById(contentId).setAttribute('loop',''); // loop 속성 추가
+		$(btnLoopId).text("loop"); // loop 면 unloop
+		//$(contentId).attr("loop","");
+		//$(contentId).removeAttr("loop");
+	}else if(txtBtn==='loop'){
+		document.getElementById(contentId).removeAttribute('loop',''); // loop 속성 제거
+		$(btnLoopId).text("once"); // unloop 면 loop
+	}
+}
+function toggleControls(imageid) {
+	//alert(imageid);
+	let contentId = "content"+imageid;
+	let btnControlsId="#btnControls"+imageid;
+	let txtBtn=$(btnControlsId).text();
+	//alert("contentId="+contentId+",txtBtn="+txtBtn);
+	if (txtBtn==='controls'){
+		document.getElementById(contentId).setAttribute('controls',''); // 속성 추가
+		$(btnControlsId).text("controls view"); // loop 면 unloop
+	}else if(txtBtn==='controls view'){
+		document.getElementById(contentId).removeAttribute('controls',''); //  속성 제거
+		$(btnControlsId).text("controls"); // unloop 면 loop
+	}
+}
+
+function myCheck(test) {
+	let result;
+	let text = "\n\n 정말 \""+test+"\" 를 실행하시겠습니까?\n\n 확인 또는 취소를 눌러주세요!\n\n";
+	if (confirm(text) == true) {
+		//text = "You pressed OK!";
+		result = true;
+	} else {
+		//text = "You canceled!";
+		result=false;
+	}
+	//document.getElementById("demo").innerHTML = text;
+	return result;
+} //myCheck();

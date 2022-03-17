@@ -2,8 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 <input type="hidden" id="userId" value="${dto.user.id}" />
+<input type="hidden" id="principalId" value="${principal.user.id}" />
+<input type="hidden" id="principalUsername" value="${principal.user.username}" />
+
 <input type="hidden" id="ip" value="" />
 <input type="hidden" id="pageUrl" value="" />
+<input type="hidden" id="pageOwnerState" value="${dto.pageOwnerState}" />
 
 <div class="container  overflow-hidden">
 	<div class="pt-sm-5 pb-sm-0 pb-md-0 pt-md-5 align-text-bottom">
@@ -17,7 +21,7 @@
 
 <%-- 이미지 수정 삭제 Modal start --%>
 <div class="modal fade" id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">상세 페이지</h5>
@@ -36,8 +40,8 @@
 					<input type="hidden" id="principalid">
 					<%--<hr>--%>
 					<%--<label>사진 설명</label><input type="text" id="caption" size="45">--%>
-					<label class="form-control" for="caption">제목</label>
-					<textarea class="form-control" name="caption" id="caption"></textarea>
+					<label class="form-control" for="id_textcaption">제목</label>
+					<textarea class="form-control" name="caption" id="id_textcaption"></textarea>
 				</form>
 			</div>
 			<%-- 컨텐츠의 주인에게만 이미지 삭제 버튼 보임 --%>
@@ -78,8 +82,11 @@
 			console.log("principalid=",principalid);
 
 			// 모달창에 데이타 반영
+			//console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ caption='"+replaceBrTag(caption)+"'");
 			document.querySelector("#image_id").value=imageid;
-			document.querySelector("#caption").innerHTML=caption; // innerHTML
+			//document.querySelector("#caption").innerHTML=replaceBrTag(caption); // innerHTML
+			//document.querySelector("#caption").innerHTML=caption; // innerHTML
+			document.querySelector("#id_textcaption").innerHTML=caption; // innerHTML
 			document.querySelector("#user_id").value=userid;
 			document.querySelector("#image_url").value="/upload/"+imageurl;
 			//document.querySelector("#delimage").src="/upload/"+imageurl;
@@ -100,7 +107,7 @@
 
 
 	{
-		// 삭제 완료 버튼
+		// 삭제 완료 버튼 #id_textcaption
 		const delete_button=document.querySelector("#delete-btn");
 		// 클릭 이벤트 감지
 		delete_button.addEventListener('click',function (event) {
@@ -111,7 +118,7 @@
 			// 삭제 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};
@@ -143,7 +150,7 @@
 	}
 
 	{
-		// Caption 수정 완료 버튼
+		// Caption 수정 완료 버튼 #id_textcaption
 		const update_button=document.querySelector("#update-btn");
 		// 클릭 이벤트 감지
 		update_button.addEventListener('click',function (event) {
@@ -151,7 +158,7 @@
 			// 수정 이미지 객채 생성
 			const image = {
 				id: document.querySelector("#image_id").value,
-				caption: document.querySelector("#caption").value,
+				caption: document.querySelector("#id_textcaption").value,
 				userid: document.querySelector("#user_id").value,
 				url: document.querySelector("#image_url").value
 			};
@@ -207,8 +214,141 @@
 		$("#image-modal video").attr("src", $("#image-modal video").attr("src"));
 	});
 
+	// 유튜브 아이디 추출
+	function youtubeId(url) {
+		var tag = "";
+		if(url)  {
+			var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+			var matchs = url.match(regExp);
+			if (matchs) {
+				//tag += "유튜브 아이디 : "+matchs[7];
+				tag += matchs[7];
+			}
+			return tag;
+		}
+	}
+	/*
+        var s1 = "https://www.youtube.com/watch?v=Vrwyo1A8XNg";
+        var s2 = "http://youtu.be/Vrwyo1A8XNg";
+        document.write(youtubeId(s1));
+        document.write("<br />");
+        document.write(youtubeId(s2));
+    */
+	// utube Id extract
+	function extractVideoID(url) {
+		var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+		var match = url.match(regExp);
+		if (match && match[7].length == 11) {
+			return match[7];
+		} else {
+			alert("Could not extract video ID.");
+		}
+	}
 
+	<%-- 모달 닫힐때 영상 포즈 --%>
+	// modal <div id='image-modal' ....> <iframe src='youtube address'> youtube player
+	// modal <div id='image-modal' ....> <video src='......'> video player
+	$('#image-modal').on('hidden.bs.modal', function () {
+		$("#image-modal iframe").attr("src", $("#image-modal iframe").attr("src"));
+		$("#image-modal video").attr("src", $("#image-modal video").attr("src"));
+	});
+
+
+	// for YouTube
+	{
+		<%-- 1. The <iframe> (and video player) will replace this <div> tag. --%>
+		//<div id="player"></div>
+
+		// 2. This code loads the IFrame Player API code asynchronously.
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		// 3. This function creates an <iframe> (and YouTube player)
+		//    after the API code downloads.
+		var player;
+		function onYouTubeIframeAPIReady() {
+			player = new YT.Player('player', {
+				height: '280',
+				width: '325',
+				videoId: 'tgbNymZ7vqY',//tgbNymZ7vqY M7lc1UVf-VE
+				playerVars: {
+					'playsinline': 1,
+					'volumn': 40,
+					'controls': 1
+				},
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+				}
+			});
+		}
+
+		// 4. The API will call this function when the video player is ready.
+		function onPlayerReady(event) {
+			//event.target.playVideo();
+		}
+
+		// 5. The API calls this function when the player's state changes.
+		//    The function indicates that when playing a video (state=1),
+		//    the player should play for six seconds and then stop.
+		var done = false;
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING && !done) {
+				//setTimeout(stopVideo, 10000);
+				done = true;
+			}
+		}
+		function stopVideo() {
+			player.stopVideo();
+		}
+	}
+
+	{
+		const detectDeviceType = () =>
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+						navigator.userAgent
+				)
+						? "모바일"
+						: "데스크톱";
+		console.log("*********************************** ",detectDeviceType());
+	}
+
+	{
+		$.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
+			//console.log("*********************************** ipify=",JSON.stringify(data, null, 2));
+		});
+	}
+	{
+		let apiKey = '25864308b6a77fd90f8bf04b3021a48c1f2fb302a676dd3809054bc1b07f5b42';
+		$.getJSON('https://api.ipinfodb.com/v3/ip-city/?format=json&key=' + apiKey, function(data) {
+			//console.log("*************************************** ipinfodb=",JSON.stringify(data, null, 2));
+		});
+	}
+
+
+	{
+		/*function hideEditButton(){*/
+		var myModal = document.getElementById('image-modal')
+		myModal.addEventListener('show.bs.modal', function (event) {
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@ myModal @@@@@@@@@@@@@@@@@@@@@@@");
+			//document.querySelector(".btn").style.display="none";
+			let user_id = document.querySelector("#user_id").value;
+			let principalid = document.querySelector("#principalid").value;
+			console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ user_id="+user_id+",principalid ="+principalid);
+
+			if (user_id == principalid){ // 컨텐츠 주인이 아니면 수정,삭제 버튼 숨김
+				document.querySelector("#update-btn").style.display="block";
+				document.querySelector("#delete-btn").style.display="block";
+			}else{
+				document.querySelector("#update-btn").style.display="none";
+				document.querySelector("#delete-btn").style.display="none";
+			}
+		})
+		/*}*/
+	}
 </script>
-<script src="/js/story.js"></script>
+<script language="JavaScript" javascript src="/js/story.js" charset='UTF-8'></script>
+<%@ include file="../layout/footer.jsp"%>
 </body>
 </html>

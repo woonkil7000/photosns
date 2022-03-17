@@ -163,7 +163,7 @@ $(window).scroll(() => {
     //console.log("checkNum="+checkNum);
 
   // 근사치 계산 // currentPage = 0부터 시작
-  if ((checkNum < 1000 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
+  if ((checkNum < 500 && checkNum > -1)  && storyLoadUnlock && (page <= totalPage-1)) {
 
 	  storyLoad();
 	  storyLoadUnlock=false;
@@ -174,7 +174,7 @@ $(window).scroll(() => {
 		  // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ timer 2초후 허용함 storyLoadUnlock=",storyLoadUnlock);
 		  // console.timeEnd("X");
 		  // console.timeStamp("종료 시간");
-	  },1000)
+	  },3000)
 
   }
 	if (isLastPage==true&&appendFlag!=1){
